@@ -125,6 +125,15 @@ class UserController extends Controller
 
         return back();
     }
+    
+    public function activate($id){
+
+        $user = User::find($id);
+        $user->state = true;
+        $user->save();
+
+        return back();
+    }
 
     /**
      * Remove the specified resource from storage.

@@ -26,7 +26,9 @@
                                 <button class="btn btn-danger">Désactiver</button>
                             </a>
                         @else
-                            Utilisateur désactivé
+                        <a href="user/activate/{{ $user->id }}">
+                            <button class="btn btn-success">Activer</button>
+                        </a>
                         @endif
 
 
