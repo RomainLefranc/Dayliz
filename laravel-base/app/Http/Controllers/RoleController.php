@@ -85,7 +85,8 @@ class RoleController extends Controller
         ]);
         
         $role->name = $request->get('name');
-
+        $role->save();
+        
         return redirect('/role');
     }
 
