@@ -18,4 +18,15 @@ class Activity extends Model
     ];
 
     protected $table = "activities";
+
+    /**
+     * The roles that belong to the Activity
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class);
+    }
 }
