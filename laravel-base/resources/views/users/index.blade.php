@@ -11,11 +11,13 @@
                 <th scope="col">#</th>
                 <th scope="col">Nom</th>
                 <th scope="col">Prénom</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                @foreach ($users as $user)
+            @foreach ($users as $user)
+                <tr>
+
                     <th scope="row"> <a href="{{ route('users.edit', $user->id) }}"> {{ $user->id }} </a></th>
                     <td>{{ $user->lastName }}</td>
                     <td>{{ $user->firstName }}</td>
@@ -26,15 +28,14 @@
                                 <button class="btn btn-danger">Désactiver</button>
                             </a>
                         @else
-                        <a href="user/activate/{{ $user->id }}">
-                            <button class="btn btn-success">Activer</button>
-                        </a>
+                            <a href="user/activate/{{ $user->id }}">
+                                <button class="btn btn-success">Activer</button>
+                            </a>
                         @endif
-
-
                     </td>
-                @endforeach
-            </tr>
+
+                </tr>
+            @endforeach
         </tbody>
     </table>
 
