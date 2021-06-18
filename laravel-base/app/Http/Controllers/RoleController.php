@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -13,7 +14,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        $roles = Role::all();
+        return view('role.index',compact('roles'));
     }
 
     /**
@@ -23,7 +25,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+        return view('role.create');
     }
 
     /**
@@ -34,8 +36,16 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|min:3|max:255|regex:/^[A-Za-z]+$/'
+        ]);
+        $role = new Role([
+            'name' => $request->get('name')
+        ]);
+        $role->save();
+        return redirect('/role');
     }
+
 
     /**
      * Display the specified resource.
@@ -45,7 +55,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -56,7 +66,8 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $role = Role::find($id);
+        return view('role.edit',compact('role'));
     }
 
     /**
@@ -68,7 +79,14 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $role = Role::find($id);
+        $request->validate([
+            'name' => 'required|min:3|max:255|regex:/^[A-Za-z]+$/'
+        ]);
+        
+        $role->name = $request->get('name');
+
+        return redirect('/role');
     }
 
     /**
@@ -79,6 +97,5 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
     }
 }
