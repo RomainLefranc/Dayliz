@@ -14,7 +14,7 @@ class ActivityController extends Controller
      */
     public function index()
     {
-        //
+        return view("activities.index");
     }
 
     /**
@@ -35,7 +35,28 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/',
+            'beginAt' => 'required|date_format:d/m/Y H:i',
+            'endAt' => 'required|date_format:d/m/Y H:i',
+            'descritpion' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/'
+        ]);
+
+        $activity = new Activity([
+            'title' => $request->get('title'),
+            'beginAt' => $request->get('beginAt'),
+            'endAt' => $request->get('endAt'),
+            'description' => $request->get('description'),
+            'state' => true
+        ]);
+
+        try {
+            $activity->save();
+        } catch (\Throwable $th) {
+            dd($th);
+        }
+
+        return $request;
     }
 
     /**

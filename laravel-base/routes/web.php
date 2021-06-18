@@ -19,5 +19,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('activity', ActivityController::class);
+Route::resource('activities', ActivityController::class);
 Route::resource('users',UserController::class);
