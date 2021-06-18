@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Role;
 
 class UserController extends Controller
 {
@@ -25,7 +26,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        $roles = Role::all();
+        return view('users.create',compact('roles'));
     }
 
     /**
@@ -43,6 +45,7 @@ class UserController extends Controller
             'phone'=>'required|regex:/^[0-9 - () ]+$/',
             'birthDay'=>'required',
             'promotion'=>'required|regex:/^[A-Za-z0-9- ]+$/',
+            'role'=>'required'
         ]);
  
         $user = new User([
@@ -52,11 +55,11 @@ class UserController extends Controller
             'birthDay'=> $request->get('birthDay'),
             'phoneNumber'=> $request->get('phone'),
             'promotion'=> $request->get('promotion'),
-            'role_id' => 1,
+            'role_id' => $request->get('role'),
             'state'=> true
         ]);
 
-    
+        
 
         $user->save();
 
