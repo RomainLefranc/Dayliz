@@ -117,6 +117,24 @@ class UserController extends Controller
 
     }
 
+    public function desactivate($id){
+        
+        $user = User::find($id);
+        $user->state = false;
+        $user->save();
+
+        return back();
+    }
+    
+    public function activate($id){
+
+        $user = User::find($id);
+        $user->state = true;
+        $user->save();
+
+        return back();
+    }
+
     /**
      * Remove the specified resource from storage.
      *
