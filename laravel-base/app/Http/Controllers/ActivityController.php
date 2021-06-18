@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
 
-
 class ActivityController extends Controller
 {
     /**
@@ -114,5 +113,14 @@ class ActivityController extends Controller
     public function destroy(Activity $activity)
     {
         //
+    }
+
+    public function desactivate($id){
+        
+        $activity = Activity::find($id);
+        $activity->state = false;
+        $activity->save();
+
+        return back();
     }
 }
