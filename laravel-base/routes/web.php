@@ -23,3 +23,6 @@ Route::get('/', function () {
 Route::resource('activity', ActivityController::class);
 Route::resource('users',UserController::class);
 Route::resource('role', RoleController::class);
+
+Route::get('user/desactivate/{id}', [UserController::class,'desactivate']);
+Route::get('user/activate/{id}', [UserController::class,'activate']);
