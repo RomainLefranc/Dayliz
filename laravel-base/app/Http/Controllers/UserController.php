@@ -44,7 +44,22 @@ class UserController extends Controller
             'promotion'=>'required|regex:/^[A-Za-z0-9- ]+$/',
         ]);
  
-        return $request;
+        $user = new User([
+            'lastName'=> $request->get('lastName'),
+            'firstName'=> $request->get('firstName'),
+            'email'=> $request->get('email'),
+            'birthDay'=> $request->get('birthDay'),
+            'phoneNumber'=> $request->get('phone'),
+            'promotion'=> $request->get('promotion'),
+            'role_id' => 1,
+            'state'=> true
+        ]);
+
+    
+
+        $user->save();
+
+        return redirect('/users');
     }
 
     /**
