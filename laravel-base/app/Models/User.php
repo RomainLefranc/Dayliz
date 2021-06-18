@@ -48,7 +48,7 @@ class User extends Authenticatable
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
 
-    public function activities(): BelongsToMany
+    public function activities()
     {
         return $this->belongsToMany(Activity::class);
     }
