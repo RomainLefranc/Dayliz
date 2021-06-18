@@ -21,3 +21,5 @@ Route::get('/', function () {
 
 Route::resource('activity', ActivityController::class);
 Route::resource('users',UserController::class);
+
+Route::get('user/desactivate/{id}', [UserController::class,'desactivate']);

@@ -19,6 +19,11 @@
                     <th scope="row"> <a href="{{ route('users.edit', $user->id) }}"> {{ $user->id }} </a></th>
                     <td>{{ $user->lastName }}</td>
                     <td>{{ $user->firstName }}</td>
+                    <td>
+                        <a href="user/desactivate/{{ $user->id }}">
+                            <button class="btn btn-danger">Désactiver</button>
+                        </a>
+                    </td>
                 @endforeach
             </tr>
         </tbody>
