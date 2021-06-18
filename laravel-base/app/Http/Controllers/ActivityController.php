@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Validator;
+
 
 class ActivityController extends Controller
 {
@@ -36,15 +38,21 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/',
-            // 'beginAt' => 'required|date_format:Y-m-d\TH:i:sP',
-            // 'endAt' => 'required|date_format:Y-m-d\TH:i:sP',
+            'beginAt' => 'required|date',
+            'endAt' => 'required|date',
             'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/'
         ]);
 
-        $beginAt = Carbon::createFromFormat('d/m/Y H:i', $request->get('beginAt'))->format('Y-m-d H:i:s');
-        $endAt = Carbon::createFromFormat('d/m/Y H:i', $request->get('endAt'))->format('Y-m-d H:i:s');
+
+        if ($validator->fails()) {
+            $beginAt = Carbon::createFromFormat('d/m/Y H:i', $request->get('beginAt'))->format('Y-m-d H:i:s');
+            $endAt = Carbon::createFromFormat('d/m/Y H:i', $request->get('endAt'))->format('Y-m-d H:i:s');
+        } else {
+            $beginAt = $request->get('beginAt');
+            $endAt = $request->get('endAt');
+        }
 
         $activity = new Activity([
             'title' => $request->get('title'),
