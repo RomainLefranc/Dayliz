@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Activity extends Model
 {
@@ -20,7 +21,7 @@ class Activity extends Model
     protected $table = "activities";
 
     /**
-     * The roles that belong to the Activity
+     * The users that belong to the Activities
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
