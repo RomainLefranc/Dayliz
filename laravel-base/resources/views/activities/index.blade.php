@@ -18,14 +18,14 @@
                 </div>
                 <div class="mb-3">
                     <label for="beginAt" class="form-label">Début</label>
-                    <input type="datetime-local" class="form-control" name="beginAt" value="18/06/2021 13:00">
+                    <input type="datetime-local" class="form-control" name="beginAt" placeholder="jj/mm/aaaa hh:mm">
                     @if ($errors->has('beginAt'))
                         <span>{!! $errors->first('beginAt') !!}</span>
                     @endif
                 </div>
                 <div class="mb-3">
                     <label for="endAt" class="form-label">Fin</label>
-                    <input type="datetime-local" class="form-control" name="endAt" value="18/06/2021 14:00">
+                    <input type="datetime-local" class="form-control" name="endAt" placeholder="jj/mm/aaaa hh:mm">
                     @if ($errors->has('endAt'))
                         <span>{!! $errors->first('endAt') !!}</span>
                     @endif
