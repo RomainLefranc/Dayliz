@@ -19,7 +19,7 @@ class CreateActivitiesTable extends Migration
             $table->dateTime("beginAt");
             $table->dateTime("endAt");
             $table->string("title");
-            $table->string("descritpion");
+            $table->string("description");
             $table->boolean("state");
         });
     }

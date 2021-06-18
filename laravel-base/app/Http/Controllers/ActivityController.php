@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Activity;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class ActivityController extends Controller
 {
@@ -37,15 +38,18 @@ class ActivityController extends Controller
     {
         $request->validate([
             'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/',
-            'beginAt' => 'required|date_format:d/m/Y H:i',
-            'endAt' => 'required|date_format:d/m/Y H:i',
-            'descritpion' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/'
+            // 'beginAt' => 'required|date_format:Y-m-d\TH:i:sP',
+            // 'endAt' => 'required|date_format:Y-m-d\TH:i:sP',
+            'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/'
         ]);
+
+        $beginAt = Carbon::createFromFormat('d/m/Y H:i', $request->get('beginAt'))->format('Y-m-d H:i:s');
+        $endAt = Carbon::createFromFormat('d/m/Y H:i', $request->get('endAt'))->format('Y-m-d H:i:s');
 
         $activity = new Activity([
             'title' => $request->get('title'),
-            'beginAt' => $request->get('beginAt'),
-            'endAt' => $request->get('endAt'),
+            'beginAt' => $beginAt,
+            'endAt' => $endAt,
             'description' => $request->get('description'),
             'state' => true
         ]);
@@ -56,7 +60,7 @@ class ActivityController extends Controller
             dd($th);
         }
 
-        return $request;
+        return redirect('activities');
     }
 
     /**
