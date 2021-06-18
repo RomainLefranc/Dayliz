@@ -22,8 +22,12 @@ class CreateUsersTable extends Migration
             $table->string('birthDay');
             $table->string('phoneNumber');
             $table->string('promotion');
-            $table->integer('role_id');
-
+            
+            $table->foreignId('role_id');
+            $table->foreign("role_id")
+                ->references('id')
+                ->on('roles')
+                ->onDelete('cascade');
             $table->timestamp('email_verified_at')->nullable();
             //$table->string('password');
             $table->rememberToken();
