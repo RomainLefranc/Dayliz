@@ -14,7 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('users.index');
+        $users = User::all();
+        return view('users.index',compact('users'));
     }
 
     /**
@@ -81,7 +82,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return view('users.edit',compact('user'));
     }
 
     /**
@@ -93,7 +95,26 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $request->validate([
+            'lastName' => 'required|min:3|max:255|regex:/^[A-Za-z]+$/',
+            'firstName' => 'required|min:3|max:255|regex:/^[A-Za-z - é è ]+$/',
+            'email'=> 'required|email',
+            'phone'=>'required|regex:/^[0-9 - () ]+$/',
+            'birthDay'=>'required',
+            'promotion'=>'required|regex:/^[A-Za-z0-9- ]+$/',
+        ]);
+
+        $user->lastName = $request->get('lastName');
+        $user->firstName = $request->get('firstName');
+        $user->email = $request->get('email');
+        $user->phoneNumber = $request->get('phone');
+        $user->birthDay = $request->get('birthDay');
+        $user->promotion = $request->get('promotion');
+
+        $user->save();
+        return redirect('/users');
+
     }
 
     /**
