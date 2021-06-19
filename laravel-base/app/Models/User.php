@@ -55,7 +55,7 @@ class User extends Authenticatable
 
     public function activities()
     {
-        return $this->belongsToMany(UserActivity::class);
+        return $this->hasMany(UserActivity::class);
     }
     /**
      * The role that belong to the User
@@ -65,7 +65,7 @@ class User extends Authenticatable
 
     public function role()
     {
-        return $this->hasOne(Role::class);
+        return $this->belongsTo(Role::class);
     }
 }
 
