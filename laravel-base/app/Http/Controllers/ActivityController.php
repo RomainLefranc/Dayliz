@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
@@ -133,4 +134,28 @@ class ActivityController extends Controller
 
         return back();
     }
+
+    public function assignActivityForm()
+    {
+        $users = User::all();
+        $activities = Activity::all();
+
+        return view('users.assignActivity',compact('users', 'activities'));
+    }
+
+
+    public function assignActivityToUser(Request $request) {
+        $user = User::find($request->user_id);
+        $activity = Activity::find($request->activity_id);    
+        
+        if ($user->activities()->where('id', $activity->id)->exists()) {
+            redirect()->back()->withErrors("Activité déjà attribuée");
+        } else {
+            $user->activities()->attach($activity->id);
+        }
+
+        return back();
+     }
+     
+     
 }
