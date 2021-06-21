@@ -105,9 +105,10 @@ class ActivityController extends Controller
      * @param  \App\Models\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function edit(Activity $activity)
+    public function edit($id)
     {
-        //
+        $activity = Activity::find($id);
+        return view('activities.edit',compact('activity'));
     }
 
     /**
