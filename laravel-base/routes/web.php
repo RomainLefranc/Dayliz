@@ -30,3 +30,6 @@ Route::get('user/activate/{id}', [UserController::class,'activate']);
 
 Route::get('activity/activate/{id}', [ActivityController::class, 'activate']);
 Route::get('activity/desactivate/{id}', [ActivityController::class, 'desactivate']);
+
+Route::get('activity/assign', [ActivityController::class, 'assignActivityForm']);
+Route::post('activity/assign', [ActivityController::class, 'assignActivityToUser'])->name('activities.assign');
