@@ -14,17 +14,11 @@ class CreateUserActivityTable extends Migration
     public function up()
     {
         Schema::create('user_activity', function (Blueprint $table) {
-            $table->id();
             $table->foreignId('user_id');
             $table->foreignId('activity_id');
-            $table->foreign("user_id")
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
-            $table->foreign("activity_id")
-                ->references('id')
-                ->on('activities')
-                ->onDelete('cascade');
+            $table->foreign("user_id")->references('id')->on('users')->onDelete('cascade');
+            $table->foreign("activity_id")->references('id')->on('activities')->onDelete('cascade');
+            $table->primary(['user_id', 'activity_id']);
         });
     }
 
