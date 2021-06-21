@@ -169,27 +169,40 @@ class ActivityController extends Controller
         return back();
     }
 
-    public function assignActivityForm()
-    {
-        $users = User::all();
-        $activities = Activity::all();
+    public function index_activity_user($id) {
+        $activity = Activity::find($id);
+        $users = $activity->users()->get();
+        return view('activities.users',compact('activity', 'users'));
 
-        return view('users.assignActivity',compact('users', 'activities'));
+    }
+    public function create_activity_user($id) {
+        $activity = Activity::find($id);
+        $users = User::all();
+
+        return view('activities.users_create',compact('activity', 'users'));
+
     }
 
-
-    public function assignActivityToUser(Request $request) {
+    public function store_activity_user($id, Request $request) {
         $user = User::find($request->user_id);
-        $activity = Activity::find($request->activity_id);    
+        $activity = Activity::find($id);    
         
-        if ($user->activities()->where('id', $activity->id)->exists()) {
+        if ($activity->users()->where('id', $user->id)->exists()) {
             redirect()->back()->withErrors("Activité déjà attribuée");
         } else {
             $user->activities()->attach($activity->id);
         }
 
+        return redirect('/activities/'.$activity->id.'/user');
+
+    }
+
+    public function delete_activity_user($activity_id, $user_id) {
+        $user = User::find($user_id);
+        $activity = Activity::find($activity_id); 
+        $activity->users()->detach($user->id);
         return back();
-     }
+    }
      
      
 }

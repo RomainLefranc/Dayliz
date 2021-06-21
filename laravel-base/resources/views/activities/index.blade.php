@@ -40,6 +40,9 @@
                         <a href="{{ route('activities.edit', $activity->id) }}">
                             <button class="btn btn-primary">Modifier</button>
                         </a>
+                        <a href="activities/{{ $activity->id }}/user">
+                            <button class="btn btn-primary">Utilisateurs assignés</button>
+                        </a>
                     </td>
                 </tr>
                 @endforeach
