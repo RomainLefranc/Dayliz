@@ -118,9 +118,24 @@ class ActivityController extends Controller
      * @param  \App\Models\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Activity $activity)
+    public function update(Request $request,$id)
     {
-        //
+        $activity = Activity::find($id);
+
+        $request->validate([
+            'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/',
+            'beginAt' => 'required|date',
+            'endAt' => 'required|date|after:beginAt',
+            'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/'
+        ]);
+
+        $activity->title = $request->get('title');
+        $activity->beginAt = $request->get('beginAt');
+        $activity->endAt = $request->get('endAt');
+        $activity->description = $request->get('description');
+
+        return redirect('/activities');
+
     }
 
     /**
