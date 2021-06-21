@@ -134,6 +134,8 @@ class ActivityController extends Controller
         $activity->endAt = $request->get('endAt');
         $activity->description = $request->get('description');
 
+        $activity->save();
+
         return redirect('/activities');
 
     }
