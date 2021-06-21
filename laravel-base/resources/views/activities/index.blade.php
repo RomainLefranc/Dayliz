@@ -108,7 +108,7 @@
                         <div class="mb-3">
                             <label for="title" class="form-label">Titre</label>
                             <input id="titleEdit" type="text" class="form-control" name="title"
-                                value="{{ $activity->title }}">
+                                value="">
                             @if ($errors->has('title'))
                                 <span>{ !! $errors->first('title') !! }</span>
                             @endif
@@ -116,7 +116,7 @@
                         <div class="mb-3">
                             <label for="beginAt" class="form-label">Début</label>
                             <input id="beginAtEdit" type="datetime-local" class="form-control" name="beginAt"
-                                value="{{ explode(' ', $activity->beginAt)[0] . 'T' . explode(' ', $activity->beginAt)[1] }}"
+                                value=""
                                 placeholder="jj/mm/aaaa hh:mm">
                             @if ($errors->has('beginAt'))
                                 <span>{!! $errors->first('beginAt') !!}</span>
@@ -125,7 +125,7 @@
                         <div class="mb-3">
                             <label for="endAt" class="form-label">Fin</label>
                             <input id="endAtEdit" type="datetime-local" class="form-control" name="endAt"
-                                value="{{ explode(' ', $activity->endAt)[0] . 'T' . explode(' ', $activity->endAt)[1] }}"
+                                value=""
                                 placeholder="jj/mm/aaaa hh:mm">
                             @if ($errors->has('endAt'))
                                 <span>{!! $errors->first('endAt') !!}</span>
@@ -134,7 +134,7 @@
                         <div class="mb-3">
                             <label for="description" class="form-label">Description</label>
                             <textarea id="descriptionEdit" type="textarea" class="form-control" name="description"
-                                rows="3">{{ $activity->description }}</textarea>
+                                rows="3"></textarea>
                             @if ($errors->has('description'))
                                 <span>{ !! $errors->first('description') !! }</span>
                             @endif
