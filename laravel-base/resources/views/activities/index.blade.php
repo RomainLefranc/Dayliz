@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="row">
-    <div class="col-12 col-md-6">
+    <div class="col-12">
         <div class="d-flex justify-content-between">
             <h1>Liste des activités</h1>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#form">Ajouter</button>
