@@ -26,3 +26,7 @@ Route::resource('role', RoleController::class);
 
 Route::get('user/desactivate/{id}', [UserController::class,'desactivate']);
 Route::get('user/activate/{id}', [UserController::class,'activate']);
+
+
+Route::get('activity/activate/{id}', [ActivityController::class, 'activate']);
+Route::get('activity/desactivate/{id}', [ActivityController::class, 'desactivate']);
