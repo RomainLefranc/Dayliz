@@ -43,7 +43,7 @@ class RoleController extends Controller
             'name' => $request->get('name')
         ]);
         $role->save();
-        return redirect('/role');
+        return redirect()->route('role.index')->with('status', 'Rôle ajouté');
     }
 
 
@@ -87,7 +87,7 @@ class RoleController extends Controller
         $role->name = $request->get('name');
         $role->save();
         
-        return redirect('/role');
+        return redirect()->route('role.index')->with('status', 'Rôle modifié');
     }
 
     /**

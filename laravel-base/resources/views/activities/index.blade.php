@@ -3,7 +3,49 @@
 @section('content')
 
 <div class="row">
-    <div class="col-12 col-md-6"></div>
+    <div class="col-12 col-md-6">
+        <h1>Liste des activités</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Titre</th>
+                    <th scope="col">Date début</th>
+                    <th scope="col">Date Fin</th>
+                    <th scope="col">Action</th>
+ 
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($activities as $activity)
+                    <tr>
+                        <td>{{ $activity->id }}</td>
+                        <td>{{ $activity->title }}</td>
+                        <td>{{ $activity->beginAt }}</td>
+                        <td>{{ $activity->endAt }}</td>
+                        <td>
+                            @if ($activity->state)
+                                <a href="activity/desactivate/{{ $activity->id }}">
+                                    <button class="btn btn-danger">Désactiver</button>
+                                </a>
+                            @else
+                                <a href="activity/activate/{{ $activity->id }}">
+                                    <button class="btn btn-success">Activer</button>
+                                </a>
+                            @endif
+                            <a href="{{ route('activities.edit', $activity->id) }}">
+                                <button class="btn btn-primary">Modifier</button>
+                            </a> 
+                        </td>  
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+
+
+    </div>
     <div class="col-12 col-md-6">
         <div class="col">
             <h1>Activité</h1>

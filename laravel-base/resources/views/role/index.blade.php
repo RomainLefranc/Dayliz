@@ -4,7 +4,11 @@
      <a href="/role/create"><button class="btn btn-primary mt-5">Créer un rôle</button></a>
 
     <h1>Liste des roles</h1>
-
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+    @endif
     <table class="table">
         <thead>
             <tr>
