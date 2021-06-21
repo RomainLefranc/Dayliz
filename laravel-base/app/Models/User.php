@@ -55,7 +55,7 @@ class User extends Authenticatable
 
     public function activities()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(Activity::class,'user_activity');
     }
     /**
      * The role that belong to the User

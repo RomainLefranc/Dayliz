@@ -22,8 +22,8 @@
                     <tr>
                         <td>{{ $activity->id }}</td>
                         <td>{{ $activity->title }}</td>
-                        <td>{{ $activity->beginAt }}</td>
-                        <td>{{ $activity->endAt }}</td>
+                        <td>{{ date('d/m/Y à H:i', strtotime($activity->beginAt))}}</td>
+                        <td>{{ date('d/m/Y à H:i', strtotime($activity->endAt)) }}</td>
                         <td>
                             @if ($activity->state)
                                 <a href="activity/desactivate/{{ $activity->id }}">

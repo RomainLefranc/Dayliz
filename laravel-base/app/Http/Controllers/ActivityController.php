@@ -38,26 +38,42 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+       /*  dd($request->all()); */
+
+        /* $validator = Validator::make($request->all(), [
             'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/',
             'beginAt' => 'required|date',
             'endAt' => 'required|date',
             'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/'
+        ]); */
+        $request->validate([
+            'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/',
+            'beginAt' => 'required|date',
+            'endAt' => 'required|date|after:beginAt',
+            'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/'
         ]);
 
 
-        if ($validator->fails()) {
+        /* if ($validator->fails()) {
             $beginAt = Carbon::createFromFormat('d/m/Y H:i', $request->get('beginAt'))->format('Y-m-d H:i:s');
             $endAt = Carbon::createFromFormat('d/m/Y H:i', $request->get('endAt'))->format('Y-m-d H:i:s');
         } else {
             $beginAt = $request->get('beginAt');
             $endAt = $request->get('endAt');
-        }
+        } */
 
-        $activity = new Activity([
+        /* $activity = new Activity([
             'title' => $request->get('title'),
             'beginAt' => $beginAt,
             'endAt' => $endAt,
+            'description' => $request->get('description'),
+            'state' => true
+        ]); */
+
+        $activity = new Activity([
+            'title' => $request->get('title'),
+            'beginAt' => $request->get('beginAt'),
+            'endAt' => $request->get('endAt'),
             'description' => $request->get('description'),
             'state' => true
         ]);

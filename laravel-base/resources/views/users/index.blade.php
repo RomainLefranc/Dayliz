@@ -11,18 +11,18 @@
                 <th scope="col">#</th>
                 <th scope="col">Nom</th>
                 <th scope="col">Prénom</th>
-                <th scope="col">Action</th>
                 <th scope="col">Rôle</th>
+                <th scope="col">Action</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach ($users as $user)
                 <tr>
-
-                    <th scope="row"> <a href="{{ route('users.edit', $user->id) }}"> {{ $user->id }} </a></th>
+                    <td>{{ $user->id }}</td>
                     <td>{{ $user->lastName }}</td>
                     <td>{{ $user->firstName }}</td>
+                    <td>{{ $user->role->name }}</td>
                     <td>
 
                         @if ($user->state)
@@ -34,8 +34,10 @@
                                 <button class="btn btn-success">Activer</button>
                             </a>
                         @endif
+                        <a href="{{ route('users.edit', $user->id) }}">
+                            <button class="btn btn-primary">Modifier</button>
+                        </a>
                     </td>
-                    <td>{{ $user->role->name }}</td>
 
                 </tr>
             @endforeach
