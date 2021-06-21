@@ -18,7 +18,7 @@ class ActivityController extends Controller
     public function index()
     {
         $activities = Activity::all();
-        return view("activities.index",compact('activities'));
+        return view("activities.index", compact('activities'));
     }
 
     /**
@@ -39,7 +39,7 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
-       /*  dd($request->all()); */
+        /*  dd($request->all()); */
 
         /* $validator = Validator::make($request->all(), [
             'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/',
@@ -94,9 +94,10 @@ class ActivityController extends Controller
      * @param  \App\Models\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function show(Activity $activity)
+    public function show($id)
     {
-        //
+        $activity = Activity::find($id);
+        return $activity;
     }
 
     /**
@@ -108,7 +109,7 @@ class ActivityController extends Controller
     public function edit($id)
     {
         $activity = Activity::find($id);
-        return view('activities.edit',compact('activity'));
+        return view('activities.edit', compact('activity'));
     }
 
     /**
@@ -118,7 +119,7 @@ class ActivityController extends Controller
      * @param  \App\Models\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         $activity = Activity::find($id);
 
@@ -137,7 +138,6 @@ class ActivityController extends Controller
         $activity->save();
 
         return redirect('/activities');
-
     }
 
     /**
@@ -151,8 +151,9 @@ class ActivityController extends Controller
         //
     }
 
-    public function desactivate($id){
-        
+    public function desactivate($id)
+    {
+
         $activity = Activity::find($id);
         $activity->state = false;
         $activity->save();
@@ -160,8 +161,9 @@ class ActivityController extends Controller
         return back();
     }
 
-    public function activate($id){
-        
+    public function activate($id)
+    {
+
         $activity = Activity::find($id);
         $activity->state = true;
         $activity->save();
@@ -169,40 +171,39 @@ class ActivityController extends Controller
         return back();
     }
 
-    public function index_activity_user($id) {
+    public function index_activity_user($id)
+    {
         $activity = Activity::find($id);
         $users = $activity->users()->get();
-        return view('activities.users',compact('activity', 'users'));
-
+        return view('activities.users', compact('activity', 'users'));
     }
-    public function create_activity_user($id) {
+    public function create_activity_user($id)
+    {
         $activity = Activity::find($id);
         $users = User::all();
 
-        return view('activities.users_create',compact('activity', 'users'));
-
+        return view('activities.users_create', compact('activity', 'users'));
     }
 
-    public function store_activity_user($id, Request $request) {
+    public function store_activity_user($id, Request $request)
+    {
         $user = User::find($request->user_id);
-        $activity = Activity::find($id);    
-        
+        $activity = Activity::find($id);
+
         if ($activity->users()->where('id', $user->id)->exists()) {
             redirect()->back()->withErrors("Activité déjà attribuée");
         } else {
             $user->activities()->attach($activity->id);
         }
 
-        return redirect('/activities/'.$activity->id.'/user');
-
+        return redirect('/activities/' . $activity->id . '/user');
     }
 
-    public function delete_activity_user($activity_id, $user_id) {
+    public function delete_activity_user($activity_id, $user_id)
+    {
         $user = User::find($user_id);
-        $activity = Activity::find($activity_id); 
+        $activity = Activity::find($activity_id);
         $activity->users()->detach($user->id);
         return back();
     }
-     
-     
 }
