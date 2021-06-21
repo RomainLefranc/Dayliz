@@ -123,4 +123,13 @@ class ActivityController extends Controller
 
         return back();
     }
+
+    public function activate($id){
+        
+        $activity = Activity::find($id);
+        $activity->state = true;
+        $activity->save();
+
+        return back();
+    }
 }
