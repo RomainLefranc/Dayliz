@@ -34,3 +34,5 @@ Route::get('activities/{id}/users', [ActivityController::class, 'index_activity_
 Route::get('activities/{id}/user/create', [ActivityController::class, 'create_activity_user'])->name('activities.users.create');
 Route::post('activities/{id}/user/store', [ActivityController::class, 'store_activity_user'])->name('activities.users.store');
 Route::delete('activities/{activity_id}/user/{user_id}/delete', [ActivityController::class, 'delete_activity_user'])->name('activities.users.delete');
+Route::get('activities/{id}/show', [ActivityController::class, 'show']);
+Route::patch('activities/{id}/update/', [ActivityController::class, 'update']);
