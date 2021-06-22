@@ -29,18 +29,18 @@
                     <td>{{ date('d/m/Y à H:i', strtotime($activity->endAt)) }}</td>
                     <td>
                         @if ($activity->state)
-                        <a href="activity/desactivate/{{ $activity->id }}">
+                        <a href="{{ route('activities.desactivate', $activity->id) }}">
                             <button class="btn btn-danger">Désactiver</button>
                         </a>
                         @else
-                        <a href="activity/activate/{{ $activity->id }}">
+                        <a href="{{ route('activities.activate'), $activity->id }}">
                             <button class="btn btn-success">Activer</button>
                         </a>
                         @endif
                         {{-- <a href="{{ route('activities.edit', $activity->id) }}">
                             <button class="btn btn-primary">Modifier</button>
                         </a> --}}
-                        <a href="activities/{{ $activity->id }}/user">
+                        <a href="{{ route('activities.users.index'), $activity->id }}">
                             <button class="btn btn-primary">Utilisateurs assignés</button>
                         </a>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formEdit">Modifier</button>

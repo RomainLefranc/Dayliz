@@ -62,8 +62,7 @@ class UserController extends Controller
         
 
         $user->save();
-
-        return redirect('/users');
+        return redirect()->route('users.index');
     }
 
     /**
@@ -116,7 +115,7 @@ class UserController extends Controller
         $user->promotion = $request->get('promotion');
 
         $user->save();
-        return redirect('/users');
+        return redirect()->route('users.index');
 
     }
 

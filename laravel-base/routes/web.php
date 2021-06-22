@@ -22,15 +22,15 @@ Route::get('/', function () {
 
 Route::resource('activities', ActivityController::class);
 Route::resource('users',UserController::class);
-Route::resource('role', RoleController::class);
+Route::resource('roles', RoleController::class);
 
-Route::get('user/desactivate/{id}', [UserController::class,'desactivate']);
-Route::get('user/activate/{id}', [UserController::class,'activate']);
+Route::get('users/{id}/desactivate', [UserController::class,'desactivate']);
+Route::get('users/{id}/activate', [UserController::class,'activate']);
 
-Route::get('activity/activate/{id}', [ActivityController::class, 'activate']);
-Route::get('activity/desactivate/{id}', [ActivityController::class, 'desactivate']);
+Route::get('activities/{id}/activate', [ActivityController::class, 'activate'])->name('activities.activate');
+Route::get('activities/{id}/desactivate', [ActivityController::class, 'desactivate'])->name('activities.desactivate');
 
-Route::get('activities/{id}/user', [ActivityController::class, 'index_activity_user']);
-Route::get('activities/{id}/user/create', [ActivityController::class, 'create_activity_user']);
-Route::post('activities/{id}/user/store', [ActivityController::class, 'store_activity_user']);
-Route::delete('activities/{activity_id}/user/{user_id}/delete', [ActivityController::class, 'delete_activity_user']);
+Route::get('activities/{id}/users', [ActivityController::class, 'index_activity_user'])->name('activities.users.index');
+Route::get('activities/{id}/user/create', [ActivityController::class, 'create_activity_user'])->name('activities.users.create');
+Route::post('activities/{id}/user/store', [ActivityController::class, 'store_activity_user'])->name('activities.users.store');
+Route::delete('activities/{activity_id}/user/{user_id}/delete', [ActivityController::class, 'delete_activity_user'])->name('activities.users.delete');

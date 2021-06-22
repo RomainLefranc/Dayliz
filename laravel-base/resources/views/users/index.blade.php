@@ -1,7 +1,7 @@
 @extends('layout')
 @section('content')
 
-    <a href="/users/create"><button class="btn btn-primary mt-5">Créer un utilisateur</button></a>
+    <a href="{{ route('users.create') }}"><button class="btn btn-primary mt-5">Créer un utilisateur</button></a>
 
     <h1>Liste des utilisateurs</h1>
 
@@ -26,11 +26,11 @@
                     <td>
 
                         @if ($user->state)
-                            <a href="user/desactivate/{{ $user->id }}">
+                            <a href="{{ route('users.desactivate', $user->id) }}">
                                 <button class="btn btn-danger">Désactiver</button>
                             </a>
                         @else
-                            <a href="user/activate/{{ $user->id }}">
+                            <a href="{{ route('users.activate', $user->id) }}">
                                 <button class="btn btn-success">Activer</button>
                             </a>
                         @endif

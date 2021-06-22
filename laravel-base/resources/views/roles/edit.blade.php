@@ -4,7 +4,7 @@
 
     <div class="row">
         <h1 class="text-center">Modifier un rôle</h1>
-        <form action="{{ route('role.update',$role->id) }}" method="POST">
+        <form action="{{ route('roles.update',$role->id) }}" method="POST">
             @csrf
             @method("patch")
             <div class="form-floating mb-3 col">

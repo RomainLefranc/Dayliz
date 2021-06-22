@@ -84,8 +84,8 @@ class ActivityController extends Controller
         } catch (\Throwable $th) {
             dd($th);
         }
-
-        return redirect('activities');
+        
+        return redirect()->route('activities.index');
     }
 
     /**
@@ -136,7 +136,7 @@ class ActivityController extends Controller
 
         $activity->save();
 
-        return redirect('/activities');
+        return redirect()->route('activities.index');
 
     }
 
@@ -192,9 +192,7 @@ class ActivityController extends Controller
         } else {
             $user->activities()->attach($activity->id);
         }
-
-        return redirect('/activities/'.$activity->id.'/user');
-
+        return redirect()->route('activities.users.index' , $activity->id);
     }
 
     public function delete_activity_user($activity_id, $user_id) {
