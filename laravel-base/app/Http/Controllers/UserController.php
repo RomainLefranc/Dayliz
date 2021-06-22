@@ -96,13 +96,17 @@ class UserController extends Controller
         $idUser = $request->id;
      
         $user = User::find($idUser);
-  
-        $date_ = md5(Carbon::today().($user->id));
+        
+        if($user)
+        {
+            $date_ = md5(Carbon::today().($user->id));
 
-        $user->tokenRandom = $date_.md5($chaineAleatoire);
+            $user->tokenRandom = $date_.md5($chaineAleatoire);
+    
+            $user->save();
+        }
 
-        $user->save();
-
+      
         return redirect('/users');
 
     }
