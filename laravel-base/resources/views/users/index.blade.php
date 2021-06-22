@@ -14,6 +14,7 @@
                 <th scope="col">Rôle</th>
                 <th scope="col">Action</th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -38,7 +39,13 @@
                             <button class="btn btn-primary">Modifier</button>
                         </a>
                     </td>
-
+                    <td>
+                        <form action="{{route('users.generate',$user->id)}}" method="POST">
+                            @csrf
+                            <input type="hidden" value="{{$user->id}}" name="id"/>
+                            <button class="btn btn-secondary" type="submit">Générer un lien</button>
+                        </form>
+                    </td>
                 </tr>
             @endforeach
         </tbody>

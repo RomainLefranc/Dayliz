@@ -37,3 +37,7 @@ Route::post('activities/{id}/user/store', [ActivityController::class, 'store_act
 Route::delete('activities/{activity_id}/user/{user_id}/delete', [ActivityController::class, 'delete_activity_user'])->name('activities.users.delete');
 Route::get('activities/{id}/show', [ActivityController::class, 'show']);
 Route::patch('activities/{id}/update', [ActivityController::class, 'update']);
+
+Route::get('users/{token}/activities',[UserController::class,'showActivities']);
+
+Route::post('users/generateToken',[UserController::class,'generateToken'])->name('users.generate');

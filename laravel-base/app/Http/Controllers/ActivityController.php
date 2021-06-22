@@ -178,6 +178,7 @@ class ActivityController extends Controller
         $users = $activity->users()->get();
         return view('activities.users', compact('activity', 'users'));
     }
+    
     public function create_activity_user($id)
     {
         $activity = Activity::find($id);

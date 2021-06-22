@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\User;
+use Carbon\Carbon;
 use App\Models\Role;
+use App\Models\User;
+use App\Models\Activity;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -73,7 +76,60 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+    
+    }
+
+    public function generateToken(Request $request)
+    {
+        $caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $longueurMax = strlen($caracteres);
+        $chaineAleatoire = '';
+        for ($i = 0; $i < 6; $i++)
+        {
+        $chaineAleatoire .= $caracteres[rand(0, $longueurMax - 1)];
+        }
+
+        $idUser = $request->id;
+     
+        $user = User::find($idUser);
+  
+        $date_ = md5(Carbon::today().($user->id));
+
+        $user->tokenRandom = $date_.md5($chaineAleatoire);
+
+        $user->save();
+
+        return redirect('/users');
+
+    }
+
+    public function showActivities($token)
+    {  
+       
+        $user = User::where('tokenRandom',$token)->get();
+    
+         //On vérifie que l'utilisateur est bien trouvé
+        if (count($user) > 0)
+        {
+             //Variable pour tester la date
+            $verif = md5(Carbon::today() . $user[0]->id);
+
+            //On vérifie que la date est ok
+            if (substr_compare($token,$verif,0,strlen($verif)) == 0)
+            {
+                $activities = $user[0]->activities()->get();
+                return ($activities);
+            }
+            else 
+            {
+                return ([]);
+            }
+        }
+
+        else
+        {
+            return ([]);
+        }
     }
 
     /**

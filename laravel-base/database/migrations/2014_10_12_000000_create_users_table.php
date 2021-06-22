@@ -22,7 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('birthDay');
             $table->string('phoneNumber');
             $table->string('promotion');
-            
+            $table->string('tokenRandom')->nullable();
+
             $table->foreignId('role_id');
             $table->foreign("role_id")
                 ->references('id')
