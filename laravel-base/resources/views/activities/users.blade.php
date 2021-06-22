@@ -1,7 +1,10 @@
 @extends('layout')
 @section('content')
-<a href="{{ route('activities.users.create', $activity->id)}}"><button class="btn btn-primary mt-5">Ajouter utilisateur</button></a>
-<a href="{{ route('activities.index')}}"><button class="btn btn-primary mt-5">Liste des activités</button></a>
+
+<h1>Liste des utilisateurs assignés à l'activité : {{$activity->title}}</h1>
+<a href="{{ route('activities.index')}}"><button class="btn btn-primary mt-5">Retour</button></a>
+<a href="{{ route('activities.users.create', $activity->id)}}"><button class="btn btn-primary mt-5">Assigner utilisateur</button></a>
+
 <table class="table">
     <thead>
         <tr>
@@ -23,7 +26,7 @@
                         {{ method_field('DELETE') }}
 
                         <div class="form-group">
-                            <input type="submit" class="btn btn-danger" value="Supprimer">
+                            <input type="submit" class="btn btn-danger" value="Désassigner">
                         </div>
                     </form>
                 </a>
