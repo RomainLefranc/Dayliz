@@ -43,6 +43,7 @@
                         @endforeach
                     </select>
                     <label for="floatingInput">Rôle</label>
+                    {{ Session::get("error") }}
                 </div>
             </div>
             <span class="d-flex justify-content-end">
