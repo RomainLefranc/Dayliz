@@ -47,22 +47,26 @@ class UserController extends Controller
             'promotion'=>'required|regex:/^[A-Za-z0-9- ]+$/',
             'role'=>'required'
         ]);
- 
-        $user = new User([
-            'lastName'=> $request->get('lastName'),
-            'firstName'=> $request->get('firstName'),
-            'email'=> $request->get('email'),
-            'birthDay'=> $request->get('birthDay'),
-            'phoneNumber'=> $request->get('phone'),
-            'promotion'=> $request->get('promotion'),
-            'role_id' => $request->get('role'),
-            'state'=> true
-        ]);
-
         
+        if (Role::find($request->get('role')) != null) {
+            $user = new User([
+                'lastName'=> $request->get('lastName'),
+                'firstName'=> $request->get('firstName'),
+                'email'=> $request->get('email'),
+                'birthDay'=> $request->get('birthDay'),
+                'phoneNumber'=> $request->get('phone'),
+                'promotion'=> $request->get('promotion'),
+                'role_id' => $request->get('role'),
+                'state'=> true
+            ]);
 
-        $user->save();
-        return redirect()->route('users.index');
+            $user->save();
+            return redirect()->route('users.index');
+        } else {
+            return back()->withError('Rôle invalide');
+        }
+       
+ 
     }
 
     /**
