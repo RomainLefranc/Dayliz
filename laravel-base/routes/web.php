@@ -24,8 +24,9 @@ Route::resource('activities', ActivityController::class);
 Route::resource('users',UserController::class);
 Route::resource('roles', RoleController::class);
 
-Route::get('users/{id}/desactivate', [UserController::class,'desactivate']);
-Route::get('users/{id}/activate', [UserController::class,'activate']);
+Route::get('users/{id}/desactivate', [UserController::class,'desactivate'])->name('users.desactivate');
+
+Route::get('users/{id}/activate', [UserController::class,'activate'])->name('users.activate');
 
 Route::get('activities/{id}/activate', [ActivityController::class, 'activate'])->name('activities.activate');
 Route::get('activities/{id}/desactivate', [ActivityController::class, 'desactivate'])->name('activities.desactivate');
@@ -35,4 +36,4 @@ Route::get('activities/{id}/user/create', [ActivityController::class, 'create_ac
 Route::post('activities/{id}/user/store', [ActivityController::class, 'store_activity_user'])->name('activities.users.store');
 Route::delete('activities/{activity_id}/user/{user_id}/delete', [ActivityController::class, 'delete_activity_user'])->name('activities.users.delete');
 Route::get('activities/{id}/show', [ActivityController::class, 'show']);
-Route::patch('activities/{id}/update/', [ActivityController::class, 'update']);
+Route::patch('activities/{id}/update', [ActivityController::class, 'update']);

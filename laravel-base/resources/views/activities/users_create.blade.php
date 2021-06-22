@@ -3,7 +3,7 @@
 @section('content')
 
 
-<form method="POST" action='{{ route('activities.user.store'), $activity->id }}'>
+<form method="POST" action='{{ route('activities.users.store', $activity->id) }}'>
     @csrf
       <label>Choisir un utilisateur</label>
       <select class="form-select" aria-label="Default select example" name="user_id">

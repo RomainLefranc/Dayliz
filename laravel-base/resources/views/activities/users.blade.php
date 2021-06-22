@@ -1,6 +1,6 @@
 @extends('layout')
 @section('content')
-<a href="{{ route('activities.user.create'), $activity->id}}"><button class="btn btn-primary mt-5">Ajouter utilisateur</button></a>
+<a href="{{ route('activities.users.create', $activity->id)}}"><button class="btn btn-primary mt-5">Ajouter utilisateur</button></a>
 <a href="{{ route('activities.index')}}"><button class="btn btn-primary mt-5">Liste des activités</button></a>
 <table class="table">
     <thead>
@@ -18,7 +18,7 @@
             <td>{{ $user->firstName }}</td>
             <td>{{ $user->lastName }}</td>
             <td>
-                    <form method="POST" action="{{ route('activities.user.delete'), $activity->id, $user->id }}">
+                    <form method="POST" action="{{ route('activities.users.delete', [$activity->id, $user->id]) }}">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
 

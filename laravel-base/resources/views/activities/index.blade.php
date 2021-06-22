@@ -9,8 +9,6 @@
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                     data-bs-target="#formCreate">Ajouter</button>
             </div>
-
-<<<<<<< HEAD
                
         <table class="table">
             <thead>
@@ -35,17 +33,16 @@
                             <button class="btn btn-danger">Désactiver</button>
                         </a>
                         @else
-                        <a href="{{ route('activities.activate'), $activity->id }}">
+                        <a href="{{ route('activities.activate', $activity->id) }}">
                             <button class="btn btn-success">Activer</button>
                         </a>
                         @endif
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#formEditModal" data-id="{{ $activity->id }}"
                         onclick="getData(this)">Modifier</button>
-                        <a href="{{ route('activities.users.index'), $activity->id }}">
+                        <a href="{{ route('activities.users.index', $activity->id) }}">
                             <button class="btn btn-primary">Utilisateurs assignés</button>
                         </a>
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formEdit">Modifier</button>
                     </td>
                 </tr>
                 @endforeach
@@ -65,31 +62,31 @@
                         @csrf
                         <div class="mb-3">
                             <label for="title" class="form-label">Titre</label>
-                            <input type="text" class="form-control" name="title">
-                            @if ($errors->has('title'))
-                                <span>{ !! $errors->first('title') !! }</span>
-                            @endif
+                            <input type="text" class="form-control @error('title') is-invalid @enderror" name="title">
+                            @error('beginAt')
+                                <p class="error">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label for="beginAt" class="form-label">Début</label>
-                            <input type="datetime-local" class="form-control" name="beginAt" placeholder="jj/mm/aaaa hh:mm">
-                            @if ($errors->has('beginAt'))
-                                <span>{!! $errors->first('beginAt') !!}</span>
-                            @endif
+                            <input type="datetime-local" class="form-control @error('beginAt') is-invalid @enderror" name="beginAt" placeholder="jj/mm/aaaa hh:mm">
+                            @error('beginAt')
+                                <p class="error">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label for="endAt" class="form-label">Fin</label>
-                            <input type="datetime-local" class="form-control" name="endAt" placeholder="jj/mm/aaaa hh:mm">
-                            @if ($errors->has('endAt'))
-                                <span>{!! $errors->first('endAt') !!}</span>
-                            @endif
+                            <input type="datetime-local" class="form-control @error('endAt') is-invalid @enderror" name="endAt" placeholder="jj/mm/aaaa hh:mm">
+                            @error('endAt')
+                                <p class="error">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label for="description" class="form-label">Description</label>
-                            <textarea type="textarea" class="form-control" name="description" rows="3"></textarea>
-                            @if ($errors->has('description'))
-                                <span>{ !! $errors->first('description') !! }</span>
-                            @endif
+                            <textarea type="textarea" class="form-control @error('description') is-invalid @enderror" name="description" rows="3"></textarea>
+                            @error('description')
+                                <p class="error">{{ $message }}</p>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <button type="submit" class="btn btn-primary">Enregistrer</button>
