@@ -50,22 +50,26 @@ class UserController extends Controller
             'promotion'=>'required|regex:/^[A-Za-z0-9- ]+$/',
             'role'=>'required'
         ]);
- 
-        $user = new User([
-            'lastName'=> $request->get('lastName'),
-            'firstName'=> $request->get('firstName'),
-            'email'=> $request->get('email'),
-            'birthDay'=> $request->get('birthDay'),
-            'phoneNumber'=> $request->get('phone'),
-            'promotion'=> $request->get('promotion'),
-            'role_id' => $request->get('role'),
-            'state'=> true
-        ]);
-
         
+        if (Role::find($request->get('role')) != null) {
+            $user = new User([
+                'lastName'=> $request->get('lastName'),
+                'firstName'=> $request->get('firstName'),
+                'email'=> $request->get('email'),
+                'birthDay'=> $request->get('birthDay'),
+                'phoneNumber'=> $request->get('phone'),
+                'promotion'=> $request->get('promotion'),
+                'role_id' => $request->get('role'),
+                'state'=> true
+            ]);
 
-        $user->save();
-        return redirect()->route('users.index');
+            $user->save();
+            return redirect()->route('users.index');
+        } else {
+            return back()->withError('Rôle invalide');
+        }
+       
+ 
     }
 
     /**
@@ -153,44 +157,53 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::find($id);
-        $request->validate([
-            'lastName' => 'required|min:3|max:255|regex:/^[A-Za-z]+$/',
-            'firstName' => 'required|min:3|max:255|regex:/^[A-Za-z - é è ]+$/',
-            'email'=> 'required|email',
-            'phone'=>'required|regex:/^[0-9 - () ]+$/',
-            'birthDay'=>'required',
-            'promotion'=>'required|regex:/^[A-Za-z0-9- ]+$/',
-        ]);
-
-        $user->lastName = $request->get('lastName');
-        $user->firstName = $request->get('firstName');
-        $user->email = $request->get('email');
-        $user->phoneNumber = $request->get('phone');
-        $user->birthDay = $request->get('birthDay');
-        $user->promotion = $request->get('promotion');
-
-        $user->save();
-        return redirect()->route('users.index');
+        if (User::find($id) != null) {
+            $user = User::find($id);
+            $request->validate([
+                'lastName' => 'required|min:3|max:255|regex:/^[A-Za-z]+$/',
+                'firstName' => 'required|min:3|max:255|regex:/^[A-Za-z - é è ]+$/',
+                'email'=> 'required|email',
+                'phone'=>'required|regex:/^[0-9 - () ]+$/',
+                'birthDay'=>'required',
+                'promotion'=>'required|regex:/^[A-Za-z0-9- ]+$/',
+            ]);
+    
+            $user->lastName = $request->get('lastName');
+            $user->firstName = $request->get('firstName');
+            $user->email = $request->get('email');
+            $user->phoneNumber = $request->get('phone');
+            $user->birthDay = $request->get('birthDay');
+            $user->promotion = $request->get('promotion');
+    
+            $user->save();
+            return redirect()->route('users.index');        
+        }
+        return back();
 
     }
 
     public function desactivate($id){
-        
-        $user = User::find($id);
-        $user->state = false;
-        $user->save();
 
-        return back();
+        if (User::find($id) != null) {
+            $user = User::find($id);
+            $user->state = false;
+            $user->save();
+    
+            return back();        
+        }
+        return back();        
     }
     
     public function activate($id){
-
-        $user = User::find($id);
-        $user->state = true;
-        $user->save();
-
+        if (User::find($id) != null) {
+            $user = User::find($id);
+            $user->state = true;
+            $user->save();
+    
+            return back();        
+        }
         return back();
+
     }
 
     /**
