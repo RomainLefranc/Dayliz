@@ -62,7 +62,7 @@
                         @csrf
                         <div class="mb-3">
                             <label for="title" class="form-label">Titre</label>
-                            <input type="text" class="form-control" name="title" value="Titre">
+                            <input type="text" class="form-control" name="title">
                             @if ($errors->has('title'))
                                 <span>{ !! $errors->first('title') !! }</span>
                             @endif
