@@ -125,8 +125,12 @@ class UserController extends Controller
             //On vérifie que la date est ok
             if (substr_compare($token,$verif,0,strlen($verif)) == 0)
             {
-                $activities = $user[0]->activities()->get();
+                $dateNow = explode(' ',Carbon::now())[0];
+                $activities = $user[0]->activities()->where('beginAt','like','%'.$dateNow.'%')->get();
+
+                //$activities = $user[0]->activities()->get();
                 return ($activities);
+               
             }
             else 
             {
