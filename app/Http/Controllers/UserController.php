@@ -126,7 +126,7 @@ class UserController extends Controller
             if (substr_compare($token,$verif,0,strlen($verif)) == 0)
             {
                 $dateNow = explode(' ',Carbon::now())[0];
-                $activities = $user[0]->activities()->where('beginAt','like','%'.$dateNow.'%')->get();
+                $activities = $user[0]->activities()->where('beginAt','like','%'.$dateNow.'%')->where('state', '=', true)->get();
 
                 //$activities = $user[0]->activities()->get();
                 return ($activities);
