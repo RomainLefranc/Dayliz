@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Activity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class UserController extends Controller
 {
@@ -104,6 +105,10 @@ class UserController extends Controller
             $user->tokenRandom = $date_.md5($chaineAleatoire);
     
             $user->save();
+
+            $qrcode = QrCode::size(200)->generate("20fac1385e50.ngrok.io/planning/".$user->tokenRandom);
+            
+            //return ($qrcode);
         }
 
       
