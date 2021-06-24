@@ -107,6 +107,7 @@ class UserController extends Controller
             $user->save();
 
             $qrcode = QrCode::size(200)->generate("20fac1385e50.ngrok.io/planning/".$user->tokenRandom);
+            //$qrcode = QrCode::size(200)->generate(env('APP_URL_MOBILE'));
             
             //return ($qrcode);
         }
