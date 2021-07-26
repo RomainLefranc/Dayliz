@@ -1,18 +1,4 @@
-# Principaux Backlog
-
-| En tant que | Je peux                     | Afin de                           | Fonctionnalité          | Avancement |
-| ----------- | --------------------------- | --------------------------------- | ----------------------- | ---------- |
-| Utilisateur | Me connecter                | D'accéder à l'appli               | Authentification        |            |
-| Utilisateur | Me déconnecter              | De quitter l'appli                | Authentification        |            |
-| Utilisateur | Ajouter une activité        | Gérer mes activités               | CRUD activité           | Terminé    |
-| Utilisateur | Voir mes activités          | Avoir une vision de mes activités | CRUD activité           | Terminé    |
-| Admin       | Créer un utilisateur        | Lui permettre de se connecter     | CRUD compte utilisateur | Terminé    |
-| Admin       | Désactiver un utilisateur   | Supprimer son compte              | CRUD compte utilisateur | Terminé    |
-| Admin       | Me connecter                | D'accéder à l'appli               | Authentification        |
-| Admin       | Me déconnecter              | De quitter l'appli                | Authentification        |
-| Admin       | Ajouter une activité        | Gérer les activités               | CRUD activité           | Terminé    |
-| Admin       | Voir la liste des activités | Avoir une vision d'ensemble       | CRUD activité           | Terminé    |
-| Admin       | Désactiver une activité     | Gérer les activités               | CRUD activité           | Terminé    |
+# Dayliz
 
 ## Initialisation du projet
 
@@ -32,6 +18,22 @@ Modifier les informations de connexion à la BDD.
 ### Migration et seeding
 
 `php artisan migrate:fresh --seed`
+
+## Principaux Backlog
+
+| En tant que | Je peux                     | Afin de                           | Fonctionnalité          | Avancement |
+| ----------- | --------------------------- | --------------------------------- | ----------------------- | ---------- |
+| Utilisateur | Me connecter                | D'accéder à l'appli               | Authentification        |            |
+| Utilisateur | Me déconnecter              | De quitter l'appli                | Authentification        |            |
+| Utilisateur | Ajouter une activité        | Gérer mes activités               | CRUD activité           | Terminé    |
+| Utilisateur | Voir mes activités          | Avoir une vision de mes activités | CRUD activité           | Terminé    |
+| Admin       | Créer un utilisateur        | Lui permettre de se connecter     | CRUD compte utilisateur | Terminé    |
+| Admin       | Désactiver un utilisateur   | Supprimer son compte              | CRUD compte utilisateur | Terminé    |
+| Admin       | Me connecter                | D'accéder à l'appli               | Authentification        |
+| Admin       | Me déconnecter              | De quitter l'appli                | Authentification        |
+| Admin       | Ajouter une activité        | Gérer les activités               | CRUD activité           | Terminé    |
+| Admin       | Voir la liste des activités | Avoir une vision d'ensemble       | CRUD activité           | Terminé    |
+| Admin       | Désactiver une activité     | Gérer les activités               | CRUD activité           | Terminé    |
 
 ## MCD Gaultier
 
