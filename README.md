@@ -46,3 +46,8 @@ Modifier les informations de connexion à la BDD.
 ## MCD v2
 
 ![MCD v2](https://user-images.githubusercontent.com/69463293/123043927-13177d00-d40a-11eb-9e13-8233cdb737f8.png)
+
+## Schema projet
+
+![image](https://user-images.githubusercontent.com/69463293/126984260-70e369e4-294d-44ad-9150-a8dd2678c679.png)
+
