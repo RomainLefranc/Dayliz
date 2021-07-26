@@ -14,6 +14,25 @@
 | Admin       | Voir la liste des activités | Avoir une vision d'ensemble       | CRUD activité           | Terminé    |
 | Admin       | Désactiver une activité     | Gérer les activités               | CRUD activité           | Terminé    |
 
+## Initialisation du projet
+
+### Cloner le projet
+
+`git clone git@github.com:RomainLefranc/Dayliz_backend.git`
+
+### Set up env variables
+
+Copier le contenu du fichier _.env.example_ dans un nouveau fichier _.env_ à la racine du projet.  
+Modifier les informations de connexion à la BDD.
+
+### Installation des dépendances via composer
+
+`composer install`
+
+### Migration et seeding
+
+`php artisan migrate:fresh --seed`
+
 ## MCD Gaultier
 
 ![mcd_gaultier](https://user-images.githubusercontent.com/69463293/123043960-19a5f480-d40a-11eb-8fd3-64eec1c11993.png)
