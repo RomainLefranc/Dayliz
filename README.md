@@ -34,6 +34,8 @@ Modifier les informations de connexion à la BDD.
 | Admin       | Ajouter une activité        | Gérer les activités               | CRUD activité           | Terminé    |
 | Admin       | Voir la liste des activités | Avoir une vision d'ensemble       | CRUD activité           | Terminé    |
 | Admin       | Désactiver une activité     | Gérer les activités               | CRUD activité           | Terminé    |
+| Admin       | Génerer le token d'une promo     | Voir des planning               | CRUD promo           |  |
+
 
 ## MCD Gaultier
 
