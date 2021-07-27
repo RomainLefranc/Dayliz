@@ -23,19 +23,19 @@ Modifier les informations de connexion à la BDD.
 
 | En tant que | Je peux                     | Afin de                           | Fonctionnalité          | Avancement |
 | ----------- | --------------------------- | --------------------------------- | ----------------------- | ---------- |
-| Utilisateur | Me connecter                | D'accéder à l'appli               | Authentification        |            |
-| Utilisateur | Me déconnecter              | De quitter l'appli                | Authentification        |            |
+| Utilisateur | Me connecter                | D'accéder à l'appli               | Authentification        |  WIP          |
+| Utilisateur | Me déconnecter              | De quitter l'appli                | Authentification        |  WIP          |
 | Utilisateur | Ajouter une activité        | Gérer mes activités               | CRUD activité           | Terminé    |
 | Utilisateur | Voir mes activités          | Avoir une vision de mes activités | CRUD activité           | Terminé    |
 | Admin       | Créer un utilisateur        | Lui permettre de se connecter     | CRUD compte utilisateur | Terminé    |
 | Admin       | Désactiver un utilisateur   | Supprimer son compte              | CRUD compte utilisateur | Terminé    |
-| Admin       | Me connecter                | D'accéder à l'appli               | Authentification        |
-| Admin       | Me déconnecter              | De quitter l'appli                | Authentification        |
+| Admin       | Me connecter                | D'accéder à l'appli               | Authentification        |WIP
+| Admin       | Me déconnecter              | De quitter l'appli                | Authentification        |WIP
 | Admin       | Ajouter une activité        | Gérer les activités               | CRUD activité           | Terminé    |
 | Admin       | Voir la liste des activités | Avoir une vision d'ensemble       | CRUD activité           | Terminé    |
 | Admin       | Désactiver une activité     | Gérer les activités               | CRUD activité           | Terminé    |
-| Admin       | Génerer le token d'une promo     | Voir des planning            | CRUD promo           |            |
-| Admin       | Ajouter une promotion       | Gérer des planning                | CRUD promo           |            |
+| Admin       | Génerer le token d'une promo     | Voir des planning            | CRUD promo           |  |
+| Admin       | Ajouter une promotion       | Gérer des planning                | CRUD promo           | Terminé|
 
 
 ## MCD Gaultier

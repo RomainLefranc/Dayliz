@@ -48,10 +48,10 @@ class ActivityController extends Controller
             'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/'
         ]); */
         $request->validate([
-            'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/',
+            'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù]+$/',
             'beginAt' => 'required|date',
             'endAt' => 'required|date|after:beginAt',
-            'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù]+$/i'
+            'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i'
         ]);
 
 
@@ -131,10 +131,10 @@ class ActivityController extends Controller
         if ($activity) {
             
             $request->validate([
-                'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/',
+                'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù]+$/',
                 'beginAt' => 'required|date',
                 'endAt' => 'required|date|after:beginAt',
-                'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\']+$/i'
+                'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i'
             ]);
     
             $activity->title = $request->get('title');
