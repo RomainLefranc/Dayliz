@@ -29,7 +29,7 @@ class UserController extends Controller
     public function listUser(Request $request){
 
         $users = DB::table('users')
-        ->select('users.id as id','users.firstName','users.lastName','roles.name as role','promotions.name as promotion')
+        ->select('users.id as id','users.firstName','users.lastName','roles.name as role','promotions.name as promotion','users.state')
             ->join('roles','users.role_id','=','roles.id')
             ->join('promotions','users.promotion_id','=','promotions.id')
             ->get();
@@ -43,8 +43,13 @@ class UserController extends Controller
                 $btn = '<a href="/users/'.$user->id.'/generateToken"  class="btn btn-primary text-center"> Générer un lien </a> ';
                 return $btn; 
             })
-            ->addColumn('ac')
-            ->rawColumns(['modifier','generate'])
+            ->addColumn('activate',function($user){
+                if ($user->state == 1)
+                {  $btn = '<a href="users/' . $user->id . '/desactivate"  class="btn btn-danger"> Désactiver </a>';}
+                else  {  $btn = '<a href="users/' . $user->id . '/activate"  class="btn btn-success"> Activer </a>';}
+                  return $btn;
+            })
+            ->rawColumns(['modifier','generate','activate'])
             ->make(true);
     }
 

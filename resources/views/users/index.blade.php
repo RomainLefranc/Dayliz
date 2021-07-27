@@ -1,9 +1,10 @@
 @extends('layout')
 @section('content')
 
-    <a href="{{ route('users.create') }}"><button class="btn btn-primary mt-5">Créer un utilisateur</button></a>
-
-    <h1>Liste des utilisateurs</h1>
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>Liste des utilisateurs</h1>
+        <a href="{{ route('users.create') }}"><button class="btn btn-success">Ajouter</button></a>
+    </div>
 
     {{-- <table class="table">
         <thead>
@@ -60,6 +61,7 @@
                 <th scope="col">Promotion</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
+                <th scope="col"></th>
             </tr>
         </thead>
     </table>
@@ -84,7 +86,8 @@
                     {data:'role',name:'Rôle'},
                     {data:'promotion',name:'Promotion',orderable:false},
                     {data: 'modifier', name:'modifier', orderable:false, searchable:false},
-                    {data:'generate',name:'generate', orderable:false, searchable:false}
+                    {data:'generate',name:'generate', orderable:false, searchable:false},
+                    {data:'activate',name:'activate', orderable:false, searchable:false}
                 ]
             })
         })

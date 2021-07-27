@@ -1,9 +1,11 @@
 @extends('layout')
 @section('content')
    
-     <a href="{{ route('roles.create') }}"><button class="btn btn-primary mt-5">Créer un rôle</button></a>
 
-    <h1>Liste des roles</h1>
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>Liste des roles</h1>
+        <a href="{{ route('roles.create') }}"><button class="btn btn-success">Ajouter</button></a>
+    </div>
     @if (session('status'))
         <div class="alert alert-success">
             {{ session('status') }}

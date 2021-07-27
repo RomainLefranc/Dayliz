@@ -1,9 +1,11 @@
 @extends('layout')
 @section('content')
    
-     <a href="{{ route('promotions.create') }}"><button class="btn btn-primary mt-5">Créer une promotion</button></a>
 
-    <h1>Liste des promotions</h1>
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>Liste des promotions</h1>
+        <a href="{{ route('promotions.create') }}"><button class="btn btn-success ">Ajouter</button></a>
+    </div>
     @if (session('status'))
         <div class="alert alert-success">
             {{ session('status') }}
@@ -23,12 +25,11 @@
                 <tr>
                     <td>{{ $promotion->id }}</td>
                     <td>{{ $promotion->name }}</td>
-                    <td>
-                        <a class="btn btn-primary" href="{{ route('promotions.edit', $promotion->id) }}" role="button">Modifier</a>
+                    <td class="d-flex">
+                        <a class="btn btn-primary me-2" href="{{ route('promotions.edit', $promotion->id) }}" role="button">Modifier</a>
                         <form method="POST" action="{{ route('promotions.destroy', [$promotion->id]) }}">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
-    
                             <div class="form-group">
                                 <input type="submit" class="btn btn-danger" value="Supprimer">
                             </div>

@@ -2,8 +2,8 @@
 @section('content')
 
 <h1>Liste des utilisateurs assignés à l'activité : {{$activity->title}}</h1>
-<a href="{{ route('activities.index')}}"><button class="btn btn-primary mt-5">Retour</button></a>
-<a href="{{ route('activities.users.create', $activity->id)}}"><button class="btn btn-primary mt-5">Assigner utilisateur</button></a>
+<a href="{{ route('activities.index')}}"><button class="btn btn-primary ">Retour</button></a>
+<a href="{{ route('activities.users.create', $activity->id)}}"><button class="btn btn-primary ">Assigner utilisateur</button></a>
 
 <table class="table">
     <thead>

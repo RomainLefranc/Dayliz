@@ -10,7 +10,6 @@
 
     <title>Dayliz</title>
 
-
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
@@ -35,8 +34,21 @@
 <body>
 
     <div id="wrapper">
-
-
+        <ul class="nav nav-tabs mb-2">
+            <li class="nav-item">
+              <a class="nav-link {{ Request::segment(1) === 'users' ? 'active' : '' }}" aria-current="page" href="{{ route('users.index') }}">Utilisateurs</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ Request::segment(1) === 'activities' ? 'active' : '' }} " aria-current="page" href="{{ route('activities.index') }}">Activités</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link  {{ Request::segment(1) === 'roles' ? 'active' : '' }}" aria-current="page" href="{{ route('roles.index') }}">Rôles</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link  {{ Request::segment(1) === 'promotions' ? 'active' : '' }}" aria-current="page" href="{{ route('promotions.index') }}">Promotions</a>
+            </li>
+        </ul>
+     
 
         <!-- Page Content -->
         <div>
