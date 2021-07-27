@@ -57,7 +57,9 @@
                 <th scope="col">Nom</th>
                 <th scope="col">Prénom</th>
                 <th scope="col">Rôle</th>
-
+                <th scope="col">Promotion</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
             </tr>
         </thead>
     </table>
@@ -80,6 +82,9 @@
                     {data:'lastName',name:'Nom'},
                     {data: 'firstName',name:'Prénom'},
                     {data:'role',name:'Rôle'},
+                    {data:'promotion',name:'Promotion',orderable:false},
+                    {data: 'modifier', name:'modifier', orderable:false, searchable:false},
+                    {data:'generate',name:'generate', orderable:false, searchable:false}
                 ]
             })
         })

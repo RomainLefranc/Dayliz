@@ -29,12 +29,22 @@ class UserController extends Controller
     public function listUser(Request $request){
 
         $users = DB::table('users')
-        ->select('users.firstName','users.lastName','roles.name as role')
+        ->select('users.id as id','users.firstName','users.lastName','roles.name as role','promotions.name as promotion')
             ->join('roles','users.role_id','=','roles.id')
+            ->join('promotions','users.promotion_id','=','promotions.id')
             ->get();
 
         return datatables()->of($users)
-            
+            ->addColumn('modifier',function($user){
+                $btn = '<a href="/users/'.$user->id.'/edit"  class="btn btn-primary text-center"> Modifier </a> ';
+                return $btn; 
+            })
+            ->addColumn('generate',function($user){
+                $btn = '<a href="/users/'.$user->id.'/generateToken"  class="btn btn-primary text-center"> Générer un lien </a> ';
+                return $btn; 
+            })
+            ->addColumn('ac')
+            ->rawColumns(['modifier','generate'])
             ->make(true);
     }
 
@@ -100,7 +110,7 @@ class UserController extends Controller
     
     }
 
-    public function generateToken(Request $request)
+    public function generateToken($id)
     {
         $caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $longueurMax = strlen($caracteres);
@@ -110,7 +120,7 @@ class UserController extends Controller
         $chaineAleatoire .= $caracteres[rand(0, $longueurMax - 1)];
         }
 
-        $idUser = $request->id;
+        $idUser = $id;
      
         $user = User::find($idUser);
         
@@ -129,7 +139,8 @@ class UserController extends Controller
         }
 
       
-        return redirect('/users');
+        //return redirect('/users');
+        return back();
 
     }
 

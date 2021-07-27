@@ -43,4 +43,4 @@ Route::patch('activities/{id}/update', [ActivityController::class, 'update']);
 
 Route::get('users/{token}/activities',[UserController::class,'showActivities']);
 
-Route::post('users/generateToken',[UserController::class,'generateToken'])->name('users.generate');
+Route::get('users/{id}/generateToken',[UserController::class,'generateToken'])->name('users.generate');
