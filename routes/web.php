@@ -29,6 +29,7 @@ Route::resource('promotions', PromotionController::class);
 Route::get('users/{id}/desactivate', [UserController::class,'desactivate'])->name('users.desactivate');
 
 Route::get('users/{id}/activate', [UserController::class,'activate'])->name('users.activate');
+Route::get('listUsers',[UserController::class,'listUser']);
 
 Route::get('activities/{id}/activate', [ActivityController::class, 'activate'])->name('activities.activate');
 Route::get('activities/{id}/desactivate', [ActivityController::class, 'desactivate'])->name('activities.desactivate');
@@ -42,4 +43,4 @@ Route::patch('activities/{id}/update', [ActivityController::class, 'update']);
 
 Route::get('users/{token}/activities',[UserController::class,'showActivities']);
 
-Route::post('users/generateToken',[UserController::class,'generateToken'])->name('users.generate');
+Route::get('users/{id}/generateToken',[UserController::class,'generateToken'])->name('users.generate');
