@@ -48,10 +48,10 @@ class ActivityController extends Controller
             'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/'
         ]); */
         $request->validate([
-            'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/',
+            'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù]+$/',
             'beginAt' => 'required|date',
             'endAt' => 'required|date|after:beginAt',
-            'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/'
+            'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i'
         ]);
 
 
@@ -96,8 +96,8 @@ class ActivityController extends Controller
      */
     public function show($id)
     {
-        if (Activity::find($id) != null) {
-            $activity = Activity::find($id);
+        $activity = Activity::find($id);
+        if ($activity) {
             return $activity;
         }
     }
@@ -110,8 +110,8 @@ class ActivityController extends Controller
      */
     public function edit($id)
     {
-        if (Activity::find($id) != null) {
-            $activity = Activity::find($id);
+        $activity = Activity::find($id);
+        if ($activity) {
             return view('activities.edit', compact('activity'));        
         }
         return back();
@@ -127,13 +127,14 @@ class ActivityController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (Activity::find($id) != null) {
-            $activity = Activity::find($id);
+        $activity = Activity::find($id);
+        if ($activity) {
+            
             $request->validate([
-                'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/',
+                'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù]+$/',
                 'beginAt' => 'required|date',
                 'endAt' => 'required|date|after:beginAt',
-                'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/'
+                'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i'
             ]);
     
             $activity->title = $request->get('title');
@@ -163,8 +164,9 @@ class ActivityController extends Controller
 
     public function desactivate($id)
     {
-        if (Activity::find($id) != null) {
-            $activity = Activity::find($id);
+        $activity = Activity::find($id);
+        if ($activity) {
+           
             $activity->state = false;
             $activity->save();
     
@@ -175,8 +177,9 @@ class ActivityController extends Controller
 
     public function activate($id)
     {
-        if (Activity::find($id) != null) {
-            $activity = Activity::find($id);
+        $activity = Activity::find($id);
+        if ($activity) {
+            
             $activity->state = true;
             $activity->save();
     
@@ -187,8 +190,9 @@ class ActivityController extends Controller
 
     public function index_activity_user($id)
     {
-        if (Activity::find($id) != null) {
-            $activity = Activity::find($id);
+        $activity = Activity::find($id);
+        if ($activity) {
+            
             $users = $activity->users()->get();
             return view('activities.users', compact('activity', 'users'));        
         }
@@ -198,8 +202,9 @@ class ActivityController extends Controller
     
     public function create_activity_user($id)
     {
-        if (Activity::find($id) != null ) {
-            $activity = Activity::find($id);
+        $activity = Activity::find($id);
+        if ($activity) {
+            
             $users = User::all();
     
             return view('activities.users_create', compact('activity', 'users'));        
@@ -213,12 +218,10 @@ class ActivityController extends Controller
         $request->validate([
             'user'=>'required'
         ]);
+        $user = User::find($request->get('user'));
+        $activity = Activity::find($id);
+        if ($activity && $user) {
 
-        if (User::find($request->get('user')) != null && Activity::find($id) != null) {
-
-            $user = User::find($request->get('user'));
-            $activity = Activity::find($id);
-    
             if (!$activity->users()->where('id', $user->id)->exists()) {
                 $user->activities()->attach($activity->id);
             }
@@ -231,11 +234,11 @@ class ActivityController extends Controller
 
     public function delete_activity_user($activity_id, $user_id)
     {
-        if (User::find($user_id) != null && Activity::find($activity_id) != null) {
-            $user = User::find($user_id);
-            $activity = Activity::find($activity_id);
+        $user = User::find($user_id);
+        $activity = Activity::find($activity_id);
+        
+        if ($activity && $user) {
             $activity->users()->detach($user->id);
-            return back();        
         }
         return back();
 

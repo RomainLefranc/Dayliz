@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Activity;
+use App\Models\Promotion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -45,7 +46,8 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::all();
-        return view('users.create',compact('roles'));
+        $promotions = Promotion::all();
+        return view('users.create',compact('roles','promotions'));
     }
 
     /**
@@ -62,7 +64,7 @@ class UserController extends Controller
             'email'=> 'required|email',
             'phone'=>'required|regex:/^[0-9 - () ]+$/',
             'birthDay'=>'required',
-            'promotion'=>'required|regex:/^[A-Za-z0-9- ]+$/',
+            'promotion'=>'required',
             'role'=>'required'
         ]);
         
@@ -73,7 +75,7 @@ class UserController extends Controller
                 'email'=> $request->get('email'),
                 'birthDay'=> $request->get('birthDay'),
                 'phoneNumber'=> $request->get('phone'),
-                'promotion'=> $request->get('promotion'),
+                'promotion_id'=> $request->get('promotion'),
                 'role_id' => $request->get('role'),
                 'state'=> true
             ]);
@@ -137,7 +139,7 @@ class UserController extends Controller
         $user = User::where('tokenRandom',$token)->get();
     
          //On vérifie que l'utilisateur est bien trouvé
-        if (count($user) > 0)
+        if ($user)
         {
              //Variable pour tester la date
             $verif = md5(Carbon::today() . $user[0]->id);
@@ -173,7 +175,10 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view('users.edit',compact('user'));
+        $promotions = Promotion::all();
+        if ($user) {
+            return view('users.edit',compact('user','promotions'));
+        }
     }
 
     /**
@@ -185,24 +190,25 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (User::find($id) != null) {
-            $user = User::find($id);
-            $request->validate([
+        /* dd($request); */
+        $user = User::find($id);
+        if ($user) {
+            
+            /* $request->validate([
                 'lastName' => 'required|min:3|max:255|regex:/^[A-Za-z]+$/',
                 'firstName' => 'required|min:3|max:255|regex:/^[A-Za-z - é è ]+$/',
                 'email'=> 'required|email',
                 'phone'=>'required|regex:/^[0-9 - () ]+$/',
                 'birthDay'=>'required',
-                'promotion'=>'required|regex:/^[A-Za-z0-9- ]+$/',
-            ]);
-    
+                'promotion'=>'required'
+            ]); */
+            
             $user->lastName = $request->get('lastName');
             $user->firstName = $request->get('firstName');
             $user->email = $request->get('email');
+            $user->promotion_id = $request->get('promotion');
             $user->phoneNumber = $request->get('phone');
             $user->birthDay = $request->get('birthDay');
-            $user->promotion = $request->get('promotion');
-    
             $user->save();
             return redirect()->route('users.index');        
         }
@@ -212,8 +218,9 @@ class UserController extends Controller
 
     public function desactivate($id){
 
-        if (User::find($id) != null) {
-            $user = User::find($id);
+        $user = User::find($id);
+        if ($user) {
+
             $user->state = false;
             $user->save();
     
@@ -223,8 +230,9 @@ class UserController extends Controller
     }
     
     public function activate($id){
-        if (User::find($id) != null) {
-            $user = User::find($id);
+        $user = User::find($id);
+        if ($user) {
+            
             $user->state = true;
             $user->save();
     

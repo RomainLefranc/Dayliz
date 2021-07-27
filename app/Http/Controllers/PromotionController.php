@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Role;
+use App\Models\Promotion;
 use Illuminate\Http\Request;
 
-class RoleController extends Controller
+class PromotionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::all();
-        return view('roles.index',compact('roles'));
+        $promotions = Promotion::all();
+        return view('promotions.index',compact('promotions'));
     }
 
     /**
@@ -25,7 +25,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('roles.create');
+        return view('promotions.create');
     }
 
     /**
@@ -39,13 +39,12 @@ class RoleController extends Controller
         $request->validate([
             'name' => 'required|min:3|max:255|regex:/^[A-Za-z]+$/'
         ]);
-        $role = new Role([
+        $promotion = new Promotion([
             'name' => $request->get('name')
         ]);
-        $role->save();
-        return redirect()->route('roles.index')->with('status', 'Rôle ajouté');
+        $promotion->save();
+        return redirect()->route('promotions.index')->with('status', 'Promotion ajouté');
     }
-
 
     /**
      * Display the specified resource.
@@ -55,7 +54,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        
+        //
     }
 
     /**
@@ -66,11 +65,10 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        $role = Role::find($id);
-        if ($role) {
-            return view('roles.edit',compact('role'));
+        $promotion = Promotion::find($id);
+        if ($promotion) {
+            return view('promotions.edit',compact('promotion'));
         }
-
     }
 
     /**
@@ -82,18 +80,17 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $role = Role::find($id);
-        if ($role) {
+        $promotion = Promotion::find($id);
+        if ($promotion) {
             $request->validate([
-                'name' => 'required|min:3|max:255|regex:/^[A-Za-z]+$/'
+                'name' => 'required|min:3|max:255'
             ]);
             
-            $role->name = $request->get('name');
-            $role->save();
+            $promotion->name = $request->get('name');
+            $promotion->save();
             
-            return redirect()->route('roles.index')->with('status', 'Rôle modifié');        
+            return redirect()->route('promotions.index')->with('status', 'Promotion modifié');        
         }
-
     }
 
     /**
@@ -104,5 +101,9 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
+        $promotion = Promotion::find($id);
+        $promotion->delete();
+        return redirect()->route('promotions.index')->with('status', 'Promotion supprimé');   
+
     }
 }
