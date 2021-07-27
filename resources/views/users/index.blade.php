@@ -1,9 +1,10 @@
 @extends('layout')
 @section('content')
 
-    <a href="{{ route('users.create') }}"><button class="btn btn-primary mt-5">Créer un utilisateur</button></a>
-
-    <h1>Liste des utilisateurs</h1>
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>Liste des utilisateurs</h1>
+        <a href="{{ route('users.create') }}"><button class="btn btn-success">Ajouter</button></a>
+    </div>
 
     <table class="table">
         <thead>
