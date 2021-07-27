@@ -26,7 +26,7 @@
                     <td>{{ $promotion->id }}</td>
                     <td>{{ $promotion->name }}</td>
                     <td class="d-flex">
-                        <a class="btn btn-primary mr-2" href="{{ route('promotions.edit', $promotion->id) }}" role="button">Modifier</a>
+                        <a class="btn btn-primary me-2" href="{{ route('promotions.edit', $promotion->id) }}" role="button">Modifier</a>
                         <form method="POST" action="{{ route('promotions.destroy', [$promotion->id]) }}">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
