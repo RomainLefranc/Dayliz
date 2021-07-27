@@ -15,7 +15,6 @@
                 <th scope="col">Rôle</th>
                 <th scope="col">Action</th>
                 <th></th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
