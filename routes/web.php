@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,7 @@ Route::get('/', function () {
 Route::resource('activities', ActivityController::class);
 Route::resource('users',UserController::class);
 Route::resource('roles', RoleController::class);
+Route::resource('promotions', PromotionController::class);
 
 Route::get('users/{id}/desactivate', [UserController::class,'desactivate'])->name('users.desactivate');
 

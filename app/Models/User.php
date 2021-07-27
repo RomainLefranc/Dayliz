@@ -21,7 +21,7 @@ class User extends Authenticatable
         'firstName',
         'birthDay',
         'phoneNumber',
-        'promotion',
+        'promotion_id',
         'role_id',
         'email',
         'password',
@@ -67,6 +67,11 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    public function promotion()
+    {
+        return $this->belongsTo(Promotion::class);
     }
 }
 

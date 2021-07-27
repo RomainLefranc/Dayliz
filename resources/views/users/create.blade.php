@@ -27,8 +27,11 @@
                     <label for="floatingInput">Date de naissance *</label>
                 </div>
                 <div class="form-floating mb-3 col">
-                    <input type="text" class="form-control" name="promotion" placeholder="Simplon 2018-2019" required
-                        pattern="[A-Za-z-0-9 ]+">
+                    <select class="form-control" name="promotion">
+                        @foreach ($promotions as $promotion)
+                            <option value="{{$promotion->id}}">{{$promotion->name}}</option>
+                        @endforeach
+                    </select>
                     <label for="floatingInput">Promotion *</label>
                 </div>
                 <div class="form-floating mb-3 col">

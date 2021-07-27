@@ -27,8 +27,15 @@
             <label for="floatingInput">Date de naissance *</label>
         </div>
         <div class="form-floating mb-3 col">
-            <input type="text" class="form-control" name="promotion"  value="{{$user->promotion}}" required
-                pattern="[A-Za-z-0-9 ]+">
+            <select class="form-control" name="promotion">
+                @foreach ($promotions as $promotion)
+                    @if ($user->promotion_id == $promotion->id)
+                        <option value="{{$promotion->id}}" selected>{{$promotion->name}}</option>
+                    @else
+                        <option value="{{$promotion->id}}">{{$promotion->name}}</option>
+                    @endif
+                @endforeach
+            </select>
             <label for="floatingInput">Promotion *</label>
         </div>
         <div class="form-floating mb-3 col">
