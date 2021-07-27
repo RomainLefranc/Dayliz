@@ -51,7 +51,7 @@ class ActivityController extends Controller
             'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/',
             'beginAt' => 'required|date',
             'endAt' => 'required|date|after:beginAt',
-            'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/'
+            'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù]+$/i'
         ]);
 
 
@@ -134,7 +134,7 @@ class ActivityController extends Controller
                 'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/',
                 'beginAt' => 'required|date',
                 'endAt' => 'required|date|after:beginAt',
-                'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/'
+                'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\']+$/i'
             ]);
     
             $activity->title = $request->get('title');
