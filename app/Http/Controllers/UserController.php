@@ -9,6 +9,8 @@ use App\Models\Activity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use DataTables;
+use Symfony\Component\VarDumper\Cloner\Data;
 
 class UserController extends Controller
 {
@@ -19,8 +21,20 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('users.index',compact('users'));
+        return view('users.index');
+        //return view('users.index',compact('users'));
+    }
+
+    public function listUser(Request $request){
+
+        $users = DB::table('users')
+        ->select('users.firstName','users.lastName','roles.name as role')
+            ->join('roles','users.role_id','=','roles.id')
+            ->get();
+
+        return datatables()->of($users)
+            
+            ->make(true);
     }
 
     /**
