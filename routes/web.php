@@ -29,7 +29,7 @@ Route::resource('promotions', PromotionController::class);
 Route::get('users/{id}/desactivate', [UserController::class,'desactivate'])->name('users.desactivate');
 
 Route::get('users/{id}/activate', [UserController::class,'activate'])->name('users.activate');
-Route::get('listUsers',[UserController::class,'listUser']);
+Route::get('listUsers',[UserController::class,'listUser'])->name('users.list');
 
 Route::get('activities/{id}/activate', [ActivityController::class, 'activate'])->name('activities.activate');
 Route::get('activities/{id}/desactivate', [ActivityController::class, 'desactivate'])->name('activities.desactivate');
@@ -40,6 +40,7 @@ Route::post('activities/{id}/user/store', [ActivityController::class, 'store_act
 Route::delete('activities/{activity_id}/user/{user_id}/delete', [ActivityController::class, 'delete_activity_user'])->name('activities.users.delete');
 Route::get('activities/{id}/show', [ActivityController::class, 'show']);
 Route::patch('activities/{id}/update', [ActivityController::class, 'update']);
+Route::get('listActivities',[ActivityController::class,'listActivities'])->name('activities.list');
 
 Route::get('users/{token}/activities',[UserController::class,'showActivities']);
 

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Activity;
+use DataTables;
 use App\Models\User;
+use App\Models\Activity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ActivityController extends Controller
@@ -19,6 +21,19 @@ class ActivityController extends Controller
     {
         $activities = Activity::all();
         return view("activities.index", compact('activities'));
+    }
+
+    public function listActivities(){
+        //$activities = DB::table('activities')->select('id','beginAt','endAt','title','description','state');
+        $activities = Activity::all();
+        return datatables()->of($activities)
+                ->addColumn('modifier',function($activity){
+                    $btn = '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formEditModal" data-id="'.$activity->id.'" onclick="getData(this)">Modifier</button>';
+                    return $btn;
+                })
+                ->rawColumns(['modifier'])
+                ->make(true);
+                        
     }
 
     /**
@@ -129,7 +144,6 @@ class ActivityController extends Controller
     {
         $activity = Activity::find($id);
         if ($activity) {
-            
             $request->validate([
                 'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù]+$/',
                 'beginAt' => 'required|date',
