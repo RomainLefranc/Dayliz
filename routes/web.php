@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\ExamenController;
 use App\Http\Controllers\PromotionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -25,6 +26,7 @@ Route::resource('activities', ActivityController::class);
 Route::resource('users',UserController::class);
 Route::resource('roles', RoleController::class);
 Route::resource('promotions', PromotionController::class);
+Route::resource('examens', ExamenController::class);
 
 Route::get('users/{id}/desactivate', [UserController::class,'desactivate'])->name('users.desactivate');
 
@@ -34,13 +36,11 @@ Route::get('listUsers',[UserController::class,'listUser']);
 Route::get('activities/{id}/activate', [ActivityController::class, 'activate'])->name('activities.activate');
 Route::get('activities/{id}/desactivate', [ActivityController::class, 'desactivate'])->name('activities.desactivate');
 
-Route::get('activities/{id}/users', [ActivityController::class, 'index_activity_user'])->name('activities.users.index');
-Route::get('activities/{id}/user/create', [ActivityController::class, 'create_activity_user'])->name('activities.users.create');
-Route::post('activities/{id}/user/store', [ActivityController::class, 'store_activity_user'])->name('activities.users.store');
-Route::delete('activities/{activity_id}/user/{user_id}/delete', [ActivityController::class, 'delete_activity_user'])->name('activities.users.delete');
 Route::get('activities/{id}/show', [ActivityController::class, 'show']);
 Route::patch('activities/{id}/update', [ActivityController::class, 'update']);
 
 Route::get('users/{token}/activities',[UserController::class,'showActivities']);
-
 Route::get('users/{id}/generateToken',[UserController::class,'generateToken'])->name('users.generate');
+
+Route::get('promotions/{id}/generateToken',[PromotionController::class,'generateToken'])->name('promotions.generate');
+Route::get('promotions/{token}/activities',[PromotionController::class,'showActivities']);

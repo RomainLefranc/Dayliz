@@ -47,6 +47,10 @@
             <li class="nav-item">
                 <a class="nav-link  {{ Request::segment(1) === 'promotions' ? 'active' : '' }}" aria-current="page" href="{{ route('promotions.index') }}">Promotions</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link  {{ Request::segment(1) === 'examens' ? 'active' : '' }}" aria-current="page" href="{{ route('examens.index') }}">Examens</a>
+            </li>
+
         </ul>
      
 

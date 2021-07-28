@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Promotion;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PromotionController extends Controller
@@ -105,5 +107,54 @@ class PromotionController extends Controller
         $promotion->delete();
         return redirect()->route('promotions.index')->with('status', 'Promotion supprimé');   
 
+    }
+
+    public function generateToken($id)
+    {
+        $caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $longueurMax = strlen($caracteres);
+        $chaineAleatoire = '';
+        for ($i = 0; $i < 6; $i++){
+            $chaineAleatoire .= $caracteres[rand(0, $longueurMax - 1)];
+        }
+
+        $promotion = Promotion::find($id);
+        
+        if($promotion)
+        {
+            $date_ = md5(Carbon::today().($promotion->id));
+            $promotion->token = $date_.md5($chaineAleatoire);
+            $promotion->save();
+
+            //$qrcode = QrCode::size(200)->generate("20fac1385e50.ngrok.io/planning/".$user->tokenRandom);
+            //$qrcode = QrCode::size(200)->generate(env('APP_URL_MOBILE'));
+            
+            //return ($qrcode);
+        }
+
+      
+        //return redirect('/users');
+        return back();
+
+    }
+
+    public function showActivities($token)
+    {  
+        // récuperation de la promotion
+        $promotion = Promotion::where('token',$token)->first();
+        $verif = md5(Carbon::today() . $promotion->id);
+        // récuperation des utilisateurs de cette promotion
+        $users = User::where('promotion_id',$promotion->id)->get();
+        $dateNow = explode(' ',Carbon::now())[0];
+
+        if ($users && substr_compare($token,$verif,0,strlen($verif)) == 0) {
+            $activities = [];
+             //Variable pour tester la date
+            foreach ($users as $key => $user) {
+                
+                $activities[$key] = $user->activities()->where('beginAt','like','%'.$dateNow.'%')->where('state', '=', true)->get();
+            }
+            return $activities;
+        }
     }
 }

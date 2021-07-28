@@ -10,11 +10,17 @@ class Promotion extends Model
     use HasFactory;
 
     protected $fillable = [
-        "name"
+        "name",
+        "token"
     ];
 
     public function users()
     {
         return $this->hasMany(User::class);
+    }
+
+    public function examens()
+    {
+        return $this->belongsToMany(Examen::class);
     }
 }

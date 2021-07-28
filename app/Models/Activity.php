@@ -11,11 +11,10 @@ class Activity extends Model
     use HasFactory;
 
     protected $fillable = [
-        "beginAt",
-        "endAt",
         "title",
         "description",
-        "state"
+        "state",
+        "duree"
     ];
 
     protected $table = "activities";
@@ -26,8 +25,8 @@ class Activity extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
 
-    public function users()
+    public function examen()
     {
-        return $this->belongsToMany(User::class, 'user_activity');
+        return $this->belongsTo(Examen::class);
     }
 }

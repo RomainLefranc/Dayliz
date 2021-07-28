@@ -17,15 +17,15 @@ class ActivitySeeder extends Seeder
     {
         $faker = \Faker\Factory::create();
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 1; $i <= 5; $i++) {
             $startDate = Carbon::createFromTimestamp($faker->dateTimeBetween('-1 years', '+1 month')->getTimestamp());
 
             Activity::create([
-                "title" => $faker->text(10),
-                "beginAt" => $startDate->toDateTimeString(),
-                "endAt" => $startDate->addHours($faker->numberBetween(1, 8)),
+                "title" => 'activité ' . $i,
                 "description" => $faker->text(30),
-                "state" => true
+                "state" => true,
+                "duree" => '1 min',
+                "examen_id" => 1
             ]);
         }
     }

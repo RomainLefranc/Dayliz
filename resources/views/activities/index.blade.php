@@ -15,8 +15,7 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Titre</th>
-                    <th scope="col">Date début</th>
-                    <th scope="col">Date Fin</th>
+                    <th scope="col">Durée</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -25,8 +24,7 @@
                 <tr>
                     <td>{{ $activity->id }}</td>
                     <td>{{ $activity->title }}</td>
-                    <td>{{ date('d/m/Y à H:i', strtotime($activity->beginAt))}}</td>
-                    <td>{{ date('d/m/Y à H:i', strtotime($activity->endAt)) }}</td>
+                    <td>{{ $activity->duree }}</td>
                     <td>
                         @if ($activity->state)
                         <a href="{{ route('activities.desactivate', $activity->id) }}">
@@ -40,9 +38,6 @@
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#formEditModal" data-id="{{ $activity->id }}"
                         onclick="getData(this)">Modifier</button>
-                        <a href="{{ route('activities.users.index', $activity->id) }}">
-                            <button class="btn btn-primary">Utilisateurs assignés</button>
-                        </a>
                     </td>
                 </tr>
                 @endforeach
@@ -67,26 +62,17 @@
                                 <p class="error">{{ $message }}</p>
                             @enderror
                         </div>
-                        <div class="mb-3">
-                            <label for="beginAt" class="form-label">Début</label>
-                            <input type="datetime-local" class="form-control @error('beginAt') is-invalid @enderror" name="beginAt" placeholder="jj/mm/aaaa hh:mm">
-                            @error('beginAt')
-                                <p class="error">{{ $message }}</p>
-                            @enderror
-                        </div>
-                        <div class="mb-3">
-                            <label for="endAt" class="form-label">Fin</label>
-                            <input type="datetime-local" class="form-control @error('endAt') is-invalid @enderror" name="endAt" placeholder="jj/mm/aaaa hh:mm">
-                            @error('endAt')
-                                <p class="error">{{ $message }}</p>
-                            @enderror
-                        </div>
+
                         <div class="mb-3">
                             <label for="description" class="form-label">Description</label>
                             <textarea type="textarea" class="form-control @error('description') is-invalid @enderror" name="description" rows="3"></textarea>
                             @error('description')
                                 <p class="error">{{ $message }}</p>
                             @enderror
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Durée</label>
+                            <input type="text" class="form-control @error('duree') is-invalid @enderror" name="duree">
                         </div>
                         <div class="mb-3">
                             <button type="submit" class="btn btn-primary">Enregistrer</button>
@@ -113,26 +99,17 @@
                                 @endif
                             </div>
                             <div class="mb-3">
-                                <label for="beginAt" class="form-label">Début</label>
-                                <input id="beginAtEdit" type="datetime-local" class="form-control" name="beginAt" value=""
-                                    placeholder="jj/mm/aaaa hh:mm">
-                                @if ($errors->has('beginAt'))
-                                    <span>{!! $errors->first('beginAt') !!}</span>
-                                @endif
-                            </div>
-                            <div class="mb-3">
-                                <label for="endAt" class="form-label">Fin</label>
-                                <input id="endAtEdit" type="datetime-local" class="form-control" name="endAt" value=""
-                                    placeholder="jj/mm/aaaa hh:mm">
-                                @if ($errors->has('endAt'))
-                                    <span>{!! $errors->first('endAt') !!}</span>
-                                @endif
-                            </div>
-                            <div class="mb-3">
                                 <label for="description" class="form-label">Description</label>
                                 <textarea id="descriptionEdit" type="textarea" class="form-control" name="description"
                                     rows="3"></textarea>
                                 @if ($errors->has('description'))
+                                    <span>{ !! $errors->first('description') !! }</span>
+                                @endif
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Durée</label>
+                                <input id="durationEdit" type="text" class="form-control" name="duree" value="">
+                                @if ($errors->has('duree'))
                                     <span>{ !! $errors->first('description') !! }</span>
                                 @endif
                             </div>

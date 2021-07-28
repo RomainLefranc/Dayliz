@@ -3,8 +3,8 @@
    
 
     <div class="d-flex justify-content-between align-items-center">
-        <h1>Liste des promotions</h1>
-        <a href="{{ route('promotions.create') }}"><button class="btn btn-success ">Ajouter</button></a>
+        <h1>Liste des examens</h1>
+        <a href="{{ route('examens.create') }}"><button class="btn btn-success">Ajouter</button></a>
     </div>
     @if (session('status'))
         <div class="alert alert-success">
@@ -16,20 +16,25 @@
             <tr>
                 <th scope="col">Id</th>
                 <th scope="col">Nom</th>
+                <th scope="col">Date de début</th>
+                <th scope="col">Date de fin</th>
                 <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>
-                @foreach ($promotions as $promotion)
+            
+                @foreach ($examens as $examen)
                 <tr>
-                    <td>{{ $promotion->id }}</td>
-                    <td>{{ $promotion->name }}</td>
+                    <td>{{ $examen->id }}</td>
+                    <td>{{ $examen->name }}</td>
+                    <td>{{ $examen->beginAt }}</td>
+                    <td>{{ $examen->endAt }}</td>
                     <td>
-                        <a class="btn btn-primary" href="{{ route('promotions.edit', $promotion->id) }}" role="button">Modifier</a>
-                        <a class="btn btn-primary" href="{{ route('promotions.generate', $promotion->id) }}" role="button">Génerer token</a>
+                        <a class="btn btn-primary" href="{{ route('examens.edit', $examen->id) }}" role="button">Modifier</a>
                     </td>
                 </tr>
                 @endforeach
+            
         </tbody>
     </table>
 
