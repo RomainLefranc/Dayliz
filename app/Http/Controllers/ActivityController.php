@@ -31,7 +31,13 @@ class ActivityController extends Controller
                     $btn = '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formEditModal" data-id="'.$activity->id.'" onclick="getData(this)">Modifier</button>';
                     return $btn;
                 })
-                ->rawColumns(['modifier'])
+                ->addCOlumn('activate',function($activity){
+                    if ($activity->state == 1)
+                    {  $btn = '<a href="'.route('activities.desactivate',$activity->id).'"  class="btn btn-danger"> Désactiver </a>';}
+                    else  {  $btn = '<a href="'.route('activities.activate',$activity->id).'"  class="btn btn-success"> Activer </a>';}
+                      return $btn;
+                })
+                ->rawColumns(['modifier','activate'])
                 ->make(true);
                         
     }

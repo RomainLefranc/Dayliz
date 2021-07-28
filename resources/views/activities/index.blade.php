@@ -18,7 +18,7 @@
                 @endforeach
             @endif
 
-            <table class="table">
+            {{-- <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -50,7 +50,7 @@
                         </tr>
                     @endforeach
                 </tbody>
-            </table>
+            </table> --}}
 
 
             @foreach ($activities as $activity)
@@ -60,6 +60,8 @@
                     <tr>
                         <th scope="col">Nom</th>
                         <th scope="col">Durée</th>
+                        <th scope="col">Description</th>
+                        <th></th>
                         <th></th>
                     </tr>
                 </thead>

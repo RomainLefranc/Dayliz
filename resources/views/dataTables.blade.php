@@ -71,8 +71,20 @@
                     name: 'Début'
                 },
                 {
+                    data:'description',
+                    name:'Description',
+                    orderable : false,
+                    searchable : false
+                },
+                {
                     data: 'modifier',
                     name: 'modifier',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: 'activate',
+                    name: 'activate',
                     orderable: false,
                     searchable: false
                 }
