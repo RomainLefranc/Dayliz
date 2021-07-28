@@ -54,51 +54,20 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
-        /*  dd($request->all()); */
-
-        /* $validator = Validator::make($request->all(), [
-            'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/',
-            'beginAt' => 'required|date',
-            'endAt' => 'required|date',
-            'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9]+$/'
-        ]); */
         $request->validate([
             'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù]+$/',
-            'beginAt' => 'required|date',
-            'endAt' => 'required|date|after:beginAt',
+            'duree' => 'required',
             'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i'
         ]);
 
-
-        /* if ($validator->fails()) {
-            $beginAt = Carbon::createFromFormat('d/m/Y H:i', $request->get('beginAt'))->format('Y-m-d H:i:s');
-            $endAt = Carbon::createFromFormat('d/m/Y H:i', $request->get('endAt'))->format('Y-m-d H:i:s');
-        } else {
-            $beginAt = $request->get('beginAt');
-            $endAt = $request->get('endAt');
-        } */
-
-        /* $activity = new Activity([
-            'title' => $request->get('title'),
-            'beginAt' => $beginAt,
-            'endAt' => $endAt,
-            'description' => $request->get('description'),
-            'state' => true
-        ]); */
-
         $activity = new Activity([
             'title' => $request->get('title'),
-            'beginAt' => $request->get('beginAt'),
-            'endAt' => $request->get('endAt'),
+            'duree' => $request->get('duree'),
             'description' => $request->get('description'),
             'state' => true
         ]);
 
-        try {
-            $activity->save();
-        } catch (\Throwable $th) {
-            dd($th);
-        }
+        $activity->save();
         
         return redirect()->route('activities.index');
     }
@@ -146,14 +115,12 @@ class ActivityController extends Controller
         if ($activity) {
             $request->validate([
                 'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù]+$/',
-                'beginAt' => 'required|date',
-                'endAt' => 'required|date|after:beginAt',
+                'duree' => 'required',
                 'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i'
             ]);
     
             $activity->title = $request->get('title');
-            $activity->beginAt = $request->get('beginAt');
-            $activity->endAt = $request->get('endAt');
+            $activity->duree = $request->get('duree');
             $activity->description = $request->get('description');
     
             $activity->save();
@@ -202,59 +169,4 @@ class ActivityController extends Controller
         return back();
     }
 
-    public function index_activity_user($id)
-    {
-        $activity = Activity::find($id);
-        if ($activity) {
-            
-            $users = $activity->users()->get();
-            return view('activities.users', compact('activity', 'users'));        
-        }
-        return back();
-
-    }
-    
-    public function create_activity_user($id)
-    {
-        $activity = Activity::find($id);
-        if ($activity) {
-            
-            $users = User::all();
-    
-            return view('activities.users_create', compact('activity', 'users'));        
-        }
-        return back();
-
-    }
-
-    public function store_activity_user($id, Request $request)
-    {   
-        $request->validate([
-            'user'=>'required'
-        ]);
-        $user = User::find($request->get('user'));
-        $activity = Activity::find($id);
-        if ($activity && $user) {
-
-            if (!$activity->users()->where('id', $user->id)->exists()) {
-                $user->activities()->attach($activity->id);
-            }
-
-            return redirect()->route('activities.users.index' , $activity->id);        
-        }
-        return back();
-
-    }
-
-    public function delete_activity_user($activity_id, $user_id)
-    {
-        $user = User::find($user_id);
-        $activity = Activity::find($activity_id);
-        
-        if ($activity && $user) {
-            $activity->users()->detach($user->id);
-        }
-        return back();
-
-    }
 }

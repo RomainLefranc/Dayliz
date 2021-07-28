@@ -67,12 +67,8 @@
                     name: 'Nom'
                 },
                 {
-                    data: 'beginAt',
+                    data: 'duree',
                     name: 'Début'
-                },
-                {
-                    data: 'endAt',
-                    name: 'Fin'
                 },
                 {
                     data: 'modifier',

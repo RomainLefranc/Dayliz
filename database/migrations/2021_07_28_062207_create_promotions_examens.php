@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateActivitiesTable extends Migration
+class CreatePromotionsExamens extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,12 @@ class CreateActivitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('activities', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-            $table->string("title");
-            $table->string("duree");
-            $table->string("description");
-            $table->boolean("state");
+        Schema::create('examen_promotion', function (Blueprint $table) {
+            $table->foreignId('promotion_id');
             $table->foreignId('examen_id');
+            $table->foreign("promotion_id")->references('id')->on('promotions')->onDelete('cascade');
             $table->foreign("examen_id")->references('id')->on('examens')->onDelete('cascade');
+            $table->primary(['promotion_id', 'examen_id']);
         });
     }
 
@@ -32,6 +29,6 @@ class CreateActivitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('activities');
+        Schema::dropIfExists('examen_promotion');
     }
 }
