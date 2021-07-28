@@ -40,8 +40,14 @@ class ActivityController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+<<<<<<< HEAD
             'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù]+$/',
             'duree' => 'required',
+=======
+            'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i',
+            'beginAt' => 'required|date',
+            'endAt' => 'required|date|after:beginAt',
+>>>>>>> 7c730c85d0f6a791e86028e1dc3d017ae7bed7eb
             'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i'
         ]);
 
@@ -100,8 +106,14 @@ class ActivityController extends Controller
         if ($activity) {
             
             $request->validate([
+<<<<<<< HEAD
                 'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù]+$/',
                 'duree' => 'required',
+=======
+                'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i',
+                'beginAt' => 'required|date',
+                'endAt' => 'required|date|after:beginAt',
+>>>>>>> 7c730c85d0f6a791e86028e1dc3d017ae7bed7eb
                 'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i'
             ]);
     
