@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Activity extends Model
 {
@@ -14,7 +13,8 @@ class Activity extends Model
         "title",
         "description",
         "state",
-        "duree"
+        "duree",
+        "examen_id"
     ];
 
     protected $table = "activities";

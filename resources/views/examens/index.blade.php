@@ -31,6 +31,7 @@
                     <td>{{ $examen->endAt }}</td>
                     <td>
                         <a class="btn btn-primary" href="{{ route('examens.edit', $examen->id) }}" role="button">Modifier</a>
+                        <a class="btn btn-primary" href="{{ route('activities.index', $examen->id) }}" role="button">Déroulé</a>
                     </td>
                 </tr>
                 @endforeach

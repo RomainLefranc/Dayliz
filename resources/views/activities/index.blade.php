@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-12">
             <div class="d-flex justify-content-between">
-                <h1>Liste des activités</h1>
+                <h1>Déroulé de l'examen {{$examen->name}}</h1>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                     data-bs-target="#formCreate">Ajouter</button>
             </div>
@@ -24,27 +24,29 @@
                     <th scope="col">#</th>
                     <th scope="col">Titre</th>
                     <th scope="col">Durée</th>
+                    <th scope="col">Description</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($activities as $activity)
+                @foreach ($examen->activities as $activity)
                 <tr>
                     <td>{{ $activity->id }}</td>
                     <td>{{ $activity->title }}</td>
                     <td>{{ $activity->duree }}</td>
+                    <td>{{ $activity->description }}</td>
                     <td>
                         @if ($activity->state)
-                        <a href="{{ route('activities.desactivate', $activity->id) }}">
-                            <button class="btn btn-danger">Désactiver</button>
-                        </a>
+                            <a href="{{ route('activities.desactivate', [$examen->id,$activity->id]) }}">
+                                <button class="btn btn-danger">Désactiver</button>
+                            </a>
                         @else
-                        <a href="{{ route('activities.activate', $activity->id) }}">
-                            <button class="btn btn-success">Activer</button>
-                        </a>
+                            <a href="{{ route('activities.activate', [$examen->id,$activity->id]) }}">
+                                <button class="btn btn-success">Activer</button>
+                            </a>
                         @endif
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#formEditModal" data-id="{{ $activity->id }}"
+                        data-bs-target="#formEditModal" data-exam="{{$examen->id}}" data-id="{{ $activity->id }}"
                         onclick="getData(this)">Modifier</button>
                     </td>
                 </tr>
@@ -61,7 +63,7 @@
                     <div class="modal-header">
                         <h1>Activité</h1>
                     </div>
-                    <form class="" action="{{ route('activities.store') }}" method="POST">
+                    <form class="" action="{{ route('activities.store', $examen->id) }}" method="POST">
                         @csrf
                         <div class="mb-3">
                             <label for="title" class="form-label">Titre</label>
@@ -96,7 +98,7 @@
                         <div class="modal-header">
                             <h1 id="formEditTitle"></h1>
                         </div>
-                        <form id="formEdit" action="{{ route('activities.update', $activity->id) }}" method="POST">
+                        <form id="formEdit" action="{{ route('activities.update', [$examen->id, $activity->id]) }}" method="POST">
                             @csrf
                             @method('patch')
                             <div class="mb-3">

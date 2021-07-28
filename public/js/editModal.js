@@ -6,12 +6,14 @@ const durationEdit = document.querySelector("#durationEdit");
 
 const getData = (elem) => {
     console.log(titleEdit);
-    let target = elem.dataset.id;
+    let id_activity = elem.dataset.id;
+    let id_examen = elem.dataset.exam;
+
     window.axios
-        .get(`/activities/${target}/show`)
+        .get(`/examens/${id_examen}/activities/${id_activity}/show`)
         .then((res) => {
             console.log(res.data);
-            formEdit.action = `/activities/${target}/update`;
+            formEdit.action = `/examens/${id_examen}/activities/${id_activity}/update`;
             formEditTitle.innerHTML = `Modifier l'activité ${res.data.title}`;
             titleEdit.value = res.data.title;
             descriptionEdit.innerHTML = res.data.description;
