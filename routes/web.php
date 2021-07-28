@@ -19,14 +19,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/users');
 });
+
 Route::resource('roles', RoleController::class);
 
 Route::resource('users',UserController::class);
 Route::get('users/{id}/desactivate', [UserController::class,'desactivate'])->name('users.desactivate');
 Route::get('users/{id}/activate', [UserController::class,'activate'])->name('users.activate');
-Route::get('listUsers',[UserController::class,'listUser']);
+Route::get('listUsers',[UserController::class,'listUser'])->name('users.list');
 Route::get('users/{token}/activities',[UserController::class,'showActivities']);
 Route::get('users/{id}/generateToken',[UserController::class,'generateToken'])->name('users.generate');
 
@@ -34,12 +35,11 @@ Route::resource('promotions', PromotionController::class);
 Route::get('promotions/{id}/generateToken',[PromotionController::class,'generateToken'])->name('promotions.generate');
 Route::get('promotions/{token}/activities',[PromotionController::class,'showActivities']);
 
-
 Route::resource('examens', ExamenController::class);
-
 
 Route::resource('examens/{id_examen}/activities', ActivityController::class);
 Route::get('examens/{id_examen}/activities/{id}/activate', [ActivityController::class, 'activate'])->name('activities.activate');
 Route::get('examens/{id_examen}/activities/{id}/desactivate', [ActivityController::class, 'desactivate'])->name('activities.desactivate');
 Route::get('examens/{id_examen}/activities/{id}/show', [ActivityController::class, 'show']);
 Route::patch('examens/{id_examen}/activities/{id}/update', [ActivityController::class, 'update']);
+Route::get('listActivities',[ActivityController::class,'listActivities'])->name('activities.list');

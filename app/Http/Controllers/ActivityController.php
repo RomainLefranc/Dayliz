@@ -2,10 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Activity;
-use App\Models\Examen;
-use Illuminate\Http\Request;
 
+
+use DataTables;
+use App\Models\User;
+use App\Models\Examen;
+use App\Models\Activity;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ActivityController extends Controller
 {
@@ -18,6 +24,25 @@ class ActivityController extends Controller
     {
         $examen = Examen::find($id_examen);
         return view("activities.index", compact('examen'));
+    }
+
+    public function listActivities(){
+        //$activities = DB::table('activities')->select('id','beginAt','endAt','title','description','state');
+        $activities = Activity::all();
+        return datatables()->of($activities)
+                ->addColumn('modifier',function($activity){
+                    $btn = '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formEditModal" data-id="'.$activity->id.'" onclick="getData(this)">Modifier</button>';
+                    return $btn;
+                })
+                ->addCOlumn('activate',function($activity){
+                    if ($activity->state == 1)
+                    {  $btn = '<a href="'.route('activities.desactivate',$activity->id).'"  class="btn btn-danger"> Désactiver </a>';}
+                    else  {  $btn = '<a href="'.route('activities.activate',$activity->id).'"  class="btn btn-success"> Activer </a>';}
+                      return $btn;
+                })
+                ->rawColumns(['modifier','activate'])
+                ->make(true);
+                        
     }
 
     /**

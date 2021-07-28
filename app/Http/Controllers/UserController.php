@@ -35,18 +35,19 @@ class UserController extends Controller
             ->get();
 
         return datatables()->of($users)
+       
             ->addColumn('modifier',function($user){
-                $btn = '<a href="/users/'.$user->id.'/edit"  class="btn btn-primary text-center"> Modifier </a> ';
+                $btn = '<a href="'.route('users.edit',$user->id).'"  class="btn btn-primary text-center"> Modifier </a> ';
                 return $btn; 
             })
             ->addColumn('generate',function($user){
-                $btn = '<a href="/users/'.$user->id.'/generateToken"  class="btn btn-primary text-center"> Générer un lien </a> ';
+                $btn = '<a href="'.route('users.generate',$user->id).'"  class="btn btn-primary text-center"> Générer un lien </a> ';
                 return $btn; 
             })
             ->addColumn('activate',function($user){
                 if ($user->state == 1)
-                {  $btn = '<a href="users/' . $user->id . '/desactivate"  class="btn btn-danger"> Désactiver </a>';}
-                else  {  $btn = '<a href="users/' . $user->id . '/activate"  class="btn btn-success"> Activer </a>';}
+                {  $btn = '<a href="'.route('users.desactivate',$user->id).'"  class="btn btn-danger"> Désactiver </a>';}
+                else  {  $btn = '<a href="'.route('users.activate',$user->id).'"  class="btn btn-success"> Activer </a>';}
                   return $btn;
             })
             ->rawColumns(['modifier','generate','activate'])
