@@ -9,6 +9,14 @@
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                     data-bs-target="#formCreate">Ajouter</button>
             </div>
+
+            @if($errors->any())
+                @foreach($errors->all() as $error)
+                    <div class="alert alert-danger" role="alert">
+                        {{ $error }}
+                    </div>
+                @endforeach
+            @endif
                
         <table class="table">
             <thead>
