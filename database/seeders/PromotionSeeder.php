@@ -16,11 +16,11 @@ class PromotionSeeder extends Seeder
     {
         $faker = \Faker\Factory::create();
 
-        for ($i = 1; $i <= 10; $i++) {
-            Promotion::create([
-                "name" => "Promotion " . $i,
-                
-            ]);
-        }
+        Promotion::create([
+            "name" => "CDA 2021",
+        ]);
+        Promotion::create([
+            "name" => "DWWW 2021",
+        ]);
     }
 }

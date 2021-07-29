@@ -19,7 +19,7 @@ class ExamenSeeder extends Seeder
         $startDate = Carbon::createFromTimestamp($faker->dateTimeBetween('-1 years', '+1 month')->getTimestamp());
 
         Examen::create([
-            "name" => "Examen CDA",
+            "name" => "CDA 2021",
             "beginAt" => $startDate->toDateTimeString(),
             "endAt" => $startDate->addHours($faker->numberBetween(1, 8)),
         ]);

@@ -13,9 +13,7 @@
                 <th scope="col">Prénom</th>
                 <th scope="col">Rôle</th>
                 <th scope="col">Promotion</th>
-                <th scope="col"></th>
-                <th scope="col w-100"></th>
-                <th scope="col"></th>
+                <th scope="col">Action</th>
             </tr>
         </thead>
     </table>

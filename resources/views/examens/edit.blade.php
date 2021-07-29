@@ -13,14 +13,14 @@
             </div>
             <div class="mb-3">
                 <label for="beginAt" class="form-label">Début</label>
-                <input type="datetime-local" class="form-control @error('beginAt') is-invalid @enderror" name="beginAt" value="{{ $examen->beginAt }}" placeholder="jj/mm/aaaa hh:mm">
+                <input type="datetime-local" class="form-control @error('beginAt') is-invalid @enderror" name="beginAt" value="{{  \Carbon\Carbon::parse($examen->beginAt)->format('Y-m-d\TH:i') }}" placeholder="jj/mm/aaaa hh:mm">
                 @error('beginAt')
                     <p class="error">{{ $message }}</p>
                 @enderror
             </div>
             <div class="mb-3">
                 <label for="endAt" class="form-label">Fin</label>
-                <input type="datetime-local" class="form-control @error('endAt') is-invalid @enderror" name="endAt" value="{{ $examen->endAt }}" placeholder="jj/mm/aaaa hh:mm">
+                <input type="datetime-local" class="form-control @error('endAt') is-invalid @enderror" name="endAt" value="{{  \Carbon\Carbon::parse($examen->endAt)->format('Y-m-d\TH:i') }}" placeholder="jj/mm/aaaa hh:mm">
                 @error('endAt')
                     <p class="error">{{ $message }}</p>
                 @enderror

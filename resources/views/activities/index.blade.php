@@ -35,8 +35,8 @@
                     <td>{{ $activity->title }}</td>
                     <td>{{ $activity->duree }}</td>
                     <td>{{ $activity->description }}</td>
-                    <td>
-                        @if ($activity->state)
+                    <td class=" d-flex">
+                        {{-- @if ($activity->state)
                             <a href="{{ route('activities.desactivate', [$examen->id,$activity->id]) }}">
                                 <button class="btn btn-danger">Désactiver</button>
                             </a>
@@ -44,64 +44,21 @@
                             <a href="{{ route('activities.activate', [$examen->id,$activity->id]) }}">
                                 <button class="btn btn-success">Activer</button>
                             </a>
-                        @endif
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        @endif --}}
+                        <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal"
                         data-bs-target="#formEditModal" data-exam="{{$examen->id}}" data-id="{{ $activity->id }}"
                         onclick="getData(this)">Modifier</button>
+
+                        <form action="{{ route('activities.destroy',[$examen->id,$activity->id]) }}" method="POST">
+                            @csrf
+                            @method("delete")
+                            <button class="btn btn-danger" type="submit">Supprimer</button>
+                        </form>
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
-
-            {{-- <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Titre</th>
-                        <th scope="col">Durée</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($activities as $activity)
-                        <tr>
-                            <td>{{ $activity->id }}</td>
-                            <td>{{ $activity->title }}</td>
-                            <td>{{ $activity->duree }}</td>
-                            <td>
-                                @if ($activity->state)
-                                    <a href="{{ route('activities.desactivate', $activity->id) }}">
-                                        <button class="btn btn-danger">Désactiver</button>
-                                    </a>
-                                @else
-                                    <a href="{{ route('activities.activate', $activity->id) }}">
-                                        <button class="btn btn-success">Activer</button>
-                                    </a>
-                                @endif
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#formEditModal" data-id="{{ $activity->id }}"
-                                    onclick="getData(this)">Modifier</button>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table> --}}
-
-
-            {{-- @foreach ($activities as $activity)
-            @endforeach --}}
-            <table class="table table-bordered table-striped table-hover" id="dataTableActivities">
-                <thead>
-                    <tr>
-                        <th scope="col">Nom</th>
-                        <th scope="col">Durée</th>
-                        <th scope="col">Description</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-            </table>
 
         </div>
         <div class="modal fade" id="formCreate" tabindex="-1" aria-labelledby="formLabel" aria-hidden="true">

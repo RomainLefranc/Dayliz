@@ -30,34 +30,22 @@
                     orderable: false
                 },
                 {
-                    data: 'modifier',
-                    name: 'modifier',
-                    orderable: false,
-                    searchable: false
-                },
-                {
-                    data: 'generate',
-                    name: 'generate',
-                    orderable: false,
-                    searchable: false
-                },
-                {
-                    data: 'activate',
-                    name: 'activate',
+                    data: 'action',
+                    name: 'action',
                     orderable: false,
                     searchable: false
                 }
             ]
         });
 
-        $('#dataTableActivities').dataTable({
+       /*  $('#dataTableActivities').dataTable({
             processing: false,
             serverSide: false,
             responsive: true,
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.22/i18n/French.json"
             },
-            ajax: `{{ route('activities.list') }}`,
+            ajax: ``,
             lengthMenu: [
                 [10, 25, 50, -1],
                 ['10', '25', '50', 'Tout montrer']
@@ -77,20 +65,15 @@
                     searchable : false
                 },
                 {
-                    data: 'modifier',
-                    name: 'modifier',
+                    data: 'action',
+                    name: 'action',
                     orderable: false,
                     searchable: false
                 },
-                {
-                    data: 'activate',
-                    name: 'activate',
-                    orderable: false,
-                    searchable: false
-                }
+
             ]
         });
-
+ */
 
 
 
