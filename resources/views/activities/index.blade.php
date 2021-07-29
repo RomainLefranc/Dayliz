@@ -18,7 +18,7 @@
                 @endforeach
             @endif
                
-        <table class="table">
+        {{-- <table class="table">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -45,7 +45,7 @@
                                 <button class="btn btn-success">Activer</button>
                             </a>
                         @endif --}}
-                        <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal"
+                        {{-- <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal"
                         data-bs-target="#formEditModal" data-exam="{{$examen->id}}" data-id="{{ $activity->id }}"
                         onclick="getData(this)">Modifier</button>
 
@@ -58,6 +58,18 @@
                 </tr>
                 @endforeach
             </tbody>
+        </table> --}} 
+
+        <table class="table table-bordered table-striped table-hover" id="dataTableActivities">
+            <thead>
+                <tr>
+                    
+                    <th scope="col">Titre</th>
+                    <th scope="col">Durée</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
         </table>
 
         </div>
@@ -95,14 +107,14 @@
                 </div>
             </div>
         </div>
-        @isset($activity)
+        @isset($examen)
             <div class="modal fade" id="formEditModal" tabindex="-1" aria-labelledby="formEditLabel" aria-hidden="true">
                 <div class="col-12 col-md-6 modal-dialog">
                     <div class="col modal-content px-5">
                         <div class="modal-header">
                             <h1 id="formEditTitle"></h1>
                         </div>
-                        <form id="formEdit" action="{{ route('activities.update', [$examen->id, $activity->id]) }}" method="POST">
+                        <form id="formEdit" {{-- action="{{ route('activities.update', [$examen->id, $activity->id]) }}" --}} method="POST">
                             @csrf
                             @method('patch')
                             <div class="mb-3">
