@@ -14,14 +14,12 @@ class PromotionResource extends JsonResource
      */
     public function toArray($request)
     {
-
-        $examens = ExamensResource::collection($this->examens);
-        $users = UsersResource::collection($this->users);
+ 
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'examens' => $examens,
-            'users' => $users
+            'examens' => ExamensResource::collection($this->examens),
+            'users' => UsersResource::collection($this->users) 
         ];
     }
 }

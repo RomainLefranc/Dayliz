@@ -7,7 +7,7 @@
         <form action="{{ route('examens.store') }}" method="POST">
             @csrf
             <div class="form-floating mb-3 col">
-                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="Doe" required pattern="[A-Za-z-]+">
+                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="Doe">
                 <label for="floatingInput">Nom *</label>
                 @error('name')
                     <p class="error">{{ $message }}</p>

@@ -16,7 +16,7 @@
         <form action="{{ route('promotions.store') }}" method="POST">
             @csrf
             <div class="form-floating mb-3 col">
-                <input type="text" class="form-control" name="name" placeholder="Doe" required pattern="[A-Za-z-]+">
+                <input type="text" class="form-control" name="name" placeholder="Doe">
                 <label for="floatingInput">Nom *</label>
             </div>
             <button class="btn btn-primary" type="submit">Ajouter</button>

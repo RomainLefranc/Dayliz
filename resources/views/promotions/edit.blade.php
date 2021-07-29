@@ -17,7 +17,7 @@
             @csrf
             @method("patch")
             <div class="form-floating mb-3 col">
-                <input type="text" class="form-control" name="name" placeholder="Doe" value="{{$promotion->name}}" required pattern="[A-Za-z-]+">
+                <input type="text" class="form-control" name="name" placeholder="Doe" value="{{$promotion->name}}">
                 <label for="floatingInput">Nom *</label>
             </div>
             <button class="btn btn-primary" type="submit">Modifier</button>

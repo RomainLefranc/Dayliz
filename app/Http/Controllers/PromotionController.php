@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PromotionResource;
 use App\Models\Promotion;
 use App\Models\User;
 use Carbon\Carbon;
@@ -56,7 +57,10 @@ class PromotionController extends Controller
      */
     public function show($id)
     {
-        //
+        $promotion = Promotion::find($id);
+        if ($promotion) {
+            return new PromotionResource($promotion);
+        }
     }
 
     /**

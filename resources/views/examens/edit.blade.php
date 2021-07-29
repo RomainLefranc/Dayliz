@@ -8,7 +8,7 @@
             @csrf
             @method("patch")
             <div class="form-floating mb-3 col">
-                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="Doe" value="{{ $examen->name }}" required pattern="[A-Za-z-]+">
+                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="Doe" value="{{ $examen->name }}" >
                 <label for="floatingInput">Nom *</label>
                 @error('name')
                     <p class="error">{{ $message }}</p>

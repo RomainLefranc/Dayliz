@@ -69,8 +69,8 @@ class ExamenController extends Controller
     {
         $examen = Examen::find($id);
         if ($examen) {
-            return ExamensResource::collection($examen);
-        }
+            return new ExamensResource($examen);
+        } 
     }
 
     /**

@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
-
+use App\Http\Resources\ActivitiesResource;
 use DataTables;
 use App\Models\User;
 use App\Models\Examen;
@@ -100,7 +99,7 @@ class ActivityController extends Controller
     {
         $activity = Activity::find($id);
         if ($activity) {
-            return $activity;
+            return new ActivitiesResource($activity);
         }
     }
 

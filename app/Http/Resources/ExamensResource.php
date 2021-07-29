@@ -14,13 +14,12 @@ class ExamensResource extends JsonResource
      */
     public function toArray($request)
     {
-        $activities = ActivitiesResource::collection($this->activities);
         return [
             'id' => $this->id,
             'start' => $this->beginAt,
             'end' => $this->endAt,
             'title' => $this->name,
-            'description' => $activities
+            'description' => ActivitiesResource::collection($this->activities)
         ];
     }
 }

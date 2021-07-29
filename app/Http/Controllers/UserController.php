@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\ExamensResource;
+use App\Http\Resources\UsersResource;
 use Carbon\Carbon;
 use App\Models\Role;
 use App\Models\User;
@@ -109,7 +109,10 @@ class UserController extends Controller
      */
     public function show($id)
     {
-    
+        $user = User::find($id);
+        if ($user) {
+            return new UsersResource($user);
+        } 
     }
 
     public function generateToken($id)
@@ -161,7 +164,7 @@ class UserController extends Controller
             {
                 $dateNow = explode(' ',Carbon::now())[0];
 
-                $activities = ExamensResource::collection($user->promotion->examens()->where('beginAt','like','%'.$dateNow.'%')->get());
+                $activities = UsersResource::collection($user->promotion->examens()->where('beginAt','like','%'.$dateNow.'%')->get());
                 return $activities;
                
             }
