@@ -107,14 +107,14 @@
                 </div>
             </div>
         </div>
-        @isset($activity)
+        @isset($examen)
             <div class="modal fade" id="formEditModal" tabindex="-1" aria-labelledby="formEditLabel" aria-hidden="true">
                 <div class="col-12 col-md-6 modal-dialog">
                     <div class="col modal-content px-5">
                         <div class="modal-header">
                             <h1 id="formEditTitle"></h1>
                         </div>
-                        <form id="formEdit" action="{{ route('activities.update', [$examen->id, $activity->id]) }}" method="POST">
+                        <form id="formEdit" {{-- action="{{ route('activities.update', [$examen->id, $activity->id]) }}" --}} method="POST">
                             @csrf
                             @method('patch')
                             <div class="mb-3">
