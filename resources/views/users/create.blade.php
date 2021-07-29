@@ -4,6 +4,14 @@
 
     <div class="row">
 
+        @if($errors->any())
+            @foreach($errors->all() as $error)
+                <div class="alert alert-danger" role="alert">
+                    {{ $error }}
+                </div>
+            @endforeach
+        @endif
+
         <h1 class="text-center">Créer un utilisateur</h1>
 
         <form action="{{ route('users.store') }}" method="POST">
@@ -23,7 +31,7 @@
                     <label for="floatingInput">Email *</label>
                 </div>
                 <div class="form-floating mb-3 col">
-                    <input type="date" class="form-control" name="birthDay" required>
+                    <input type="date" class="form-control" name="birthDay" required  pattern="^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$">
                     <label for="floatingInput">Date de naissance *</label>
                 </div>
                 <div class="form-floating mb-3 col">
