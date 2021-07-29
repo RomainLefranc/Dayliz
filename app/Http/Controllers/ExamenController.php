@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ExamensResource;
 use App\Models\Examen;
 use App\Models\Promotion;
 use Illuminate\Http\Request;
@@ -66,9 +67,9 @@ class ExamenController extends Controller
      */
     public function show($id)
     {
-        $examen = Examen::with(['activities','promotions'])->where('id','=',$id)->get();
+        $examen = Examen::find($id);
         if ($examen) {
-            return $examen;
+            return ExamensResource::collection($examen);
         }
     }
 

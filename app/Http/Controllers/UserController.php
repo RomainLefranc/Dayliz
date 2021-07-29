@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ExamensResource;
 use Carbon\Carbon;
 use App\Models\Role;
 use App\Models\User;
@@ -159,7 +160,8 @@ class UserController extends Controller
             if (substr_compare($token,$verif,0,strlen($verif)) == 0)
             {
                 $dateNow = explode(' ',Carbon::now())[0];
-                $activities = $user->promotion->examens()->with('activities')->where('beginAt','like','%'.$dateNow.'%')->get();
+
+                $activities = ExamensResource::collection($user->promotion->examens()->where('beginAt','like','%'.$dateNow.'%')->get());
                 return $activities;
                
             }
