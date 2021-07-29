@@ -45,7 +45,7 @@
                                 <button class="btn btn-success">Activer</button>
                             </a>
                         @endif --}}
-                        <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal"
+                        {{-- <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal"
                         data-bs-target="#formEditModal" data-exam="{{$examen->id}}" data-id="{{ $activity->id }}"
                         onclick="getData(this)">Modifier</button>
 
@@ -58,7 +58,19 @@
                 </tr>
                 @endforeach
             </tbody>
-        </table> --}}
+        </table> --}} 
+
+        <table class="table table-bordered table-striped table-hover" id="dataTableActivities">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Titre</th>
+                    <th scope="col">Durée</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+        </table>
 
         </div>
         <div class="modal fade" id="formCreate" tabindex="-1" aria-labelledby="formLabel" aria-hidden="true">
