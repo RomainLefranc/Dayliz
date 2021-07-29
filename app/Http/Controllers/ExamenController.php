@@ -39,7 +39,7 @@ class ExamenController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù]+$/',
+            'name' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù ]+$/',
             'beginAt' => 'required|date',
             'endAt' => 'required|date|after:beginAt',
             'promotion' => 'required'
@@ -106,7 +106,7 @@ class ExamenController extends Controller
         if ($examen) {
             
             $request->validate([
-                'name' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù]+$/',
+                'name' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù ]+$/',
                 'beginAt' => 'required|date',
                 'endAt' => 'required|date|after:beginAt',
                 'promotion' => 'required',

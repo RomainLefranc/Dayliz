@@ -148,34 +148,25 @@ class UserController extends Controller
     public function showActivities($token)
     {  
        
-        $user = User::where('tokenRandom',$token)->get();
-    
+        $user = User::where('tokenRandom',$token)->get()->first();
          //On vérifie que l'utilisateur est bien trouvé
-        if ($user)
-        {
+         
+        if ($user) {
              //Variable pour tester la date
-            $verif = md5(Carbon::today() . $user[0]->id);
+            $verif = md5(Carbon::today() . $user->id);
 
             //On vérifie que la date est ok
             if (substr_compare($token,$verif,0,strlen($verif)) == 0)
             {
                 $dateNow = explode(' ',Carbon::now())[0];
-                $activities = $user[0]->activities()->where('beginAt','like','%'.$dateNow.'%')->where('state', '=', true)->get();
-
-                //$activities = $user[0]->activities()->get();
-                return ($activities);
+                $activities = $user->promotion->examens()->with('activities')->where('beginAt','like','%'.$dateNow.'%')->get();
+                return $activities;
                
             }
-            else 
-            {
-                return ([]);
-            }
-        }
+            return response()->json('Token périmé');
 
-        else
-        {
-            return ([]);
         }
+        return response()->json('Token invalide');
     }
 
     /**
