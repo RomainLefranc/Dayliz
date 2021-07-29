@@ -49,7 +49,6 @@
                 }
             ]
         });
-
         $('#dataTableActivities').dataTable({
             processing: false,
             serverSide: false,
@@ -57,7 +56,7 @@
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.22/i18n/French.json"
             },
-            ajax: `{{ route('activities.list') }}`,
+            ajax: `{{ route('activities.list', $examen->id) }}`,
             lengthMenu: [
                 [10, 25, 50, -1],
                 ['10', '25', '50', 'Tout montrer']

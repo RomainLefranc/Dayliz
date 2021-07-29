@@ -18,7 +18,7 @@
                 @endforeach
             @endif
                
-        <table class="table">
+        {{-- <table class="table">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -52,7 +52,7 @@
                 </tr>
                 @endforeach
             </tbody>
-        </table>
+        </table> --}}
 
             {{-- <table class="table">
                 <thead>

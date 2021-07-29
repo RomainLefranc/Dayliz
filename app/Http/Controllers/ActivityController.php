@@ -26,18 +26,21 @@ class ActivityController extends Controller
         return view("activities.index", compact('examen'));
     }
 
-    public function listActivities(){
+    public function listActivities($id_examen){
         //$activities = DB::table('activities')->select('id','beginAt','endAt','title','description','state');
+        
+        $id_examen = (int) $id_examen;
         $activities = Activity::all();
+
         return datatables()->of($activities)
                 ->addColumn('modifier',function($activity){
                     $btn = '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formEditModal" data-id="'.$activity->id.'" onclick="getData(this)">Modifier</button>';
                     return $btn;
                 })
-                ->addCOlumn('activate',function($activity){
+                ->addColumn('activate',function($activity) use ($id_examen) {
                     if ($activity->state == 1)
-                    {  $btn = '<a href="'.route('activities.desactivate',$activity->id).'"  class="btn btn-danger"> Désactiver </a>';}
-                    else  {  $btn = '<a href="'.route('activities.activate',$activity->id).'"  class="btn btn-success"> Activer </a>';}
+                    {  $btn = '<a href="'.route('activities.desactivate', [ $id_examen, $activity->id] ).'"  class="btn btn-danger"> Désactiver </a>';}
+                    else  {  $btn = '<a href="'.route('activities.activate', [ $id_examen, $activity->id ]).'"  class="btn btn-success"> Activer </a>';}
                       return $btn;
                 })
                 ->rawColumns(['modifier','activate'])
