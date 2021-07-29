@@ -79,7 +79,7 @@ class UserController extends Controller
             'firstName' => 'required|min:3|max:255|regex:/^[A-Za-z - é è ]+$/',
             'email'=> 'required|email',
             'phone'=>'required|regex:/^[0-9 - () ]+$/',
-            'birthDay'=>'required',
+            'birthDay'=> ['required', 'regex:/^(19|20)\d{2}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])+$/'],
             'promotion'=>'required',
             'role'=>'required'
         ]);
