@@ -63,7 +63,7 @@
         <table class="table table-bordered table-striped table-hover" id="dataTableActivities">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
+                    
                     <th scope="col">Titre</th>
                     <th scope="col">Durée</th>
                     <th scope="col">Description</th>
