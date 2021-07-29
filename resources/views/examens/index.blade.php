@@ -29,9 +29,14 @@
                     <td>{{ $examen->name }}</td>
                     <td>{{ $examen->beginAt }}</td>
                     <td>{{ $examen->endAt }}</td>
-                    <td>
-                        <a class="btn btn-primary" href="{{ route('examens.edit', $examen->id) }}" role="button">Modifier</a>
-                        <a class="btn btn-primary" href="{{ route('activities.index', $examen->id) }}" role="button">Déroulé</a>
+                    <td class="d-flex ">
+                        <a class="btn btn-primary me-2" href="{{ route('examens.edit', $examen->id) }}" role="button">Modifier</a>
+                        <a class="btn btn-primary me-2" href="{{ route('activities.index', $examen->id) }}" role="button">Déroulé</a>
+                        <form action="{{ route('examens.destroy',$examen->id) }}" method="POST">
+                            @csrf
+                            @method("delete")
+                            <button class="btn btn-danger" type="submit">Supprimer</button>
+                        </form>
                     </td>
                 </tr>
                 @endforeach

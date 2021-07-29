@@ -66,7 +66,10 @@ class ExamenController extends Controller
      */
     public function show($id)
     {
-        //
+        $examen = Examen::with(['activities','promotions'])->where('id','=',$id)->get();
+        if ($examen) {
+            return $examen;
+        }
     }
 
     /**
@@ -136,6 +139,10 @@ class ExamenController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $examen = Examen::find($id);
+        if ($examen) {
+            $examen->delete();
+            return back();
+        }
     }
 }

@@ -23,30 +23,31 @@ class ActivityController extends Controller
     public function index($id_examen)
     {
         $examen = Examen::find($id_examen);
-        return view("activities.index", compact('examen'));
+        if ($examen) {
+            return view("activities.index", compact('examen'));
+        }
     }
 
-    public function listActivities($id_examen){
+    public function listActivities( $id_examen){
         //$activities = DB::table('activities')->select('id','beginAt','endAt','title','description','state');
-        
-        $id_examen = (int) $id_examen;
-        $activities = Activity::all();
 
-        return datatables()->of($activities)
-                ->addColumn('modifier',function($activity){
-                    $btn = '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formEditModal" data-id="'.$activity->id.'" onclick="getData(this)">Modifier</button>';
+        $examen = Examen::find($id_examen);
+        if ($examen) {
+            $activities = $examen->activities;
+            
+            return datatables()->of($activities)
+                ->addColumn('action',function($activity){
+                    $btn = '';
+                    $btn .= '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formEditModal" data-exam="'.$activity->examen_id.'" data-id="'.$activity->id.'" onclick="getData(this)">Modifier</button>';
                     return $btn;
                 })
-                ->addColumn('activate',function($activity) use ($id_examen) {
-                    if ($activity->state == 1)
-                    {  $btn = '<a href="'.route('activities.desactivate', [ $id_examen, $activity->id] ).'"  class="btn btn-danger"> Désactiver </a>';}
-                    else  {  $btn = '<a href="'.route('activities.activate', [ $id_examen, $activity->id ]).'"  class="btn btn-success"> Activer </a>';}
-                      return $btn;
-                })
-                ->rawColumns(['modifier','activate'])
+                ->rawColumns(['action'])
                 ->make(true);
+        }
+        
                         
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -158,37 +159,15 @@ class ActivityController extends Controller
      * @param  \App\Models\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Activity $activity)
+    public function destroy($id, $id_examen)
     {
-        //
-    }
+        $examen = Examen::find($id);
+        $activity = Activity::find($id_examen);
 
-    public function desactivate($id, $id_examen)
-    {
-        $examen = Examen::find($id_examen);
-        $activity = Activity::find($id);
         if ($examen && $activity) {
-           
-            $activity->state = false;
-            $activity->save();
-    
-            return back();        
+            $activity->delete();
+            return back();  
         }
-        return back();        
-    }
-
-    public function activate($id, $id_examen)
-    {
-        $examen = Examen::find($id_examen);
-        $activity = Activity::find($id);
-        if ($examen && $activity) {
-            
-            $activity->state = true;
-            $activity->save();
-    
-            return back();        
-        }
-        return back();
     }
 
 }

@@ -17,16 +17,28 @@ class ActivitySeeder extends Seeder
     {
         $faker = \Faker\Factory::create();
 
-        for ($i = 1; $i <= 5; $i++) {
-            $startDate = Carbon::createFromTimestamp($faker->dateTimeBetween('-1 years', '+1 month')->getTimestamp());
+        Activity::create([
+            "title" => 'Installation du materiel',
+            "description" => $faker->text(100),
+            "state" => true,
+            "duree" => '20 min',
+            "examen_id" => 1
+        ]);
 
-            Activity::create([
-                "title" => 'activité ' . $i,
-                "description" => $faker->text(30),
-                "state" => true,
-                "duree" => '1 min',
-                "examen_id" => 1
-            ]);
-        }
+        Activity::create([
+            "title" => 'Presentation du projet',
+            "description" => $faker->text(30),
+            "state" => true,
+            "duree" => '40 min',
+            "examen_id" => 1
+        ]);
+
+        Activity::create([
+            "title" => 'Question sur le sujet',
+            "description" => $faker->text(30),
+            "state" => true,
+            "duree" => '40 min',
+            "examen_id" => 1
+        ]);
     }
 }

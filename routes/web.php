@@ -42,4 +42,4 @@ Route::get('examens/{id_examen}/activities/{id}/activate', [ActivityController::
 Route::get('examens/{id_examen}/activities/{id}/desactivate', [ActivityController::class, 'desactivate'])->name('activities.desactivate');
 Route::get('examens/{id_examen}/activities/{id}/show', [ActivityController::class, 'show']);
 Route::patch('examens/{id_examen}/activities/{id}/update', [ActivityController::class, 'update']);
-Route::get('listActivities/{id_examen}',[ActivityController::class,'listActivities'])->name('activities.list');
+Route::get('examens/{id_examen}/listActivities',[ActivityController::class,'listActivities'])->name('activities.list');

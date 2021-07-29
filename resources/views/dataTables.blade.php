@@ -30,20 +30,8 @@
                     orderable: false
                 },
                 {
-                    data: 'modifier',
-                    name: 'modifier',
-                    orderable: false,
-                    searchable: false
-                },
-                {
-                    data: 'generate',
-                    name: 'generate',
-                    orderable: false,
-                    searchable: false
-                },
-                {
-                    data: 'activate',
-                    name: 'activate',
+                    data: 'action',
+                    name: 'action',
                     orderable: false,
                     searchable: false
                 }
@@ -76,21 +64,14 @@
                     searchable : false
                 },
                 {
-                    data: 'modifier',
-                    name: 'modifier',
+                    data: 'action',
+                    name: 'action',
                     orderable: false,
                     searchable: false
                 },
-                {
-                    data: 'activate',
-                    name: 'activate',
-                    orderable: false,
-                    searchable: false
-                }
+
             ]
         });
-
-
 
 
     })

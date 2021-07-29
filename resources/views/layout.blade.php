@@ -34,13 +34,10 @@
 <body>
 
     <div id="wrapper">
-        <ul class="nav nav-tabs mb-2">
+        <ul class="nav nav-tabs mb-2 bg-dark pt-2">
             <li class="nav-item">
               <a class="nav-link {{ Request::segment(1) === 'users' ? 'active' : '' }}" aria-current="page" href="{{ route('users.index') }}">Utilisateurs</a>
             </li>
-            {{-- <li class="nav-item">
-                <a class="nav-link {{ Request::segment(1) === 'activities' ? 'active' : '' }} " aria-current="page" href="{{ route('activities.index') }}">Activités</a>
-            </li> --}}
             <li class="nav-item">
                 <a class="nav-link  {{ Request::segment(1) === 'roles' ? 'active' : '' }}" aria-current="page" href="{{ route('roles.index') }}">Rôles</a>
             </li>
