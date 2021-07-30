@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ExamensResource;
 use App\Http\Resources\UsersResource;
 use Carbon\Carbon;
 use App\Models\Role;
@@ -93,8 +94,6 @@ class UserController extends Controller
         ]);
         $user->save();
         return redirect()->route('users.index');
-       
- 
     }
 
     /**
@@ -141,7 +140,7 @@ class UserController extends Controller
     public function showActivities($token)
     {  
        
-        $user = User::where('tokenRandom',$token)->get()->firstOrFail();
+        $user = User::where('tokenRandom',$token)->firstOrFail();
         //On vérifie que l'utilisateur est bien trouvé
          
         //Variable pour tester la date
@@ -152,7 +151,7 @@ class UserController extends Controller
         {
             $dateNow = explode(' ',Carbon::now())[0];
 
-            $activities = UsersResource::collection($user->promotion->examens()->where('beginAt','like','%'.$dateNow.'%')->get());
+            $activities = ExamensResource::collection($user->promotion->examens()->where('beginAt','like','%'.$dateNow.'%')->get());
             return $activities;
             
         }

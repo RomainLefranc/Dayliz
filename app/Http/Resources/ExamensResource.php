@@ -16,8 +16,8 @@ class ExamensResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'start' => $this->beginAt,
-            'end' => $this->endAt,
+            'start' =>  str_replace(' ','T',$this->beginAt),
+            'end' => str_replace(' ','T',$this->endAt),
             'title' => $this->name,
             'description' => ActivitiesResource::collection($this->activities)
         ];

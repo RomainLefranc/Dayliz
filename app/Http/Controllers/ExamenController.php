@@ -84,6 +84,7 @@ class ExamenController extends Controller
         foreach($examen->promotions as $promotion){
             $cur_ids[] = $promotion->id;
         }
+        return view('examens.edit',compact('examen','promotions','cur_ids'));
     }
 
     /**
