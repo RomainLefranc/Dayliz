@@ -4,7 +4,7 @@
 
     <div class="d-flex justify-content-between align-items-center">
         <h1>Liste des promotions</h1>
-        <a href="{{ route('promotions.create') }}"><button class="btn btn-success ">Ajouter</button></a>
+        <a href="{{ route('promotions.create') }}"><button class="btn btn-success "><i class="fas fa-plus"></i></button></a>
     </div>
     @if (session('status'))
         <div class="alert alert-success">
@@ -26,11 +26,15 @@
                 <tr>
                     <td>{{ $promotion->id }}</td>
                     <td>{{ $promotion->name }}</td>
-                    <td>{{ $promotion->token }}</td>
-
                     <td>
-                        <a class="btn btn-primary" href="{{ route('promotions.edit', $promotion->id) }}" role="button">Modifier</a>
-                        <a class="btn btn-primary" href="{{ route('promotions.generate', $promotion->id) }}" role="button">Génerer token</a>
+                        @if ($promotion->token)
+                        <a class="btn btn-primary" href="{{ route('users.generate', $promotion->id) }}" role="button"><i class="fas fa-redo-alt"></i></a> {{ $promotion->token }}
+                        @else
+                        <a class="btn btn-primary" href="{{ route('users.generate', $promotion->id) }}" role="button"><i class="fas fa-plus"></i></a>
+                        @endif 
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" href="{{ route('promotions.edit', $promotion->id) }}" role="button"><i class="far fa-edit"></i></a>
                     </td>
                 </tr>
                 @endforeach

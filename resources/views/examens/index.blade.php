@@ -4,7 +4,7 @@
 
     <div class="d-flex justify-content-between align-items-center">
         <h1>Liste des examens</h1>
-        <a href="{{ route('examens.create') }}"><button class="btn btn-success">Ajouter</button></a>
+        <a href="{{ route('examens.create') }}"><button class="btn btn-success"><i class="fas fa-plus"></i></button></a>
     </div>
     @if (session('status'))
         <div class="alert alert-success">
@@ -30,12 +30,12 @@
                     <td>{{ $examen->beginAt }}</td>
                     <td>{{ $examen->endAt }}</td>
                     <td class="d-flex ">
-                        <a class="btn btn-primary me-2" href="{{ route('examens.edit', $examen->id) }}" role="button">Modifier</a>
+                        <a class="btn btn-primary me-2" href="{{ route('examens.edit', $examen->id) }}" role="button"><i class="far fa-edit"></i></a>
                         <a class="btn btn-primary me-2" href="{{ route('activities.index', $examen->id) }}" role="button">Déroulé</a>
                         <form action="{{ route('examens.destroy',$examen->id) }}" method="POST">
                             @csrf
                             @method("delete")
-                            <button class="btn btn-danger" type="submit">Supprimer</button>
+                            <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
                         </form>
                     </td>
                 </tr>

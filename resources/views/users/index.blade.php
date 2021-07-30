@@ -3,7 +3,7 @@
     @include('dataTables')
     <div class="d-flex justify-content-between align-items-center">
         <h1>Liste des utilisateurs</h1>
-        <a href="{{ route('users.create') }}"><button class="btn btn-success">Ajouter</button></a>
+        <a href="{{ route('users.create') }}"><button class="btn btn-success"><i class="fas fa-plus"></i></button></a>
     </div>
 
     <table class="table table-striped table-hover" id="dataTableUser">
@@ -24,15 +24,20 @@
                     <td scope="col">{{ $user->lastName }}</td>
                     <td scope="col">{{ $user->role->name }}</td>
                     <td scope="col">{{ $user->promotion->name }}</td>
-                    <td scope="col">{{ $user->tokenRandom }}</td>
                     <td scope="col">
-                        <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}" role="button">Modifier</a>
-                        @if ($user->state == 0)
-                            <a class="btn btn-success" href="{{ route('users.activate', $user->id) }}" role="button">Activer</a>
+                        @if ($user->tokenRandom)
+                        <a class="btn btn-primary" href="{{ route('users.generate', $user->id) }}" role="button"><i class="fas fa-redo-alt"></i></a> {{ $user->tokenRandom }}
                         @else
-                            <a class="btn btn-danger" href="{{ route('users.desactivate', $user->id) }}" role="button">Désactiver</a>
+                        <a class="btn btn-primary" href="{{ route('users.generate', $user->id) }}" role="button"><i class="fas fa-plus"></i></a>
+                        @endif  
+                    </td>
+                    <td scope="col">
+                        <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}" role="button"><i class="far fa-edit"></i></a>
+                        @if ($user->state == 0)
+                            <a class="btn btn-success" href="{{ route('users.activate', $user->id) }}" role="button"><i class="fas fa-trash-restore"></i></a>
+                        @else
+                            <a class="btn btn-danger" href="{{ route('users.desactivate', $user->id) }}" role="button"><i class="fas fa-trash"></i></a>
                         @endif
-                        <a class="btn btn-primary" href="{{ route('users.generate', $user->id) }}" role="button">Génerer token</a>
                     </td>
 
                 </tr>

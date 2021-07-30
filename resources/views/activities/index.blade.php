@@ -4,10 +4,11 @@
     @include('dataTables')
     <div class="row">
         <div class="col-12">
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between align-items-center">
                 <h1>Déroulé de l'examen {{$examen->name}}</h1>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#formCreate">Ajouter</button>
+              
+                    <a href="#"><button type="button" class="btn btn-success" data-bs-toggle="modal"
+                        data-bs-target="#formCreate"><i class="fas fa-plus"></i></button></a>
             </div>
 
             @if ($errors->any())

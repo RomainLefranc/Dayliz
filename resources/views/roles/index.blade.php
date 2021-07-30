@@ -4,7 +4,7 @@
 
     <div class="d-flex justify-content-between align-items-center">
         <h1>Liste des roles</h1>
-        <a href="{{ route('roles.create') }}"><button class="btn btn-success">Ajouter</button></a>
+        <a href="{{ route('roles.create') }}"><button class="btn btn-success"><i class="fas fa-plus"></i></button></a>
     </div>
     @if (session('status'))
         <div class="alert alert-success">
@@ -26,7 +26,7 @@
                     <td>{{ $role->id }}</td>
                     <td>{{ $role->name }}</td>
                     <td>
-                        <a class="btn btn-primary" href="{{ route('roles.edit', $role->id) }}" role="button">Modifier</a>
+                        <a class="btn btn-primary" href="{{ route('roles.edit', $role->id) }}" role="button"><i class="far fa-edit"></i></a>
                     </td>
                 </tr>
                 @endforeach
