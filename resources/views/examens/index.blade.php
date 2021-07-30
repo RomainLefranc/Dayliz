@@ -43,5 +43,8 @@
             
         </tbody>
     </table>
+    <div class="d-flex justify-content-center">
+        {{ $examens->links() }}
+    </div>
 
 @endsection

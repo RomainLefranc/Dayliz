@@ -27,7 +27,6 @@ Route::resource('roles', RoleController::class);
 Route::resource('users',UserController::class);
 Route::get('users/{id}/desactivate', [UserController::class,'desactivate'])->name('users.desactivate');
 Route::get('users/{id}/activate', [UserController::class,'activate'])->name('users.activate');
-Route::get('listUsers',[UserController::class,'listUser'])->name('users.list');
 Route::get('users/{token}/activities',[UserController::class,'showActivities']);
 Route::get('users/{id}/generateToken',[UserController::class,'generateToken'])->name('users.generate');
 
@@ -36,6 +35,7 @@ Route::get('promotions/{id}/generateToken',[PromotionController::class,'generate
 Route::get('promotions/{token}/activities',[PromotionController::class,'showActivities']);
 
 Route::resource('examens', ExamenController::class);
+
 
 Route::resource('examens/{id_examen}/activities', ActivityController::class);
 Route::get('examens/{id_examen}/activities/{id}/activate', [ActivityController::class, 'activate'])->name('activities.activate');
