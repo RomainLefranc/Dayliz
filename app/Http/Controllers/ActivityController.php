@@ -65,7 +65,7 @@ class ActivityController extends Controller
         $examen = Examen::findOrFail($id_examen);
         $request->validate([
             'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù ]+$/',
-            'duree' => 'required',
+            'duree' => 'required|date_format:H:i',
             'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i'
         ]);
 
@@ -121,7 +121,7 @@ class ActivityController extends Controller
         $activity = Activity::findOrFail($id);
         $request->validate([
             'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù ]+$/',
-            'duree' => 'required',
+            'duree' => 'required|date_format:H:i',
             'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i'
         ]);
 

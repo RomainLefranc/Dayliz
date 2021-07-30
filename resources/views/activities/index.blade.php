@@ -98,7 +98,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="description" class="form-label">Durée</label>
-                            <input type="text" class="form-control @error('duree') is-invalid @enderror" name="duree">
+                            <input type="time" class="form-control @error('duree') is-invalid @enderror" name="duree">
                         </div>
                         <div class="mb-3">
                             <button type="submit" class="btn btn-primary">Enregistrer</button>
@@ -134,7 +134,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="description" class="form-label">Durée</label>
-                                <input id="durationEdit" type="text" class="form-control" name="duree" value="">
+                                <input id="durationEdit" type="time" class="form-control" name="duree" value="">
                                 @if ($errors->has('duree'))
                                     <span>{ !! $errors->first('description') !! }</span>
                                 @endif

@@ -21,7 +21,7 @@ class ActivitySeeder extends Seeder
             "title" => 'Installation du materiel',
             "description" => $faker->text(100),
             "state" => true,
-            "duree" => '20 min',
+            "duree" => '00:20',
             "examen_id" => 1
         ]);
 
@@ -29,7 +29,7 @@ class ActivitySeeder extends Seeder
             "title" => 'Presentation du projet',
             "description" => $faker->text(30),
             "state" => true,
-            "duree" => '40 min',
+            "duree" => '00:30',
             "examen_id" => 1
         ]);
 
@@ -37,7 +37,7 @@ class ActivitySeeder extends Seeder
             "title" => 'Question sur le sujet',
             "description" => $faker->text(30),
             "state" => true,
-            "duree" => '40 min',
+            "duree" => '00:40',
             "examen_id" => 1
         ]);
     }
