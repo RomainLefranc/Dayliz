@@ -1,4 +1,5 @@
 <script>
+    $(document).ready(function() {
         @isset($examen)
             $('#dataTableActivities').dataTable({
                 processing: false,
