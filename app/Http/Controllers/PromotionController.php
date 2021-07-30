@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ExamensResource;
 use App\Http\Resources\PromotionResource;
 use App\Models\Promotion;
 use App\Models\User;
@@ -57,10 +58,7 @@ class PromotionController extends Controller
      */
     public function show($id)
     {
-        $promotion = Promotion::find($id);
-        if ($promotion) {
-            return new PromotionResource($promotion);
-        }
+        return new PromotionResource(Promotion::findOrFail($id));
     }
 
     /**
@@ -71,10 +69,8 @@ class PromotionController extends Controller
      */
     public function edit($id)
     {
-        $promotion = Promotion::find($id);
-        if ($promotion) {
-            return view('promotions.edit',compact('promotion'));
-        }
+        $promotion = Promotion::findOrFail($id);
+        return view('promotions.edit',compact('promotion'));
     }
 
     /**
@@ -86,17 +82,15 @@ class PromotionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $promotion = Promotion::find($id);
-        if ($promotion) {
-            $request->validate([
-                'name' => 'required|min:3|max:255'
-            ]);
-            
-            $promotion->name = $request->get('name');
-            $promotion->save();
-            
-            return redirect()->route('promotions.index')->with('status', 'Promotion modifié');        
-        }
+        $promotion = Promotion::findOrFail($id);
+        $request->validate([
+            'name' => 'required|min:3|max:255'
+        ]);
+        
+        $promotion->name = $request->get('name');
+        $promotion->save();
+        
+        return redirect()->route('promotions.index')->with('status', 'Promotion modifié'); 
     }
 
     /**
@@ -112,26 +106,21 @@ class PromotionController extends Controller
 
     public function generateToken($id)
     {
+        $promotion = Promotion::findOrFail($id);
         $caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $longueurMax = strlen($caracteres);
         $chaineAleatoire = '';
         for ($i = 0; $i < 6; $i++){
             $chaineAleatoire .= $caracteres[rand(0, $longueurMax - 1)];
         }
+        $date_ = md5(Carbon::today().($promotion->id));
+        $promotion->token = $date_.md5($chaineAleatoire);
+        $promotion->save();
 
-        $promotion = Promotion::find($id);
+        //$qrcode = QrCode::size(200)->generate("20fac1385e50.ngrok.io/planning/".$user->tokenRandom);
+        //$qrcode = QrCode::size(200)->generate(env('APP_URL_MOBILE'));
         
-        if($promotion)
-        {
-            $date_ = md5(Carbon::today().($promotion->id));
-            $promotion->token = $date_.md5($chaineAleatoire);
-            $promotion->save();
-
-            //$qrcode = QrCode::size(200)->generate("20fac1385e50.ngrok.io/planning/".$user->tokenRandom);
-            //$qrcode = QrCode::size(200)->generate(env('APP_URL_MOBILE'));
-            
-            //return ($qrcode);
-        }
+        //return ($qrcode);
 
       
         //return redirect('/users');
@@ -142,20 +131,13 @@ class PromotionController extends Controller
     public function showActivities($token)
     {  
         // récuperation de la promotion
-        $promotion = Promotion::where('token',$token)->first();
+        $promotion = Promotion::where('token',$token)->firstOrFail();
         $verif = md5(Carbon::today() . $promotion->id);
-        // récuperation des utilisateurs de cette promotion
-        $users = User::where('promotion_id',$promotion->id)->get();
         $dateNow = explode(' ',Carbon::now())[0];
 
-        if ($users && substr_compare($token,$verif,0,strlen($verif)) == 0) {
-            $activities = [];
-             //Variable pour tester la date
-            foreach ($users as $key => $user) {
-                
-                $activities[$key] = $user->activities()->where('beginAt','like','%'.$dateNow.'%')->where('state', '=', true)->get();
-            }
-            return $activities;
+        if (substr_compare($token,$verif,0,strlen($verif)) == 0) {
+            $examens = $promotion->examens()->where('beginAt','like','%'.$dateNow.'%')->get();
+            return ExamensResource::collection($examens);
         }
     }
 }

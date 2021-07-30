@@ -21,28 +21,24 @@ class ActivityController extends Controller
      */
     public function index($id_examen)
     {
-        $examen = Examen::find($id_examen);
-        if ($examen) {
-            return view("activities.index", compact('examen'));
-        }
+        $examen = Examen::findOrFail($id_examen);
+        return view("activities.index", compact('examen'));
     }
 
     public function listActivities( $id_examen){
         //$activities = DB::table('activities')->select('id','beginAt','endAt','title','description','state');
 
-        $examen = Examen::find($id_examen);
-        if ($examen) {
-            $activities = $examen->activities;
+        $examen = Examen::findOrFail($id_examen);
+        $activities = $examen->activities;
             
-            return datatables()->of($activities)
-                ->addColumn('action',function($activity){
-                    $btn = '';
-                    $btn .= '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formEditModal" data-exam="'.$activity->examen_id.'" data-id="'.$activity->id.'" onclick="getData(this)">Modifier</button>';
-                    return $btn;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-        }
+        return datatables()->of($activities)
+            ->addColumn('action',function($activity){
+                $btn = '';
+                $btn .= '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formEditModal" data-exam="'.$activity->examen_id.'" data-id="'.$activity->id.'" onclick="getData(this)">Modifier</button>';
+                return $btn;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
         
                         
     }
@@ -66,26 +62,24 @@ class ActivityController extends Controller
      */
     public function store(Request $request, $id_examen)
     {
-        $examen = Examen::find($id_examen);
-        if ($examen) {
-            $request->validate([
-                'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù ]+$/',
-                'duree' => 'required',
-                'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i'
-            ]);
-    
-            $activity = new Activity([
-                'title' => $request->get('title'),
-                'duree' => $request->get('duree'),
-                'description' => $request->get('description'),
-                'state' => true,
-                'examen_id' => $examen->id
-            ]);
-    
-            $activity->save();
-            
-            return redirect()->route('activities.index', $examen->id);        
-        }
+        $examen = Examen::findOrFail($id_examen);
+        $request->validate([
+            'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù ]+$/',
+            'duree' => 'required',
+            'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i'
+        ]);
+
+        $activity = new Activity([
+            'title' => $request->get('title'),
+            'duree' => $request->get('duree'),
+            'description' => $request->get('description'),
+            'state' => true,
+            'examen_id' => $examen->id
+        ]);
+
+        $activity->save();
+        
+        return redirect()->route('activities.index', $examen->id);       
 
     }
 
@@ -97,10 +91,8 @@ class ActivityController extends Controller
      */
     public function show($id)
     {
-        $activity = Activity::find($id);
-        if ($activity) {
-            return new ActivitiesResource($activity);
-        }
+        $activity = Activity::findOrFail($id);
+        return new ActivitiesResource($activity);
     }
 
     /**
@@ -111,13 +103,9 @@ class ActivityController extends Controller
      */
     public function edit($id , $id_examen)
     {
-        $examen = Examen::find($id_examen);
-        $activity = Activity::find($id);
-        if ($examen && $activity) {
-            return view('activities.edit', compact('activity'));        
-        }
-        return back();
-
+        $examen = Examen::findOrFail($id_examen);
+        $activity = Activity::findOrFail($id);
+        return view('activities.edit', compact('activity'));        
     }
 
     /**
@@ -129,27 +117,21 @@ class ActivityController extends Controller
      */
     public function update(Request $request, $id, $id_examen)
     {
-        $examen = Examen::find($id_examen);
-        $activity = Activity::find($id);
-        if ($examen && $activity) {
-            
-            $request->validate([
-                'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù ]+$/',
-                'duree' => 'required',
-                'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i'
-            ]);
-    
-            $activity->title = $request->get('title');
-            $activity->duree = $request->get('duree');
-            $activity->description = $request->get('description');
-    
-            $activity->save();
-    
-            return redirect()->route('activities.index',$examen->id);        
-        }
-        return back();
+        $examen = Examen::findOrFail($id_examen);
+        $activity = Activity::findOrFail($id);
+        $request->validate([
+            'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù ]+$/',
+            'duree' => 'required',
+            'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i'
+        ]);
 
+        $activity->title = $request->get('title');
+        $activity->duree = $request->get('duree');
+        $activity->description = $request->get('description');
 
+        $activity->save();
+
+        return redirect()->route('activities.index',$examen->id);   
     }
 
     /**
@@ -160,13 +142,10 @@ class ActivityController extends Controller
      */
     public function destroy($id, $id_examen)
     {
-        $examen = Examen::find($id);
-        $activity = Activity::find($id_examen);
-
-        if ($examen && $activity) {
-            $activity->delete();
-            return back();  
-        }
+        $examen = Examen::findOrFail($id);
+        $activity = Activity::findOrFail($id_examen);
+        $activity->delete();
+        return back();
     }
 
 }

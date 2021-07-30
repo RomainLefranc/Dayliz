@@ -79,24 +79,20 @@ class UserController extends Controller
             'promotion'=>'required',
             'role'=>'required'
         ]);
-        
-        if (Role::find($request->get('role')) != null) {
-            $user = new User([
-                'lastName'=> $request->get('lastName'),
-                'firstName'=> $request->get('firstName'),
-                'email'=> $request->get('email'),
-                'birthDay'=> $request->get('birthDay'),
-                'phoneNumber'=> $request->get('phone'),
-                'promotion_id'=> $request->get('promotion'),
-                'role_id' => $request->get('role'),
-                'state'=> true
-            ]);
-
-            $user->save();
-            return redirect()->route('users.index');
-        } else {
-            return back()->withError('Rôle invalide');
-        }
+        $role = Role::findOrFail($request->get('role'));
+        $promotion = Promotion::findOrFail($request->get('promotion'));
+        $user = new User([
+            'lastName'=> $request->get('lastName'),
+            'firstName'=> $request->get('firstName'),
+            'email'=> $request->get('email'),
+            'birthDay'=> $request->get('birthDay'),
+            'phoneNumber'=> $request->get('phone'),
+            'promotion_id'=> $promotion->id,
+            'role_id' => $role->id,
+            'state'=> true
+        ]);
+        $user->save();
+        return redirect()->route('users.index');
        
  
     }
@@ -109,14 +105,13 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
-        if ($user) {
-            return new UsersResource($user);
-        } 
+        $user = User::findOrFail($id);
+        return new UsersResource($user);
     }
 
     public function generateToken($id)
     {
+        $user = User::findOrFail($id);
         $caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $longueurMax = strlen($caracteres);
         $chaineAleatoire = '';
@@ -124,24 +119,18 @@ class UserController extends Controller
         {
         $chaineAleatoire .= $caracteres[rand(0, $longueurMax - 1)];
         }
-
-        $idUser = $id;
-     
-        $user = User::find($idUser);
         
-        if($user)
-        {
-            $date_ = md5(Carbon::today().($user->id));
+        
+        $date_ = md5(Carbon::today().($user->id));
 
-            $user->tokenRandom = $date_.md5($chaineAleatoire);
-    
-            $user->save();
+        $user->tokenRandom = $date_.md5($chaineAleatoire);
 
-            $qrcode = QrCode::size(200)->generate("20fac1385e50.ngrok.io/planning/".$user->tokenRandom);
-            //$qrcode = QrCode::size(200)->generate(env('APP_URL_MOBILE'));
-            
-            //return ($qrcode);
-        }
+        $user->save();
+
+        $qrcode = QrCode::size(200)->generate("20fac1385e50.ngrok.io/planning/".$user->tokenRandom);
+        //$qrcode = QrCode::size(200)->generate(env('APP_URL_MOBILE'));
+        
+        //return ($qrcode);
 
       
         //return redirect('/users');
@@ -152,24 +141,20 @@ class UserController extends Controller
     public function showActivities($token)
     {  
        
-        $user = User::where('tokenRandom',$token)->get()->first();
-         //On vérifie que l'utilisateur est bien trouvé
+        $user = User::where('tokenRandom',$token)->get()->firstOrFail();
+        //On vérifie que l'utilisateur est bien trouvé
          
-        if ($user) {
-             //Variable pour tester la date
-            $verif = md5(Carbon::today() . $user->id);
+        //Variable pour tester la date
+        $verif = md5(Carbon::today() . $user->id);
 
-            //On vérifie que la date est ok
-            if (substr_compare($token,$verif,0,strlen($verif)) == 0)
-            {
-                $dateNow = explode(' ',Carbon::now())[0];
+        //On vérifie que la date est ok
+        if (substr_compare($token,$verif,0,strlen($verif)) == 0)
+        {
+            $dateNow = explode(' ',Carbon::now())[0];
 
-                $activities = UsersResource::collection($user->promotion->examens()->where('beginAt','like','%'.$dateNow.'%')->get());
-                return $activities;
-               
-            }
-            return response()->json('Token périmé');
-
+            $activities = UsersResource::collection($user->promotion->examens()->where('beginAt','like','%'.$dateNow.'%')->get());
+            return $activities;
+            
         }
         return response()->json('Token invalide');
     }

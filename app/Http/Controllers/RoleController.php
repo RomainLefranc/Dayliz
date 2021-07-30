@@ -66,11 +66,8 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        $role = Role::find($id);
-        if ($role) {
-            return view('roles.edit',compact('role'));
-        }
-
+        $role = Role::findOrFail($id);
+        return view('roles.edit',compact('role'));
     }
 
     /**
@@ -82,17 +79,15 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $role = Role::find($id);
-        if ($role) {
-            $request->validate([
-                'name' => 'required|min:3|max:255|regex:/^[A-Za-z]+$/'
-            ]);
-            
-            $role->name = $request->get('name');
-            $role->save();
-            
-            return redirect()->route('roles.index')->with('status', 'Rôle modifié');        
-        }
+        $role = Role::findOrFail($id);
+        $request->validate([
+            'name' => 'required|min:3|max:255|regex:/^[A-Za-z]+$/'
+        ]);
+        
+        $role->name = $request->get('name');
+        $role->save();
+        
+        return redirect()->route('roles.index')->with('status', 'Rôle modifié'); 
 
     }
 

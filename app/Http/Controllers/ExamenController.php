@@ -67,10 +67,7 @@ class ExamenController extends Controller
      */
     public function show($id)
     {
-        $examen = Examen::find($id);
-        if ($examen) {
-            return new ExamensResource($examen);
-        } 
+        return new ExamensResource(Examen::findOrFail($id));
     }
 
     /**
@@ -81,16 +78,11 @@ class ExamenController extends Controller
      */
     public function edit($id)
     {
-        $examen = Examen::find($id);
-        
-        if ($examen) {
-
-            $promotions = Promotion::all();
-            $cur_ids = [];
-            foreach($examen->promotions as $promotion){
-                $cur_ids[] = $promotion->id;
-            }
-            return view('examens.edit',compact('examen','promotions','cur_ids'));
+        $examen = Examen::findOrFail($id);
+        $promotions = Promotion::all();
+        $cur_ids = [];
+        foreach($examen->promotions as $promotion){
+            $cur_ids[] = $promotion->id;
         }
     }
 
@@ -103,33 +95,29 @@ class ExamenController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $examen = Examen::find($id);
-        if ($examen) {
-            
-            $request->validate([
-                'name' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù ]+$/',
-                'beginAt' => 'required|date',
-                'endAt' => 'required|date|after:beginAt',
-                'promotion' => 'required',
-            ]);
-    
-            $examen->name = $request->get('name');
-            $examen->beginAt = $request->get('beginAt');
-            $examen->endAt = $request->get('endAt');
+        $examen = Examen::findOrFail($id);
+        $request->validate([
+            'name' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù ]+$/',
+            'beginAt' => 'required|date',
+            'endAt' => 'required|date|after:beginAt',
+            'promotion' => 'required',
+        ]);
 
-            $examen->save();
+        $examen->name = $request->get('name');
+        $examen->beginAt = $request->get('beginAt');
+        $examen->endAt = $request->get('endAt');
 
-            $cur_ids = [];
-            foreach($examen->promotions as $promotion){
-                $cur_ids[] = $promotion->id;
-            }
-            $examen->promotions()->detach($cur_ids);
-            $promotions = $request->get('promotion');
-            $examen->promotions()->attach($promotions);
+        $examen->save();
 
-            return redirect()->route('examens.index');        
+        $cur_ids = [];
+        foreach($examen->promotions as $promotion){
+            $cur_ids[] = $promotion->id;
         }
-        return back();
+        $examen->promotions()->detach($cur_ids);
+        $promotions = $request->get('promotion');
+        $examen->promotions()->attach($promotions);
+
+        return redirect()->route('examens.index');   
     }
 
     /**
@@ -140,10 +128,8 @@ class ExamenController extends Controller
      */
     public function destroy($id)
     {
-        $examen = Examen::find($id);
-        if ($examen) {
-            $examen->delete();
-            return back();
-        }
+        $examen = Examen::findOrFail($id);
+        $examen->delete();
+        return back();
     }
 }
