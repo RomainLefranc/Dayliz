@@ -50,8 +50,7 @@
             </div>
             
         </div>
-      </div>
-   
+    </div>
     <div class=" mt-2">
         {{ $users->links() }}
     </div>
