@@ -24,7 +24,6 @@ class ActivityController extends Controller
         $examen = Examen::findOrFail($id_examen);
         $activities = Activity::where('examen_id','=',$id_examen)->paginate(10);
         return view("activities.index", compact('activities','examen'));
-        //return view("activities.index", compact('examen'));
     }
 
     public function getActivities()
@@ -73,15 +72,24 @@ class ActivityController extends Controller
     public function store(Request $request, $id_examen)
     {
         $examen = Examen::findOrFail($id_examen);
-        $request->validate([
+
+        $order = count($examen->activities)+1;
+
+        $validator = Validator::make($request->all(),[
             'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù ]+$/',
             'duree' => 'required|date_format:H:i',
-            'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i'
+            'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i',
         ]);
+
+        if ($validator->fails())
+        {
+            return redirect()->route('activities.index', $examen->id); 
+        }
 
         $activity = new Activity([
             'title' => $request->get('title'),
             'duree' => $request->get('duree'),
+            'order'=> $order,
             'description' => $request->get('description'),
             'state' => true,
             'examen_id' => $examen->id
@@ -128,12 +136,19 @@ class ActivityController extends Controller
     public function update(Request $request, $id, $id_examen)
     {
         $examen = Examen::findOrFail($id_examen);
+        
         $activity = Activity::findOrFail($id);
-        $request->validate([
+
+        $validator = Validator::make($request->all(),[
             'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù ]+$/',
-            'duree' => 'required|date_format:H:i',
+            'duree' => 'required|date_format:H:i:s',
             'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i'
         ]);
+
+        if ($validator->fails())
+        {
+            return redirect()->route('activities.index', $examen->id); 
+        }
 
         $activity->title = $request->get('title');
         $activity->duree = $request->get('duree');

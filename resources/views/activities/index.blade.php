@@ -16,6 +16,7 @@
                         <th scope="col">Titre</th>
                         <th scope="col">Durée</th>
                         <th scope="col">Description</th>
+                        <th scope="col">Ordre</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -25,6 +26,7 @@
                             <td scope="col">{{ $activity->title }}</td>
                             <td scope="col">{{ $activity->duree }}</td>
                             <td scope="col">{{ $activity->description }}</td>
+                            <td scope="col">{{ $activity->order }}</td>
                             <td class="d-flex">
                                 <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#formEditModal"
                                     data-exam="{{ $activity->examen_id }}" data-id="{{ $activity->id }}"
@@ -90,7 +92,7 @@
                     <div class="modal-header">
                         <h1 id="formEditTitle"></h1>
                     </div>
-                    <form id="formEdit"  action="{{ route('activities.update', [$examen->id, $activity->id]) }}" method="POST">
+                    <form id="formEdit" {{--  action="{{ route('activities.update', [ $activity->id,$examen->id]) }}" --}} method="POST"> 
                         @csrf
                         @method('patch')
                         <div class="mb-3">
@@ -116,7 +118,7 @@
                             @endif
                         </div>
                         <div class="mb-3">
-                            <button type="submit" class="btn btn-primary">Modifier</button>
+                            <button type="submit" class="btn btn-primary" >Modifier</button>
                         </div>
                     </form>
                 </div>

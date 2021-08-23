@@ -21,6 +21,7 @@ class CreateActivitiesTable extends Migration
             $table->string("description");
             $table->boolean("state");
             $table->foreignId('examen_id');
+            $table->integer('order');
             $table->foreign("examen_id")->references('id')->on('examens')->onDelete('cascade');
         });
     }

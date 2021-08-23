@@ -17,13 +17,14 @@ class ActivitySeeder extends Seeder
     {
         $faker = \Faker\Factory::create();
 
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 51; $i++) {
 
             Activity::create([
                 "title" => $faker->text(50),
                 "description" => $faker->text(100),
                 "state" => true,
                 "duree" => $faker->time(),
+                'order' => $i+1,
                 "examen_id" => 1
             ]);
 
