@@ -24,7 +24,6 @@ class ActivityController extends Controller
         $examen = Examen::findOrFail($id_examen);
         $activities = Activity::where('examen_id','=',$id_examen)->paginate(10);
         return view("activities.index", compact('activities','examen'));
-        //return view("activities.index", compact('examen'));
     }
 
     public function getActivities()
@@ -74,10 +73,12 @@ class ActivityController extends Controller
     {
         $examen = Examen::findOrFail($id_examen);
 
+        $order = count($examen->activities)+1;
+
         $validator = Validator::make($request->all(),[
             'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù ]+$/',
             'duree' => 'required|date_format:H:i',
-            'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i'
+            'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i',
         ]);
 
         if ($validator->fails())
@@ -88,6 +89,7 @@ class ActivityController extends Controller
         $activity = new Activity([
             'title' => $request->get('title'),
             'duree' => $request->get('duree'),
+            'order'=> $order,
             'description' => $request->get('description'),
             'state' => true,
             'examen_id' => $examen->id

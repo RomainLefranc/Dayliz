@@ -14,6 +14,7 @@ class Activity extends Model
         "description",
         "state",
         "duree",
+        "order",
         "examen_id"
     ];
 
