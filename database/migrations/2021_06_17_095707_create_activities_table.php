@@ -17,7 +17,8 @@ class CreateActivitiesTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string("title");
-            $table->time('duree');
+            //$table->time('duree');
+            $table->integer('duree');
             $table->string("description");
             $table->boolean("state");
             $table->foreignId('examen_id');

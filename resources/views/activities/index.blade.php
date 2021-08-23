@@ -24,7 +24,8 @@
                     @foreach ($activities as $activity)
                         <tr>
                             <td scope="col">{{ $activity->title }}</td>
-                            <td scope="col">{{ $activity->duree }}</td>
+                            {{-- <td scope="col">{{ $activity->duree }}</td> --}}
+                            <td scope="col">{{ gmdate('H:i', $activity->duree)  }}</td>
                             <td scope="col">{{ $activity->description }}</td>
                             <td scope="col">{{ $activity->order }}</td>
                             <td class="d-flex">
@@ -37,7 +38,6 @@
                                     @method("delete")
                                     <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
                                 </form>
-
                             </td>
                         </tr>
                     @endforeach

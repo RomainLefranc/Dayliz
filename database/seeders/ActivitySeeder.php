@@ -23,7 +23,8 @@ class ActivitySeeder extends Seeder
                 "title" => $faker->text(50),
                 "description" => $faker->text(100),
                 "state" => true,
-                "duree" => $faker->time(),
+                //"duree" => $faker->time('H:i'),
+                "duree" => $faker->numberBetween(60,86400),
                 'order' => $i+1,
                 "examen_id" => 1
             ]);

@@ -76,8 +76,8 @@ class ActivityController extends Controller
         $order = count($examen->activities)+1;
 
         $validator = Validator::make($request->all(),[
-            'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù ]+$/',
-            'duree' => 'required|date_format:H:i',
+            'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù. ]+$/',
+            'duree' => 'required',
             'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i',
         ]);
 
@@ -86,9 +86,12 @@ class ActivityController extends Controller
             return redirect()->route('activities.index', $examen->id); 
         }
 
+        $dureeArr = explode(':',$request->get('duree'));
+        $duree = (intval($dureeArr[0]) * 3600) + (intval($dureeArr[1]) * 60);
+
         $activity = new Activity([
             'title' => $request->get('title'),
-            'duree' => $request->get('duree'),
+            'duree' => $duree,
             'order'=> $order,
             'description' => $request->get('description'),
             'state' => true,
@@ -133,25 +136,31 @@ class ActivityController extends Controller
      * @param  \App\Models\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id, $id_examen)
+    public function update(Request $request, $id_examen, $id)
     {
+
         $examen = Examen::findOrFail($id_examen);
         
         $activity = Activity::findOrFail($id);
 
         $validator = Validator::make($request->all(),[
-            'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù ]+$/',
-            'duree' => 'required|date_format:H:i:s',
+            'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù. ]+$/',
+            'duree' => 'required',
             'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i'
         ]);
 
         if ($validator->fails())
         {
+            dd($validator->errors());
             return redirect()->route('activities.index', $examen->id); 
         }
 
+        
+        $dureeArr = explode(':',$request->get('duree'));
+        $duree = (intval($dureeArr[0]) * 3600) + (intval($dureeArr[1]) * 60);
+
         $activity->title = $request->get('title');
-        $activity->duree = $request->get('duree');
+        $activity->duree = $duree;
         $activity->description = $request->get('description');
 
         $activity->save();
