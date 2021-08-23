@@ -13,33 +13,34 @@
     position: absolute;
     content: "";
     bottom: 0;
-    width: 5px;
-    height: 5px;
+    width: 7px;
+    height: 7px;
     background: rgb(255, 255, 255);
+    z-index: 1;
 }
 .nav-link.active::before,
 .nav-link.active::after {
     position: absolute;
     content: "";
     bottom: 0;
-    width: 10px;
-    height: 10px;
-    border-radius: 10px;
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
     background: #212529;
-    z-index: 3;
+    z-index: 2;
 }
 .nav-link.active::after {
-    right: -10px;
+    right: -15px;
 }
 .nav-link.active::before {
-    left: -10px;
+    left: -15px;
 }
 
 .nav-item.active::after {
-    left: -5px;
+    left: -7px;
 }
 .nav-item.active::before {
-    right: -5px;
+    right: -7px;
 }
 
 .nav-item a {
@@ -47,4 +48,8 @@
 }
 .nav-item a:hover {
     color: grey;
+}
+
+.nav-link:hover {
+    isolation: initial !important;
 }
