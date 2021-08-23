@@ -17,6 +17,7 @@ class CreatePromotionTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('token')->nullable();
+            $table->boolean('state');
             $table->timestamps();
         });
     }

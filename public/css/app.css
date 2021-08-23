@@ -1,32 +1,11 @@
-body {
-    /* background: url(Wave.svg) repeat-x center bottom / contain;
-    height: 100vh; */
-}
-
 .nav-item.active {
     position: relative;
 }
+
+/* circle */
 .nav-link,
 .nav-tabs {
     border: none !important;
-}
-
-.nav-link.active::before,
-.nav-link.active::after {
-    position: absolute;
-    content: "";
-    bottom: 0;
-    width: 10px;
-    height: 10px;
-    border-radius: 10px;
-    background: #212529;
-    z-index: 10 !important;
-}
-.nav-link.active::after {
-    right: -10px;
-}
-.nav-link.active::before {
-    left: -10px;
 }
 
 .nav-item.active::before,
@@ -38,6 +17,24 @@ body {
     height: 5px;
     background: rgb(255, 255, 255);
 }
+.nav-link.active::before,
+.nav-link.active::after {
+    position: absolute;
+    content: "";
+    bottom: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    background: #212529;
+    z-index: 3;
+}
+.nav-link.active::after {
+    right: -10px;
+}
+.nav-link.active::before {
+    left: -10px;
+}
+
 .nav-item.active::after {
     left: -5px;
 }
@@ -45,10 +42,6 @@ body {
     right: -5px;
 }
 
-.nav-item.active:hover,
-.nav-item.active:hover {
-    z-index: 10;
-}
 .nav-item a {
     color: white;
 }

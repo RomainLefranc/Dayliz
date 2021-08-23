@@ -147,4 +147,21 @@ class PromotionController extends Controller
             return ExamensResource::collection($examens);
         }
     }
+
+
+    public function desactivate($id){
+
+        $promotion = Promotion::findOrFail($id);
+        $promotion->state = false;
+        $promotion->save();
+        return back();       
+    }
+    
+    public function activate($id){
+        $promotion = Promotion::findOrFail($id);
+        $promotion->state = true;
+        $promotion->save();
+        return back();  
+
+    }
 }

@@ -195,26 +195,16 @@ class UserController extends Controller
 
     public function desactivate($id){
 
-        $user = User::find($id);
-        if ($user) {
-
-            $user->state = false;
-            $user->save();
-    
-            return back();        
-        }
-        return back();        
+        $user = User::findOrFail($id);
+        $user->state = false;
+        $user->save();
+        return back();      
     }
     
     public function activate($id){
-        $user = User::find($id);
-        if ($user) {
-            
-            $user->state = true;
-            $user->save();
-    
-            return back();        
-        }
+        $user = User::findOrFail($id);
+        $user->state = true;
+        $user->save();
         return back();
 
     }

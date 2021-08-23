@@ -26,9 +26,9 @@
                             <td scope="col">{{ $activity->duree }}</td>
                             <td scope="col">{{ $activity->description }}</td>
                             <td class="d-flex">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formEditModal"
+                                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#formEditModal"
                                     data-exam="{{ $activity->examen_id }}" data-id="{{ $activity->id }}"
-                                    onclick="getData(this)">Modifier
+                                    onclick="getData(this)"><i class="far fa-edit"></i>
                                 </button>
                                 <form action="{{ route('activities.destroy',[$examen->id,$activity->id]) }}" method="POST" >
                                     @csrf

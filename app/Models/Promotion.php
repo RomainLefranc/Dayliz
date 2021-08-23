@@ -11,7 +11,9 @@ class Promotion extends Model
 
     protected $fillable = [
         "name",
-        "token"
+        "token",
+        'state'
+
     ];
 
     public function users()

@@ -29,9 +29,9 @@
                                 <td scope="col">{{ $user->promotion->name }}</td>
                                 <td scope="col">
                                     @if ($user->tokenRandom)
-                                    <a class="btn btn-primary" href="{{ route('users.generate', $user->id) }}" role="button"><i class="fas fa-redo-alt"></i></a> {{ $user->tokenRandom }}
+                                        <a class="btn btn-primary" href="{{ route('users.generate', $user->id) }}" role="button"><i class="fas fa-redo-alt"></i></a> {{ $user->tokenRandom }}
                                     @else
-                                    <a class="btn btn-primary" href="{{ route('users.generate', $user->id) }}" role="button"><i class="fas fa-plus"></i></a>
+                                        <a class="btn btn-primary" href="{{ route('users.generate', $user->id) }}" role="button"><i class="fas fa-plus"></i></a>
                                     @endif  
                                 </td>
                                 <td scope="col">

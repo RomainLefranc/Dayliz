@@ -38,6 +38,11 @@
                             </td>
                             <td>
                                 <a class="btn btn-primary" href="{{ route('promotions.edit', $promotion->id) }}" role="button"><i class="far fa-edit"></i></a>
+                                @if ($promotion->state == 0)
+                                <a class="btn btn-success" href="{{ route('users.activate', $promotion->id) }}" role="button"><i class="fas fa-trash-restore"></i></a>
+                                @else
+                                    <a class="btn btn-danger" href="{{ route('users.desactivate', $promotion->id) }}" role="button"><i class="fas fa-trash"></i></a>
+                                @endif
                             </td>
                         </tr>
                         @endforeach
