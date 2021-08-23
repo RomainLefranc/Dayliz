@@ -22,7 +22,9 @@ class ActivityController extends Controller
     public function index($id_examen)
     {
         $examen = Examen::findOrFail($id_examen);
-        return view("activities.index", compact('examen'));
+        $activities = Activity::where('examen_id','=',$id_examen)->paginate(10);
+        return view("activities.index", compact('activities','examen'));
+        //return view("activities.index", compact('examen'));
     }
 
     public function getActivities()

@@ -1,6 +1,6 @@
 @extends('layout')
 @section('content')
-    @include('dataTables')
+   
     <div class="d-flex justify-content-between align-items-center">
         <h1>Liste des utilisateurs</h1>
         <a href="{{ route('users.create') }}"><button class="btn btn-success"><i class="fas fa-plus"></i></button></a>
