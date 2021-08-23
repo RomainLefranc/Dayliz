@@ -1,13 +1,12 @@
 @extends('layout')
 @section('content')
    
-
-    
     @if (session('status'))
         <div class="alert alert-success">
             {{ session('status') }}
         </div>
     @endif
+
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h1>Liste des examens</h1>
@@ -15,7 +14,7 @@
         </div>        
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-striped table-hover">
                     <thead>
                         <tr>
                             <th scope="col">Id</th>
@@ -26,14 +25,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
-                            @foreach ($examens as $examen)
+                        @foreach ($examens as $examen)
                             <tr>
                                 <td>{{ $examen->id }}</td>
                                 <td>{{ $examen->name }}</td>
                                 <td>{{ $examen->beginAt }}</td>
                                 <td>{{ $examen->endAt }}</td>
-                                <td class="d-flex ">
+                                <td class="d-flex">
                                     <a class="btn btn-primary me-2" href="{{ route('examens.edit', $examen->id) }}" role="button"><i class="far fa-edit"></i></a>
                                     <a class="btn btn-primary me-2" href="{{ route('activities.index', $examen->id) }}" role="button">Déroulé</a>
                                     <form action="{{ route('examens.destroy',$examen->id) }}" method="POST">
@@ -43,12 +41,10 @@
                                     </form>
                                 </td>
                             </tr>
-                            @endforeach
-                        
+                        @endforeach
                     </tbody>
                 </table>
             </div>
-            
         </div>
     </div>
     

@@ -3,13 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ActivitiesResource;
-use DataTables;
-use App\Models\User;
 use App\Models\Examen;
 use App\Models\Activity;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ActivityController extends Controller
@@ -30,28 +26,9 @@ class ActivityController extends Controller
     {
         $activities = Activity::all();
         $result =  ActivitiesResource::collection($activities);
-
         return response($result,200);
     }
 
-    public function listActivities( $id_examen){
-        //$activities = DB::table('activities')->select('id','beginAt','endAt','title','description','state');
-
-        $examen = Examen::findOrFail($id_examen);
-        $activities = $examen->activities;
-            
-        return datatables()->of($activities)
-            ->addColumn('action',function($activity){
-                $btn = '';
-                $btn .= '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formEditModal" data-exam="'.$activity->examen_id.'" data-id="'.$activity->id.'" onclick="getData(this)">Modifier</button>';
-                return $btn;
-            })
-            ->rawColumns(['action'])
-            ->make(true);
-        
-                        
-    }
-    
 
     /**
      * Show the form for creating a new resource.

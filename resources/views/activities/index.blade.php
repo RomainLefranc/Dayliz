@@ -3,14 +3,12 @@
 @section('content')
 
     <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h1>Déroulé de l'examen {{$examen->name}}</h1>
-                
-                    <a href="#"><button type="button" class="btn btn-success" data-bs-toggle="modal"
-                        data-bs-target="#formCreate"><i class="fas fa-plus"></i></button></a>
-            </div>
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h1>Déroulé de l'examen {{$examen->name}}</h1>
+            <a href="#"><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formCreate"><i class="fas fa-plus"></i></button></a>
+        </div>
         <div class="card-body table-responsive">
-            <table class="table table-bordered table-striped table-hover" id="dataTableActivities">
+            <table class="table table-bordered table-striped table-hover" >
                 <thead>
                     <tr>
                         <th scope="col">Titre</th>
@@ -29,9 +27,9 @@
                             <td scope="col">{{ $activity->description }}</td>
                             <td scope="col">{{ $activity->order }}</td>
                             <td class="d-flex">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formEditModal"
+                                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#formEditModal"
                                     data-exam="{{ $activity->examen_id }}" data-id="{{ $activity->id }}"
-                                    onclick="getData(this)">Modifier
+                                    onclick="getData(this)"><i class="far fa-edit"></i>
                                 </button>
                                 <form action="{{ route('activities.destroy',[$examen->id,$activity->id]) }}" method="POST" >
                                     @csrf
@@ -129,7 +127,6 @@
     @push('scripts')
         <script src="{{ asset('js/app.js') }}"></script>
         <script src="{{ asset('js/editModal.js') }}"></script>
-
     @endpush
 
 @endsection

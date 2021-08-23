@@ -13,7 +13,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table">
+                <table class="table table-striped table-hover">
                     <thead>
                         <tr>
                             <th scope="col">Id</th>
@@ -22,8 +22,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
-                            @foreach ($roles as $role)
+                        @foreach ($roles as $role)
                             <tr>
                                 <td>{{ $role->id }}</td>
                                 <td>{{ $role->name }}</td>
@@ -31,12 +30,10 @@
                                     <a class="btn btn-primary" href="{{ route('roles.edit', $role->id) }}" role="button"><i class="far fa-edit"></i></a>
                                 </td>
                             </tr>
-                            @endforeach
-                        
+                        @endforeach
                     </tbody>
                 </table>
             </div>
-            
         </div>
       </div>
 

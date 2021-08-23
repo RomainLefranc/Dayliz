@@ -1,6 +1,5 @@
 @extends('layout')
 @section('content')
-    @include('dataTables')
     
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
@@ -9,7 +8,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table align-middle table-striped table-hover" id="dataTableUser">
+                <table class="table align-middle table-striped table-hover">
                     <thead>
                         <tr>
                             <th scope="col">Nom</th>
@@ -29,9 +28,9 @@
                                 <td scope="col">{{ $user->promotion->name }}</td>
                                 <td scope="col">
                                     @if ($user->tokenRandom)
-                                    <a class="btn btn-primary" href="{{ route('users.generate', $user->id) }}" role="button"><i class="fas fa-redo-alt"></i></a> {{ $user->tokenRandom }}
+                                        <a class="btn btn-primary" href="{{ route('users.generate', $user->id) }}" role="button"><i class="fas fa-redo-alt"></i></a> {{ $user->tokenRandom }}
                                     @else
-                                    <a class="btn btn-primary" href="{{ route('users.generate', $user->id) }}" role="button"><i class="fas fa-plus"></i></a>
+                                        <a class="btn btn-primary" href="{{ route('users.generate', $user->id) }}" role="button"><i class="fas fa-plus"></i></a>
                                     @endif  
                                 </td>
                                 <td scope="col">
@@ -42,7 +41,6 @@
                                         <a class="btn btn-danger" href="{{ route('users.desactivate', $user->id) }}" role="button"><i class="fas fa-trash"></i></a>
                                     @endif
                                 </td>
-            
                             </tr>
                         @endforeach
                     </tbody>

@@ -7,13 +7,9 @@ use App\Http\Resources\UsersResource;
 use Carbon\Carbon;
 use App\Models\Role;
 use App\Models\User;
-use App\Models\Activity;
 use App\Models\Promotion;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use DataTables;
-use Symfony\Component\VarDumper\Cloner\Data;
 
 class UserController extends Controller
 {
@@ -195,26 +191,16 @@ class UserController extends Controller
 
     public function desactivate($id){
 
-        $user = User::find($id);
-        if ($user) {
-
-            $user->state = false;
-            $user->save();
-    
-            return back();        
-        }
-        return back();        
+        $user = User::findOrFail($id);
+        $user->state = false;
+        $user->save();
+        return back();      
     }
     
     public function activate($id){
-        $user = User::find($id);
-        if ($user) {
-            
-            $user->state = true;
-            $user->save();
-    
-            return back();        
-        }
+        $user = User::findOrFail($id);
+        $user->state = true;
+        $user->save();
         return back();
 
     }

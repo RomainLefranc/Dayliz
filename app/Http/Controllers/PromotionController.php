@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ExamensResource;
 use App\Http\Resources\PromotionResource;
 use App\Models\Promotion;
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -146,5 +145,22 @@ class PromotionController extends Controller
             $examens = $promotion->examens()->where('beginAt','like','%'.$dateNow.'%')->get();
             return ExamensResource::collection($examens);
         }
+    }
+
+
+    public function desactivate($id){
+
+        $promotion = Promotion::findOrFail($id);
+        $promotion->state = false;
+        $promotion->save();
+        return back();       
+    }
+    
+    public function activate($id){
+        $promotion = Promotion::findOrFail($id);
+        $promotion->state = true;
+        $promotion->save();
+        return back();  
+
     }
 }
