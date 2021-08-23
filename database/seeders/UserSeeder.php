@@ -21,6 +21,7 @@ class UserSeeder extends Seeder
                 "firstName" => $faker->firstName(),
                 "lastName" => $faker->lastName(),
                 "email" => $faker->email,
+                "password" => bcrypt("Test1234"),
                 "phoneNumber" => $faker->phoneNumber,
                 "birthDay" => $faker->date(),
                 "promotion_id" => 1,
