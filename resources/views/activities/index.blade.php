@@ -90,7 +90,7 @@
                     <div class="modal-header">
                         <h1 id="formEditTitle"></h1>
                     </div>
-                    <form id="formEdit"  action="{{ route('activities.update', [$examen->id, $activity->id]) }}" method="POST">
+                    <form id="formEdit" {{--  action="{{ route('activities.update', [ $activity->id,$examen->id]) }}" --}} method="POST"> 
                         @csrf
                         @method('patch')
                         <div class="mb-3">
@@ -116,7 +116,7 @@
                             @endif
                         </div>
                         <div class="mb-3">
-                            <button type="submit" class="btn btn-primary">Modifier</button>
+                            <button type="submit" class="btn btn-primary" >Modifier</button>
                         </div>
                     </form>
                 </div>

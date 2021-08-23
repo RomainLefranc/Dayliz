@@ -134,10 +134,12 @@ class ActivityController extends Controller
     public function update(Request $request, $id, $id_examen)
     {
         $examen = Examen::findOrFail($id_examen);
+        
         $activity = Activity::findOrFail($id);
+
         $validator = Validator::make($request->all(),[
             'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù ]+$/',
-            'duree' => 'required|date_format:H:i',
+            'duree' => 'required|date_format:H:i:s',
             'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i'
         ]);
 
