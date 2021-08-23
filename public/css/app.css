@@ -1,56 +1,57 @@
-.nav li {
+body {
+    /* background: url(Wave.svg) repeat-x center bottom / contain;
+    height: 100vh; */
+}
+
+.nav-item.active {
     position: relative;
 }
+.nav-link,
+.nav-tabs {
+    border: none !important;
+}
 
-.nav li::before,
-.nav li::after,
-.nav li a::before,
-.nav li a::after {
+.nav-link.active::before,
+.nav-link.active::after {
     position: absolute;
-    bottom: 0;
-}
-
-.nav .active::after,
-.nav .active::before,
-.nav .active a::after,
-.nav .active a::before {
     content: "";
-}
-
-.nav li::before,
-.nav li::after {
-}
-
-.nav li .active:after,
-.nav li a .active::after {
-    right: -20px;
-}
-
-.nav li .active:before,
-.nav li a .active::before {
-    left: -20px;
-}
-
-.nav li a::after,
-.nav li a::before {
-    width: 20px;
-    height: 20px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    background: rgb(184, 30, 30);
-    z-index: 2;
-}
-
-.nav li::after,
-.nav li::before {
-    background: #ddc385;
+    bottom: 0;
     width: 10px;
     height: 10px;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
     border-radius: 10px;
-    z-index: 1;
+    background: #212529;
+    z-index: 10 !important;
 }
-.nav li .active::after {
+.nav-link.active::after {
+    right: -10px;
+}
+.nav-link.active::before {
+    left: -10px;
+}
+
+.nav-item.active::before,
+.nav-item.active::after {
+    position: absolute;
+    content: "";
+    bottom: 0;
+    width: 5px;
+    height: 5px;
+    background: rgb(255, 255, 255);
+}
+.nav-item.active::after {
+    left: -5px;
+}
+.nav-item.active::before {
+    right: -5px;
+}
+
+.nav-item.active:hover,
+.nav-item.active:hover {
+    z-index: 10;
+}
+.nav-item a {
+    color: white;
+}
+.nav-item a:hover {
+    color: grey;
 }
