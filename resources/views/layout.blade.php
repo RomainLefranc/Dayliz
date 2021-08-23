@@ -39,16 +39,16 @@
 
     <div id="wrapper">
         <ul class="nav nav-tabs mb-2 bg-dark pt-2">
-            <li class="nav-item">
+            <li class="nav-item {{ Request::segment(1) === 'users' ? 'active' : '' }}">
               <a class="nav-link {{ Request::segment(1) === 'users' ? 'active' : '' }}" aria-current="page" href="{{ route('users.index') }}">Utilisateurs</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {{ Request::segment(1) === 'roles' ? 'active' : '' }}">
                 <a class="nav-link  {{ Request::segment(1) === 'roles' ? 'active' : '' }}" aria-current="page" href="{{ route('roles.index') }}">Rôles</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {{ Request::segment(1) === 'promotions' ? 'active' : '' }}">
                 <a class="nav-link  {{ Request::segment(1) === 'promotions' ? 'active' : '' }}" aria-current="page" href="{{ route('promotions.index') }}">Promotions</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {{ Request::segment(1) === 'examens' ? 'active' : '' }}">
                 <a class="nav-link  {{ Request::segment(1) === 'examens' ? 'active' : '' }}" aria-current="page" href="{{ route('examens.index') }}">Examens</a>
             </li>
 
