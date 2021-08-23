@@ -73,11 +73,17 @@ class ActivityController extends Controller
     public function store(Request $request, $id_examen)
     {
         $examen = Examen::findOrFail($id_examen);
-        $request->validate([
+
+        $validator = Validator::make($request->all(),[
             'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù ]+$/',
             'duree' => 'required|date_format:H:i',
             'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i'
         ]);
+
+        if ($validator->fails())
+        {
+            return redirect()->route('activities.index', $examen->id); 
+        }
 
         $activity = new Activity([
             'title' => $request->get('title'),
@@ -129,11 +135,16 @@ class ActivityController extends Controller
     {
         $examen = Examen::findOrFail($id_examen);
         $activity = Activity::findOrFail($id);
-        $request->validate([
+        $validator = Validator::make($request->all(),[
             'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù ]+$/',
             'duree' => 'required|date_format:H:i',
             'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i'
         ]);
+
+        if ($validator->fails())
+        {
+            return redirect()->route('activities.index', $examen->id); 
+        }
 
         $activity->title = $request->get('title');
         $activity->duree = $request->get('duree');
