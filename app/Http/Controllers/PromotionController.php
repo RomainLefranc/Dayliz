@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ExamensResource;
 use App\Http\Resources\PromotionResource;
 use App\Models\Promotion;
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 

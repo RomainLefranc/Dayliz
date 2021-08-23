@@ -7,13 +7,9 @@ use App\Http\Resources\UsersResource;
 use Carbon\Carbon;
 use App\Models\Role;
 use App\Models\User;
-use App\Models\Activity;
 use App\Models\Promotion;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use DataTables;
-use Symfony\Component\VarDumper\Cloner\Data;
 
 class UserController extends Controller
 {
