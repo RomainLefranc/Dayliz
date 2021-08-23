@@ -22,6 +22,8 @@ class PromotionController extends Controller
         return view('promotions.index',compact('promotions'));
     }
 
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -32,6 +34,10 @@ class PromotionController extends Controller
         return view('promotions.create');
     }
 
+    public function getPromotions()
+    {
+        return PromotionResource::collection(Promotion::all());
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -56,7 +62,7 @@ class PromotionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function showPromotion($id)
     {
         return new PromotionResource(Promotion::findOrFail($id));
     }

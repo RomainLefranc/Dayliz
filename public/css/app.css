@@ -1,1 +1,56 @@
+.nav li {
+    position: relative;
+}
 
+.nav li::before,
+.nav li::after,
+.nav li a::before,
+.nav li a::after {
+    position: absolute;
+    bottom: 0;
+}
+
+.nav .active::after,
+.nav .active::before,
+.nav .active a::after,
+.nav .active a::before {
+    content: "";
+}
+
+.nav li::before,
+.nav li::after {
+}
+
+.nav li .active:after,
+.nav li a .active::after {
+    right: -20px;
+}
+
+.nav li .active:before,
+.nav li a .active::before {
+    left: -20px;
+}
+
+.nav li a::after,
+.nav li a::before {
+    width: 20px;
+    height: 20px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    background: rgb(184, 30, 30);
+    z-index: 2;
+}
+
+.nav li::after,
+.nav li::before {
+    background: #ddc385;
+    width: 10px;
+    height: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    z-index: 1;
+}
+.nav li .active::after {
+}

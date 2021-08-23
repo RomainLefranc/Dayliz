@@ -19,6 +19,10 @@ class ExamenController extends Controller
         $examens = Examen::paginate(10);
         return view('examens.index',compact('examens'));
     }
+    public function getExamens()
+    {
+        return ExamensResource::collection(Examen::all());
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -65,7 +69,7 @@ class ExamenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function showExamen($id)
     {
         return new ExamensResource(Examen::findOrFail($id));
     }
