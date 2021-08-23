@@ -32,7 +32,7 @@ class UserController extends Controller
     public function getUsers()
     {
         $users = User::all();
-        return response($users->toJson(),200);
+        return UsersResource::collection($users);
     }
 
 
@@ -87,7 +87,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function showUser($id)
     {
         $user = User::findOrFail($id);
         return new UsersResource($user);

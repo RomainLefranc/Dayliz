@@ -48,3 +48,10 @@ Route::get('examens/{id_examen}/listActivities',[ActivityController::class,'list
 /******/
 
 Route::get('api/users',[UserController::class,'getUsers']);
+Route::get('api/users/{id}',[UserController::class,'showUser']);
+
+Route::get('api/promotions',[PromotionController::class,'getPromotions']);
+Route::get('api/promotions/{id}',[PromotionController::class,'showPromotion']);
+
+Route::get('api/examens',[ExamenController::class,'getExamens']);
+Route::get('api/examens/{id}',[ExamenController::class,'showExamen']);
