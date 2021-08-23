@@ -36,7 +36,8 @@ class PromotionController extends Controller
 
     public function getPromotions()
     {
-        return PromotionResource::collection(Promotion::all());
+        $promotions = PromotionResource::collection(Promotion::all());
+        return response($promotions,200);
     }
     /**
      * Store a newly created resource in storage.

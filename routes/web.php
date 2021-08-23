@@ -55,3 +55,5 @@ Route::get('api/promotions/{id}',[PromotionController::class,'showPromotion']);
 
 Route::get('api/examens',[ExamenController::class,'getExamens']);
 Route::get('api/examens/{id}',[ExamenController::class,'showExamen']);
+
+Route::get('api/activities',[ActivityController::class,'getActivities']);

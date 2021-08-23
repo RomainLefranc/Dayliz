@@ -31,8 +31,8 @@ class UserController extends Controller
 
     public function getUsers()
     {
-        $users = User::all();
-        return UsersResource::collection($users);
+        $users =  UsersResource::collection(User::all());
+        return response($users,200);
     }
 
 

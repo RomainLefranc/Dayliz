@@ -25,6 +25,14 @@ class ActivityController extends Controller
         return view("activities.index", compact('examen'));
     }
 
+    public function getActivities()
+    {
+        $activities = Activity::all();
+        $result =  ActivitiesResource::collection($activities);
+
+        return response($result,200);
+    }
+
     public function listActivities( $id_examen){
         //$activities = DB::table('activities')->select('id','beginAt','endAt','title','description','state');
 

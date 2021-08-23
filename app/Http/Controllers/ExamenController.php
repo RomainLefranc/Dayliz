@@ -21,7 +21,8 @@ class ExamenController extends Controller
     }
     public function getExamens()
     {
-        return ExamensResource::collection(Examen::all());
+        $result = ExamensResource::collection(Examen::all());
+        return response($result,200);
     }
 
     /**
