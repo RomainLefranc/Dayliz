@@ -43,3 +43,8 @@ Route::get('examens/{id_examen}/activities/{id}/desactivate', [ActivityControlle
 Route::get('examens/{id_examen}/activities/{id}/show', [ActivityController::class, 'show']);
 Route::patch('examens/{id_examen}/activities/{id}/update', [ActivityController::class, 'update']);
 Route::get('examens/{id_examen}/listActivities',[ActivityController::class,'listActivities'])->name('activities.list');
+
+
+/******/
+
+Route::get('api/users',[UserController::class,'getUsers']);

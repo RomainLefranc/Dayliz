@@ -29,6 +29,13 @@ class UserController extends Controller
         return view('users.index',compact('users'));
     }
 
+    public function getUsers()
+    {
+        $users = User::all();
+        return response($users->toJson(),200);
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
