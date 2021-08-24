@@ -14,13 +14,14 @@
         </div>        
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-striped table-hover">
+                <table class="table table-striped table-hover align-middle">
                     <thead>
                         <tr>
                             <th scope="col">Id</th>
                             <th scope="col">Nom</th>
                             <th scope="col">Date de début</th>
                             <th scope="col">Date de fin</th>
+                            <th scope="col">Promotion(s)</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -31,10 +32,22 @@
                                 <td>{{ $examen->name }}</td>
                                 <td>{{ $examen->beginAt }}</td>
                                 <td>{{ $examen->endAt }}</td>
-                                <td class="d-flex">
+                                <td>
+                                    
+                                    @if(count($examen->promotions) > 0 )     
+                                            @foreach ($examen->promotions as $promotion)
+                                                <li >
+                                                    {{ $promotion->name }}
+                                                </li>
+                                            @endforeach                               
+                                    @else 
+                                    Aucune promotion
+                                @endif
+                                </td>
+                                <td>
                                     <a class="btn btn-primary me-2" href="{{ route('examens.edit', $examen->id) }}" role="button"><i class="far fa-edit"></i></a>
                                     <a class="btn btn-primary me-2" href="{{ route('activities.index', $examen->id) }}" role="button">Déroulé</a>
-                                    <form action="{{ route('examens.destroy',$examen->id) }}" method="POST">
+                                    <form action="{{ route('examens.destroy',$examen->id) }}" method="POST" class="d-inline">
                                         @csrf
                                         @method("delete")
                                         <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>
