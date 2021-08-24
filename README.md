@@ -43,6 +43,11 @@ Modifier les informations de connexion à la BDD.
 | Admin       | Génerer le token d'une promo     | Voir des planning            | CRUD promo           |  |
 | Admin       | Ajouter une promotion       | Gérer des planning                | CRUD promo           | Terminé|
 
+## En ligne 
+
+Ajouter la variable d'environnement `L5_SWAGGER_CONST_HOST` qui est égale à la base url 
+
+Ex : L5_SWAGGER_CONST_HOST='https://dayliz.herokuapp.com//api'
 
 ## MCD Gaultier
 
