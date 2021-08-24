@@ -1,10 +1,12 @@
 # Dayliz
 
-## Initialisation du projet
 
 ## Documentation de l'API
 
 BASE_URL + /api/documentation
+
+
+## Initialisation du projet
 
 ### Cloner le projet
 
