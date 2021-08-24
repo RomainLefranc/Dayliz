@@ -25,6 +25,40 @@ class UserController extends Controller
         return view('users.index',compact('users'));
     }
 
+     /**
+     * @OA\Get(
+     *      path="/users",
+     *      operationId="getUsers",
+     *      tags={"Users"},
+
+     *      summary="Get List Of Users",
+     *      description="Returns all users",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     * @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     * @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *  )
+     */
+
     public function getUsers()
     {
         $users =  UsersResource::collection(User::all());

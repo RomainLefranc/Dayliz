@@ -18,20 +18,59 @@ class ActivityController extends Controller
     public function index($id_examen)
     {
         $examen = Examen::findOrFail($id_examen);
-        $activities = Activity::where('examen_id','=',$id_examen)->paginate(10);
-        return view("activities.index", compact('activities','examen'));
+        $activities = Activity::where('examen_id', '=', $id_examen)->paginate(10);
+        return view("activities.index", compact('activities', 'examen'));
     }
 
     public function getActivities()
     {
         $activities = Activity::all();
         $result =  ActivitiesResource::collection($activities);
-        return response($result,200);
+        return response($result, 200);
     }
 
+    /**
+     * @OA\Get(
+     *      path="/activities/user/{iduser}",     
+     *      operationId="getActivitiesUser",
+     *      tags={"Users"},
+     *      summary="Obtenir la liste d'activité d'un utilisateur",
+     *      description="Obtenir la liste d'activité d'un utilisateur",
+     *  @OA\Parameter(
+     *      name="iduser",
+     *      in="path",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     * @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     * @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *  )
+     */
     public function getActivitiesUser($iduser)
     {
-        return Activity::where('user_id','=',$iduser)->get();
+        return Activity::where('user_id', '=', $iduser)->get();
     }
 
 
@@ -55,35 +94,33 @@ class ActivityController extends Controller
     {
         $examen = Examen::findOrFail($id_examen);
 
-        $order = count($examen->activities)+1;
+        $order = count($examen->activities) + 1;
 
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù. ]+$/',
             'duree' => 'required',
             'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i',
         ]);
 
-        if ($validator->fails())
-        {
-            return redirect()->route('activities.index', $examen->id); 
+        if ($validator->fails()) {
+            return redirect()->route('activities.index', $examen->id);
         }
 
-        $dureeArr = explode(':',$request->get('duree'));
+        $dureeArr = explode(':', $request->get('duree'));
         $duree = (intval($dureeArr[0]) * 3600) + (intval($dureeArr[1]) * 60);
 
         $activity = new Activity([
             'title' => $request->get('title'),
             'duree' => $duree,
-            'order'=> $order,
+            'order' => $order,
             'description' => $request->get('description'),
             'state' => true,
             'examen_id' => $examen->id
         ]);
 
         $activity->save();
-        
-        return redirect()->route('activities.index', $examen->id);       
 
+        return redirect()->route('activities.index', $examen->id);
     }
 
     /**
@@ -92,7 +129,7 @@ class ActivityController extends Controller
      * @param  \App\Models\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function show($id_examen,$id)
+    public function show($id_examen, $id)
     {
         $activity = Activity::findOrFail($id);
         return new ActivitiesResource($activity);
@@ -104,11 +141,11 @@ class ActivityController extends Controller
      * @param  \App\Models\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function edit($id , $id_examen)
+    public function edit($id, $id_examen)
     {
         $examen = Examen::findOrFail($id_examen);
         $activity = Activity::findOrFail($id);
-        return view('activities.edit', compact('activity'));        
+        return view('activities.edit', compact('activity'));
     }
 
     /**
@@ -122,23 +159,22 @@ class ActivityController extends Controller
     {
 
         $examen = Examen::findOrFail($id_examen);
-        
+
         $activity = Activity::findOrFail($id);
 
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù. ]+$/',
             'duree' => 'required',
             'description' => 'required|min:3|max:255|regex:/^[A-Za-z0-9 éàôèù\"\'!?,;.:()]+$/i'
         ]);
 
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             dd($validator->errors());
-            return redirect()->route('activities.index', $examen->id); 
+            return redirect()->route('activities.index', $examen->id);
         }
 
-        
-        $dureeArr = explode(':',$request->get('duree'));
+
+        $dureeArr = explode(':', $request->get('duree'));
         $duree = (intval($dureeArr[0]) * 3600) + (intval($dureeArr[1]) * 60);
 
         $activity->title = $request->get('title');
@@ -147,7 +183,7 @@ class ActivityController extends Controller
 
         $activity->save();
 
-        return redirect()->route('activities.index',$examen->id);   
+        return redirect()->route('activities.index', $examen->id);
     }
 
     /**
@@ -163,5 +199,4 @@ class ActivityController extends Controller
         $activity->delete();
         return back();
     }
-
 }

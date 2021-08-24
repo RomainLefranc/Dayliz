@@ -50,6 +50,45 @@ class ExamenController extends Controller
         return response($results, 200);
     }
 
+        /**
+     * @OA\Get(
+     *      path="/examens/promo/{id}",     
+     *      operationId="getExamensPromo",
+     *      tags={"Examens"},
+     *      summary="Obtenir la liste d'examens d'une promotion",
+     *      description="Obtenir la liste d'examens d'une promotion",
+     *  @OA\Parameter(
+     *      name="id",
+     *      in="path",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     * @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     * @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *  )
+     */
     public function getExamensPromo($id)
     {
         return new PromotionResource(Promotion::findOrFail($id));
