@@ -29,6 +29,11 @@ class ActivityController extends Controller
         return response($result,200);
     }
 
+    public function getActivitiesUser($iduser)
+    {
+        return Activity::where('user_id','=',$iduser)->get();
+    }
+
 
     /**
      * Show the form for creating a new resource.

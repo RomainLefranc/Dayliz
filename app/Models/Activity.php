@@ -35,4 +35,10 @@ class Activity extends Model
     {
         return $this->belongsTo(Examen::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

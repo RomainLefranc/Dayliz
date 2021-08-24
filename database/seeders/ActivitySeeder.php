@@ -26,7 +26,8 @@ class ActivitySeeder extends Seeder
                 //"duree" => $faker->time('H:i'),
                 "duree" => $faker->numberBetween(60,86400),
                 'order' => $i+1,
-                "examen_id" => $faker->numberBetween(1,2)
+                "examen_id" => $faker->numberBetween(1,2),
+                "user_id" => $faker->numberBetween(1,19)
             ]);
 
         }

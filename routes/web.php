@@ -62,5 +62,5 @@ Route::get('api/examens/apprenant/{iduser}',[ExamenController::class,'getExamens
 Route::get('api/examens/promo/{id}',[ExamenController::class,'getExamensPromo']);
 
 Route::get('api/activities',[ActivityController::class,'getActivities']);
-
+Route::get('api/activities/{iduser}',[ActivityController::class,'getActivitiesUser']);
 
