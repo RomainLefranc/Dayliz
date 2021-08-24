@@ -22,6 +22,8 @@ Route::get('/', function () {
     return redirect('/users');
 });
 
+Route::middleware(['auth', 'CheckRole:user'])->group(function () {
+
 Route::resource('roles', RoleController::class);
 
 Route::resource('users',UserController::class);
@@ -48,3 +50,22 @@ Route::get('examens/{id_examen}/listActivities',[ActivityController::class,'list
 /******/
 
 Route::get('api/users',[UserController::class,'getUsers']);
+
+/**
+ * test authentification
+ */
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+});
+
+require __DIR__.'/auth.php';
+
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/t', function () {
+        return 'bonjour';
+    })->middleware(['auth', 'CheckRole:admin']);

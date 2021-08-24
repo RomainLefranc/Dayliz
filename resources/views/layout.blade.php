@@ -50,6 +50,32 @@
                 <a class="nav-link  {{ Request::segment(1) === 'examens' ? 'active' : '' }}" aria-current="page" href="{{ route('examens.index') }}">Examens</a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link  {{ Request::segment(1) === 'examens' ? 'active' : '' }}" aria-current="page" href="{{ route('examens.index') }}">Examens</a>
+            </li>
+
+            
+                <li class="navbar-nav nav-item dropdown">
+                  <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                      {{ Auth::user()->lastName }} <i class="now-ui-icons sport_user-run"></i>
+                  </a>
+  
+                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                      <a class="dropdown-item" href="{{ route('logout') }}"
+                         onclick="event.preventDefault();
+                                       document.getElementById('logout-form').submit();">
+                          {{ __('Déconnexion') }}
+                      </a>
+  
+                      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                          @csrf
+                      </form>
+                  </div>
+              </li>
+             
+              
+            
+
         </ul>
      
 
