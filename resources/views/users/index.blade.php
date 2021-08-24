@@ -11,6 +11,7 @@
                 <table class="table align-middle table-striped table-hover">
                     <thead>
                         <tr>
+                            <th scope="col">Id</th>
                             <th scope="col">Nom</th>
                             <th scope="col">Prénom</th>
                             <th scope="col">Rôle</th>
@@ -22,6 +23,7 @@
                     <tbody>
                         @foreach ($users as $user)
                             <tr>
+                                <td scope="col">{{ $user->id }}</td>
                                 <td scope="col">{{ $user->firstName }}</td>
                                 <td scope="col">{{ $user->lastName }}</td>
                                 <td scope="col">{{ $user->role->name }}</td>

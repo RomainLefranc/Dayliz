@@ -26,7 +26,6 @@ class User extends Authenticatable
         'email',
         'password',
         'tokenRandom',
-        'state'
     ];
 
     /**
@@ -38,13 +37,10 @@ class User extends Authenticatable
         'password',
         'remember_token',
         'tokenRandom',
-        'role_id',
-        'promotion_id',
         'email_verified_at',
         'created_at',
         'updated_at',
         'state',
-        'id'
     ];
 
     /**

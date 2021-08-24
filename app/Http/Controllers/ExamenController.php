@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ExamensResource;
+use App\Http\Resources\PromotionResource;
+use App\Models\Activity;
 use App\Models\Examen;
 use App\Models\Promotion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 class ExamenController extends Controller
 {
@@ -17,13 +21,40 @@ class ExamenController extends Controller
     public function index()
     {
         $examens = Examen::paginate(10);
-        return view('examens.index',compact('examens'));
+        return view('examens.index', compact('examens'));
     }
     public function getExamens()
     {
         $result = ExamensResource::collection(Examen::all());
-        return response($result,200);
+        return response($result, 200);
     }
+
+    public function getExamensUser($iduser)
+    {
+        //On récupère l'id de la promotion de l'user
+        $user = User::find($iduser);
+
+
+        $promotion = $user->promotion_id;
+
+        //On récupère les id des examens de cette promotion
+        $examens = DB::table('examen_promotion')->select('examen_id')->where('promotion_id', '=', $promotion)->get();
+
+        $results = [];
+
+        foreach ($examens as $id) {
+            $activities = Activity::where('examen_id', '=', $id->examen_id)->get();
+            array_push($results, $activities);
+        }
+
+        return response($results, 200);
+    }
+
+    public function getExamensPromo($id)
+    {
+        return new PromotionResource(Promotion::findOrFail($id));
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -33,7 +64,7 @@ class ExamenController extends Controller
     public function create()
     {
         $promotions = Promotion::all();
-        return view('examens.create',compact('promotions'));
+        return view('examens.create', compact('promotions'));
     }
 
     /**
@@ -86,10 +117,10 @@ class ExamenController extends Controller
         $examen = Examen::findOrFail($id);
         $promotions = Promotion::all();
         $cur_ids = [];
-        foreach($examen->promotions as $promotion){
+        foreach ($examen->promotions as $promotion) {
             $cur_ids[] = $promotion->id;
         }
-        return view('examens.edit',compact('examen','promotions','cur_ids'));
+        return view('examens.edit', compact('examen', 'promotions', 'cur_ids'));
     }
 
     /**
@@ -116,14 +147,14 @@ class ExamenController extends Controller
         $examen->save();
 
         $cur_ids = [];
-        foreach($examen->promotions as $promotion){
+        foreach ($examen->promotions as $promotion) {
             $cur_ids[] = $promotion->id;
         }
         $examen->promotions()->detach($cur_ids);
         $promotions = $request->get('promotion');
         $examen->promotions()->attach($promotions);
 
-        return redirect()->route('examens.index');   
+        return redirect()->route('examens.index');
     }
 
     /**

@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
                 "email" => $faker->email,
                 "phoneNumber" => $faker->phoneNumber,
                 "birthDay" => $faker->date(),
-                "promotion_id" => 1,
+                "promotion_id" => $faker->numberBetween(1,2),
                 "role_id" => 1,
                 "state" => true
             ]);

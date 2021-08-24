@@ -20,6 +20,11 @@ class Activity extends Model
 
     protected $table = "activities";
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
     /**
      * The users that belong to the Activities
      *

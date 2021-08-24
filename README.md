@@ -26,7 +26,7 @@ Modifier les informations de connexion à la BDD.
 | Utilisateur | Me connecter                | D'accéder à l'appli               | Authentification        |  WIP          |
 | Utilisateur | Me déconnecter              | De quitter l'appli                | Authentification        |  WIP          |
 | Utilisateur | Ajouter une activité        | Gérer mes activités               | CRUD activité           | Terminé    |
-| Utilisateur | Voir mes activités          | Avoir une vision de mes activités | CRUD activité           | Terminé    |
+| Utilisateur | Voir mes activités          | Avoir une vision de mes activités | CRUD activité           |     WP   |
 | Admin       | Créer un utilisateur        | Lui permettre de se connecter     | CRUD compte utilisateur | Terminé    |
 | Admin       | Désactiver un utilisateur   | Supprimer son compte              | CRUD compte utilisateur | Terminé    |
 | Admin       | Me connecter                | D'accéder à l'appli               | Authentification        |WIP

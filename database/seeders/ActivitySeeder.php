@@ -17,7 +17,7 @@ class ActivitySeeder extends Seeder
     {
         $faker = \Faker\Factory::create();
 
-        for ($i = 0; $i < 51; $i++) {
+        for ($i = 0; $i < 20; $i++) {
 
             Activity::create([
                 "title" => $faker->text(50),
@@ -26,7 +26,7 @@ class ActivitySeeder extends Seeder
                 //"duree" => $faker->time('H:i'),
                 "duree" => $faker->numberBetween(60,86400),
                 'order' => $i+1,
-                "examen_id" => 1
+                "examen_id" => $faker->numberBetween(1,2)
             ]);
 
         }
