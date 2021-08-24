@@ -33,6 +33,40 @@ class PromotionController extends Controller
         return view('promotions.create');
     }
 
+             /**
+     * @OA\Get(
+     *      path="/promotions",
+     *      operationId="getPromotions",
+     *      tags={"Promotions"},
+
+     *      summary="Obtenir la liste des promotions",
+     *      description="Returns all Promotions",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     * @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     * @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *  )
+     */
+    
     public function getPromotions()
     {
         $promotions = PromotionResource::collection(Promotion::all());

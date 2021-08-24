@@ -2,6 +2,10 @@
 
 ## Initialisation du projet
 
+## Documentation de l'API
+
+BASE_URL + /api/documentation
+
 ### Cloner le projet
 
 `git clone git@github.com:RomainLefranc/Dayliz_backend.git`

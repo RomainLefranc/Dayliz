@@ -50,7 +50,7 @@ class ExamenController extends Controller
         return response($results, 200);
     }
 
-        /**
+    /**
      * @OA\Get(
      *      path="/examens/promo/{id}",     
      *      operationId="getExamensPromo",
