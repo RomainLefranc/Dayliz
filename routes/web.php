@@ -31,8 +31,8 @@ Route::get('users/{token}/activities',[UserController::class,'showActivities']);
 Route::get('users/{id}/generateToken',[UserController::class,'generateToken'])->name('users.generate');
 
 Route::resource('promotions', PromotionController::class);
-Route::get('promotions/{id}/desactivate', [PromotionController::class,'desactivate'])->name('users.desactivate');
-Route::get('promotions/{id}/activate', [PromotionController::class,'activate'])->name('users.activate');
+Route::get('promotions/{id}/desactivate', [PromotionController::class,'desactivate'])->name('promotions.desactivate');
+Route::get('promotions/{id}/activate', [PromotionController::class,'activate'])->name('promotions.activate');
 Route::get('promotions/{id}/generateToken',[PromotionController::class,'generateToken'])->name('promotions.generate');
 Route::get('promotions/{token}/activities',[PromotionController::class,'showActivities']);
 
