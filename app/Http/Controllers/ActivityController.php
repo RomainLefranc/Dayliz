@@ -235,10 +235,17 @@ class ActivityController extends Controller
     {
         $examen = Examen::findOrFail($id);
         $activity = Activity::findOrFail($id_examen);
-        if ($activity->order > 1) {
-            $activity->order--;
-            $activity->save();
-        }
+            if ($activity->order > 1) {
+                $remplaçant = Activity::where('order', '=', $activity->order-1)->first();
+                if ($remplaçant) {
+                    $remplaçant->order = $activity->order;
+                    $remplaçant->save();
+                }
+                $activity->order--;
+                $activity->save();
+            }
+        
+        
         return back();
     }
 
@@ -247,7 +254,12 @@ class ActivityController extends Controller
         $examen = Examen::findOrFail($id);
         $activity = Activity::findOrFail($id_examen);
         $count = Activity::where('examen_id', '=', $examen->id)->count();
-        if ($activity->order < $count) {
+        if ($activity->order < $count ) {
+            $remplaçant = Activity::where('order', '=', $activity->order+1)->first();
+            if ($remplaçant) {
+                $remplaçant->order = $activity->order;
+                $remplaçant->save();
+            } 
             $activity->order++;
             $activity->save();
         }

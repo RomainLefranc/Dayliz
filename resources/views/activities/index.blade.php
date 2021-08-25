@@ -37,12 +37,12 @@
                                 <a href={{route('activities.affectateview',[$examen->id,$activity->id])}}><button class="btn btn-primary">Affecter un apprenant</button></a>
                                 @endif
                             </td>
-                            <td scope="col" class="d-flex justify-content-around align-items-center">
+                            <div class="d-flex justify-content-around align-items-center">
                                 <a class="btn btn-primary {{ $activity->order == 1 ? 'disabled' : '' }}" href="{{ route('activities.up',[$examen->id,$activity->id]) }}" role="button"><i class="fas fa-arrow-up"></i></a>
-                                 {{ $activity->order }} 
+                                {{ $activity->order }}
                                 <a class="btn btn-primary {{ $activity->order == $count ? 'disabled' : '' }}" href="{{ route('activities.down', [$examen->id,$activity->id]) }}" role="button"><i class="fas fa-arrow-down"></i></a>
-                            </td>
-                            <td class="">
+                            </div>
+                            <td>
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formEditModal"
                                     data-exam="{{ $activity->examen_id }}" data-id="{{ $activity->id }}"
                                     onclick="getData(this)"><i class="far fa-edit"></i>
