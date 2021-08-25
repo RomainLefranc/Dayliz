@@ -14,6 +14,7 @@
                         <th scope="col">Titre</th>
                         <th scope="col">Durée</th>
                         <th scope="col">Description</th>
+                        <th scope="col">Apprenant</th>
                         <th scope="col">Ordre</th>
                         <th scope="col">Action</th>
                     </tr>
@@ -25,6 +26,7 @@
                             {{-- <td scope="col">{{ $activity->duree }}</td> --}}
                             <td scope="col">{{ gmdate('H:i', $activity->duree)  }}</td>
                             <td scope="col">{{ $activity->description }}</td>
+                            <td scope="col">{{ $activity->user->firstName}} <br /> {{$activity->user->lastName}}</td>
                             <td scope="col">{{ $activity->order }}</td>
                             <td class="d-flex">
                                 <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#formEditModal"
