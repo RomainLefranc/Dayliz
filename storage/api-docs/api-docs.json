@@ -19,13 +19,163 @@
         }
     ],
     "paths": {
+        "/activities": {
+            "get": {
+                "tags": [
+                    "Activities"
+                ],
+                "summary": "Obtenir les activités",
+                "description": "Obtenir les activités",
+                "operationId": "getActivities",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "not found"
+                    }
+                }
+            }
+        },
+        "/activities/{id}": {
+            "get": {
+                "tags": [
+                    "Activities"
+                ],
+                "summary": "Obtenir un activité",
+                "description": "Obtenir un activité",
+                "operationId": "showActivities",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "not found"
+                    }
+                }
+            }
+        },
+        "/activities/{id}/user": {
+            "get": {
+                "tags": [
+                    "Activities"
+                ],
+                "summary": "Obtenir l'utilisateur assigné a l'activité",
+                "description": "Obtenir l'utilisateur assigné a l'activité",
+                "operationId": "showActivitiesUser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "not found"
+                    }
+                }
+            }
+        },
+        "/activities/{id}/examen": {
+            "get": {
+                "tags": [
+                    "Activities"
+                ],
+                "summary": "Obtenir l'examen assigné a l'activité",
+                "description": "Obtenir l'examen assigné a l'activité",
+                "operationId": "showActivitiesExamen",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "not found"
+                    }
+                }
+            }
+        },
         "/examens": {
             "get": {
                 "tags": [
                     "Examens"
                 ],
-                "summary": "Get List Of Examens",
-                "description": "Returns all examens",
+                "summary": "Obtenir la liste des examens",
+                "description": "Obtenir la liste des examens",
                 "operationId": "getExamens",
                 "responses": {
                     "200": {
@@ -49,17 +199,17 @@
                 }
             }
         },
-        "/activities/user/{iduser}": {
+        "/examens/{id}": {
             "get": {
                 "tags": [
-                    "Users"
+                    "Examens"
                 ],
-                "summary": "Obtenir la liste d'activité d'un utilisateur",
-                "description": "Obtenir la liste d'activité d'un utilisateur",
-                "operationId": "getActivitiesUser",
+                "summary": "Obtenir un examen",
+                "description": "Obtenir un examen",
+                "operationId": "showExamen",
                 "parameters": [
                     {
-                        "name": "iduser",
+                        "name": "id",
                         "in": "path",
                         "required": true,
                         "schema": {
@@ -89,21 +239,61 @@
                 }
             }
         },
-        "/examens/promo/{id}": {
+        "/examens/{id}/promotion": {
             "get": {
                 "tags": [
                     "Examens"
                 ],
-                "summary": "Obtenir la liste d'examens d'une promotion",
-                "description": "Obtenir la liste d'examens d'une promotion",
-                "operationId": "getExamensPromo",
+                "summary": "Obtenir les promotions d'un examen",
+                "description": "Obtenir les promotions d'un examen",
+                "operationId": "showExamenPromotion",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "not found"
+                    }
+                }
+            }
+        },
+        "/examens/{id}/activities": {
+            "get": {
+                "tags": [
+                    "Examens"
+                ],
+                "summary": "Récupérer les activités d'un examen",
+                "description": "Récupérer les activités d'un examen",
+                "operationId": "showExamenActivities",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
                         }
                     }
                 ],
@@ -159,6 +349,126 @@
                 }
             }
         },
+        "/promotions/{id}": {
+            "get": {
+                "tags": [
+                    "Promotions"
+                ],
+                "summary": "Obtenir une promotion",
+                "description": "Obtenir une promotion",
+                "operationId": "showPromotion",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "not found"
+                    }
+                }
+            }
+        },
+        "/promotions/{id}/examens": {
+            "get": {
+                "tags": [
+                    "Promotions"
+                ],
+                "summary": "Obtenir les examens d'une promotion",
+                "description": "Obtenir les examens d'une promotion",
+                "operationId": "showPromotionExamens",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "not found"
+                    }
+                }
+            }
+        },
+        "/promotions/{id}/users": {
+            "get": {
+                "tags": [
+                    "Promotions"
+                ],
+                "summary": "Obtenir les utilisateurs d'une promotion",
+                "description": "Obtenir les utilisateurs d'une promotion",
+                "operationId": "showPromotionUsers",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "not found"
+                    }
+                }
+            }
+        },
         "/users": {
             "get": {
                 "tags": [
@@ -167,6 +477,166 @@
                 "summary": "Get List Of Users",
                 "description": "Returns all users",
                 "operationId": "getUsers",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "not found"
+                    }
+                }
+            }
+        },
+        "/user/{id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Obtenir un utilisateur",
+                "description": "Obtenir un utilisateur",
+                "operationId": "showUser",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "not found"
+                    }
+                }
+            }
+        },
+        "/user/{id}/examens": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Obtenir les examens d'un utilisateur",
+                "description": "Obtenir les examens d'un utilisateur",
+                "operationId": "showUserExamens",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "not found"
+                    }
+                }
+            }
+        },
+        "/user/{id}/promotion": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Obtenir la promotion d'un utilisateur",
+                "description": "Obtenir la promotion d'un utilisateur",
+                "operationId": "showUserPromotion",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "404": {
+                        "description": "not found"
+                    }
+                }
+            }
+        },
+        "/user/{id}/activities": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Obtenir les activités d'un utilisateur",
+                "description": "Obtenir les activités d'un utilisateur",
+                "operationId": "showUserActivities",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful operation",

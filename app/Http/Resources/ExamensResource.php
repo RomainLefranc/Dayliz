@@ -18,8 +18,8 @@ class ExamensResource extends JsonResource
             'id' => $this->id,
             'start' =>  str_replace(' ','T',$this->beginAt),
             'end' => str_replace(' ','T',$this->endAt),
-            'title' => $this->name,
-            'description' => ActivitiesResource::collection($this->activities)
+            'title' => $this->name
+            /* 'description' => ActivitiesResource::collection($this->activities) */
         ];
     }
 }
