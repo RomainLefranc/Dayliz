@@ -51,24 +51,24 @@ Route::get('activity/affectate/{id_examen}/{id_activity}',[ActivityController::c
 
 /******/
 
-Route::get('api/users',[UserController::class,'getUsers']);
-Route::get('api/users/{id}',[UserController::class,'showUser']);
-Route::get('api/users/{id}/examens',[UserController::class,'showUserExamens']);
-Route::get('api/users/{id}/activities',[UserController::class,'showUserActivities']);
-Route::get('api/users/{id}/promotion',[UserController::class,'showUserPromotion']);
+// Route::get('api/users',[UserController::class,'getUsers']);
+// Route::get('api/users/{id}',[UserController::class,'showUser']);
+// Route::get('api/users/{id}/examens',[UserController::class,'showUserExamens']);
+// Route::get('api/users/{id}/activities',[UserController::class,'showUserActivities']);
+// Route::get('api/users/{id}/promotion',[UserController::class,'showUserPromotion']);
 
-Route::get('api/promotions',[PromotionController::class,'getPromotions']);
-Route::get('api/promotions/{id}',[PromotionController::class,'showPromotion']);
-Route::get('api/promotions/{id}/examens',[PromotionController::class,'showPromotionExamens']);
-Route::get('api/promotions/{id}/users',[PromotionController::class,'showPromotionUsers']);
+// Route::get('api/promotions',[PromotionController::class,'getPromotions']);
+// Route::get('api/promotions/{id}',[PromotionController::class,'showPromotion']);
+// Route::get('api/promotions/{id}/examens',[PromotionController::class,'showPromotionExamens']);
+// Route::get('api/promotions/{id}/users',[PromotionController::class,'showPromotionUsers']);
 
-Route::get('api/examens',[ExamenController::class,'getExamens']);
-Route::get('api/examens/{id}',[ExamenController::class,'showExamen']);
-Route::get('api/examens/{id}/promotion',[ExamenController::class,'showExamenPromotion']);
-Route::get('api/examens/{id}/activities',[ExamenController::class,'showExamenActivities']);
+// Route::get('api/examens',[ExamenController::class,'getExamens']);
+// Route::get('api/examens/{id}',[ExamenController::class,'showExamen']);
+// Route::get('api/examens/{id}/promotion',[ExamenController::class,'showExamenPromotion']);
+// Route::get('api/examens/{id}/activities',[ExamenController::class,'showExamenActivities']);
 
-Route::get('api/activities',[ActivityController::class,'getActivities']);
-Route::get('api/activities/{id}',[ActivityController::class,'showActivities']);
-Route::get('api/activities/{id}/user',[ActivityController::class,'showActivitiesUser']);
-Route::get('api/activities/{id}/examen',[ActivityController::class,'showActivitiesExamen']);
+// Route::get('api/activities',[ActivityController::class,'getActivities']);
+// Route::get('api/activities/{id}',[ActivityController::class,'showActivities']);
+// Route::get('api/activities/{id}/user',[ActivityController::class,'showActivitiesUser']);
+// Route::get('api/activities/{id}/examen',[ActivityController::class,'showActivitiesExamen']);
 
