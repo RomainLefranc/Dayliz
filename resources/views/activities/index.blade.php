@@ -8,7 +8,7 @@
             <a href="#"><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#formCreate"><i class="fas fa-plus"></i></button></a>
         </div>
         <div class="card-body table-responsive">
-            <table class="table table-bordered table-striped table-hover" >
+            <table class="table table-bordered table-striped table-hover align-middle" >
                 <thead>
                     <tr>
                         <th scope="col">Titre</th>
@@ -37,13 +37,17 @@
                                 <a href={{route('activities.affectateview',[$examen->id,$activity->id])}}><button class="btn btn-primary">Affecter un apprenant</button></a>
                                 @endif
                             </td>
-                            <td scope="col">{{ $activity->order }}</td>
-                            <td class="d-flex">
-                                <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#formEditModal"
+                            <td scope="col" class="d-flex justify-content-around align-items-center">
+                                <a class="btn btn-primary {{ $activity->order == 1 ? 'disabled' : '' }}" href="{{ route('activities.up',[$examen->id,$activity->id]) }}" role="button"><i class="fas fa-arrow-up"></i></a>
+                                 {{ $activity->order }} 
+                                <a class="btn btn-primary {{ $activity->order == $count ? 'disabled' : '' }}" href="{{ route('activities.down', [$examen->id,$activity->id]) }}" role="button"><i class="fas fa-arrow-down"></i></a>
+                            </td>
+                            <td class="">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formEditModal"
                                     data-exam="{{ $activity->examen_id }}" data-id="{{ $activity->id }}"
                                     onclick="getData(this)"><i class="far fa-edit"></i>
                                 </button>
-                                <form action="{{ route('activities.destroy',[$examen->id,$activity->id]) }}" method="POST" >
+                                <form action="{{ route('activities.destroy',[$examen->id,$activity->id]) }}" method="POST" class="d-inline" >
                                     @csrf
                                     @method("delete")
                                     <button class="btn btn-danger" type="submit"><i class="fas fa-trash"></i></button>

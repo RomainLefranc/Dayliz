@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ActivitiesResource;
+use App\Http\Resources\ExamensResource;
+use App\Http\Resources\UsersResource;
 use App\Models\Examen;
 use App\Models\Activity;
 use App\Models\User;
@@ -20,8 +22,10 @@ class ActivityController extends Controller
     public function index($id_examen)
     {
         $examen = Examen::findOrFail($id_examen);
-        $activities = Activity::where('examen_id', '=', $id_examen)->paginate(10);
-        return view("activities.index", compact('activities', 'examen'));
+        $activities = Activity::where('examen_id', '=', $id_examen)->orderBy('order', 'ASC')->paginate(10);
+        $count = Activity::where('examen_id', '=', $examen->id)->count();
+
+        return view("activities.index", compact('activities', 'examen','count'));
     }
 
     public function affectateView($id_examen,$id_activity)
@@ -86,57 +90,14 @@ class ActivityController extends Controller
      *   ),
      *  )
      */
-    public function getActivities()
-    {
-        $activities = Activity::all();
-        $result =  ActivitiesResource::collection($activities);
-        return response($result, 200);
-    }
-
-    /**
-     * @OA\Get(
-     *      path="/activities/user/{iduser}",     
-     *      operationId="getActivitiesUser",
-     *      tags={"Users"},
-     *      summary="Obtenir la liste d'activité d'un utilisateur",
-     *      description="Obtenir la liste d'activité d'un utilisateur",
-     *  @OA\Parameter(
-     *      name="iduser",
-     *      in="path",
-     *      required=true,
-     *      @OA\Schema(
-     *           type="string"
-     *      )),
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\MediaType(
-     *           mediaType="application/json",
-     *      )
-     *      ),
-     *      @OA\Response(
-     *          response=401,
-     *          description="Unauthenticated",
-     *      ),
-     *      @OA\Response(
-     *          response=403,
-     *          description="Forbidden"
-     *      ),
-     * @OA\Response(
-     *      response=400,
-     *      description="Bad Request"
-     *   ),
-     * @OA\Response(
-     *      response=404,
-     *      description="not found"
-     *   ),
-     *  )
-     */
-    public function getActivitiesUser($iduser)
-    {
-        return Activity::where('user_id', '=', $iduser)->get();
-    }
-
+    // public function getActivities()
+    // {
+    //     $activities = Activity::all();
+    //     $result =  ActivitiesResource::collection($activities);
+    //     return response($result, 200);
+    // }
+       
+    
 
     /**
      * Show the form for creating a new resource.
@@ -193,12 +154,12 @@ class ActivityController extends Controller
      * @param  \App\Models\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function show($id_examen, $id)
-    {
-        $activity = Activity::findOrFail($id);
-        return ['data' => $activity];
-        //return new ActivitiesResource($activity);
-    }
+    // public function show()
+    // {
+    //     $activity = Activity::findOrFail($id);
+    //     return ['data' => $activity];
+    //     //return new ActivitiesResource($activity);
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -269,4 +230,201 @@ class ActivityController extends Controller
         $activity->delete();
         return back();
     }
+
+    public function up($id, $id_examen)
+    {
+        $examen = Examen::findOrFail($id);
+        $activity = Activity::findOrFail($id_examen);
+        if ($activity->order > 1) {
+            $activity->order--;
+            $activity->save();
+        }
+        return back();
+    }
+
+    public function down($id, $id_examen)
+    {
+        $examen = Examen::findOrFail($id);
+        $activity = Activity::findOrFail($id_examen);
+        $count = Activity::where('examen_id', '=', $examen->id)->count();
+        if ($activity->order < $count) {
+            $activity->order++;
+            $activity->save();
+        }
+        
+        return back();
+    }
+
+    /**
+     * @OA\Get(
+     *      path="/activities",
+     *      operationId="getActivities",
+     *      tags={"Activities"},
+
+     *      summary="Obtenir les activités",
+     *      description="Obtenir les activités",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     * @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     * @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *  )
+     */
+    public function getActivities()
+    {
+        $activities = Activity::all();
+        $result =  ActivitiesResource::collection($activities);
+        return response($result, 200);
+    }
+    /**
+     * @OA\Get(
+     *      path="/activities/{id}",     
+     *      operationId="showActivities",
+     *      tags={"Activities"},
+     *      summary="Obtenir un activité",
+     *      description="Obtenir un activité",
+     *  @OA\Parameter(
+     *      name="id",
+     *      in="path",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="integer"
+     *      )),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     * @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     * @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *  )
+     */
+    public function showActivities($id) {
+        $activity = Activity::findOrFail($id);
+        return ['data'=>$activity];
+        //return new ActivitiesResource($activity);
+    }
+    /**
+     * @OA\Get(
+     *      path="/activities/{id}/user",     
+     *      operationId="showActivitiesUser",
+     *      tags={"Activities"},
+     *      summary="Obtenir l'utilisateur assigné a l'activité",
+     *      description="Obtenir l'utilisateur assigné a l'activité",
+     *  @OA\Parameter(
+     *      name="id",
+     *      in="path",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="integer"
+     *      )),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     * @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     * @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *  )
+     */
+    public function showActivitiesUser($id) {
+        $activity = Activity::findOrFail($id);
+        $user = $activity->user;
+        return new UsersResource($user);
+    }
+    /**
+     * @OA\Get(
+     *      path="/activities/{id}/examen",     
+     *      operationId="showActivitiesExamen",
+     *      tags={"Activities"},
+     *      summary="Obtenir l'examen assigné a l'activité",
+     *      description="Obtenir l'examen assigné a l'activité",
+     *  @OA\Parameter(
+     *      name="id",
+     *      in="path",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="integer"
+     *      )),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     * @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     * @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *  )
+     */
+    public function showActivitiesExamen($id) {
+        $activity = Activity::findOrFail($id);
+        $examen = $activity->examen;
+        return new ExamensResource($examen);
+    }
+
 }

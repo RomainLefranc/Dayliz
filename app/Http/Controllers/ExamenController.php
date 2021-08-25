@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ActivitiesResource;
 use App\Http\Resources\ExamensResource;
 use App\Http\Resources\PromotionResource;
 use App\Models\Activity;
@@ -23,11 +24,7 @@ class ExamenController extends Controller
         $examens = Examen::paginate(10);
         return view('examens.index', compact('examens'));
     }
-    public function getExamens()
-    {
-        $result = ExamensResource::collection(Examen::all());
-        return response($result, 200);
-    }
+
 
     public function getExamensUser($iduser)
     {
@@ -39,60 +36,25 @@ class ExamenController extends Controller
 
         //On récupère les id des examens de cette promotion
         $examens = DB::table('examen_promotion')->select('examen_id')->where('promotion_id', '=', $promotion)->get();
+        $examensDates = Examen::select('beginAt', 'endAt')
+            ->where('id', $examens[0]->examen_id)
+            ->first();
 
-        $results = [];
+        $results = ["examTime" => json_encode($examensDates)];
 
         foreach ($examens as $id) {
             $activities = Activity::where('examen_id', '=', $id->examen_id)->get();
-            array_push($results, $activities);
         }
+
+        foreach ($activities as $activity) {
+            array_push($results, $activity);
+        }
+
 
         return response($results, 200);
     }
 
-    /**
-     * @OA\Get(
-     *      path="/examens/promo/{id}",     
-     *      operationId="getExamensPromo",
-     *      tags={"Examens"},
-     *      summary="Obtenir la liste d'examens d'une promotion",
-     *      description="Obtenir la liste d'examens d'une promotion",
-     *  @OA\Parameter(
-     *      name="id",
-     *      in="path",
-     *      required=true,
-     *      @OA\Schema(
-     *           type="string"
-     *      )),
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\MediaType(
-     *           mediaType="application/json",
-     *      )
-     *      ),
-     *      @OA\Response(
-     *          response=401,
-     *          description="Unauthenticated",
-     *      ),
-     *      @OA\Response(
-     *          response=403,
-     *          description="Forbidden"
-     *      ),
-     * @OA\Response(
-     *      response=400,
-     *      description="Bad Request"
-     *   ),
-     * @OA\Response(
-     *      response=404,
-     *      description="not found"
-     *   ),
-     *  )
-     */
-    public function getExamensPromo($id)
-    {
-        return new PromotionResource(Promotion::findOrFail($id));
-    }
+
 
 
     /**
@@ -134,16 +96,7 @@ class ExamenController extends Controller
         return redirect()->route('examens.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function showExamen($id)
-    {
-        return new ExamensResource(Examen::findOrFail($id));
-    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -207,5 +160,176 @@ class ExamenController extends Controller
         $examen = Examen::findOrFail($id);
         $examen->delete();
         return back();
+    }
+
+                 /**
+     * @OA\Get(
+     *      path="/examens",
+     *      operationId="getExamens",
+     *      tags={"Examens"},
+
+     *      summary="Obtenir la liste des examens",
+     *      description="Obtenir la liste des examens",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     * @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     * @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *  )
+     */
+    public function getExamens()
+    {
+        $result = ExamensResource::collection(Examen::all());
+        return response($result, 200);
+    }
+    /**
+     * @OA\Get(
+     *      path="/examens/{id}",     
+     *      operationId="showExamen",
+     *      tags={"Examens"},
+     *      summary="Obtenir un examen",
+     *      description="Obtenir un examen",
+     *  @OA\Parameter(
+     *      name="id",
+     *      in="path",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     * @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     * @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *  )
+     */
+    public function showExamen($id)
+    {
+        return new ExamensResource(Examen::findOrFail($id));
+    }
+
+    /**
+     * @OA\Get(
+     *      path="/examens/{id}/promotion",     
+     *      operationId="showExamenPromotion",
+     *      tags={"Examens"},
+     *      summary="Obtenir les promotions d'un examen",
+     *      description="Obtenir les promotions d'un examen",
+     *  @OA\Parameter(
+     *      name="id",
+     *      in="path",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="integer"
+     *      )),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     * @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     * @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *  )
+     */
+    public function showExamenPromotion($id) {
+        $examen = Examen::findOrFail($id);
+        $promotion = $examen->promotions;
+        return PromotionResource::collection($promotion);
+    }
+    /**
+     * @OA\Get(
+     *      path="/examens/{id}/activities",     
+     *      operationId="showExamenActivities",
+     *      tags={"Examens"},
+     *      summary="Récupérer les activités d'un examen",
+     *      description="Récupérer les activités d'un examen",
+     *  @OA\Parameter(
+     *      name="id",
+     *      in="path",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="integer"
+     *      )),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     * @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     * @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *  )
+     */
+    public function showExamenActivities($id) {
+        $examen = Examen::findOrFail($id);
+        $activities = $examen->activities;
+        return ActivitiesResource::collection($activities);
     }
 }

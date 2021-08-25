@@ -12,12 +12,13 @@ const getData = (elem) => {
     .get(`/promotions/${id_examen}/examen`)
     .then((res)=>{
         users = res.data
+        console.log(res)
     })
     .catch((err)=>{
         console.log(err)
     })
     window.axios
-    .get(`/examens/${id_examen}/activities/${id_activity}/show`)
+    .get(`/api/activities/${id_activity}`)
     .then((res) => {
         console.log(res.data)
         users.forEach(user => {
