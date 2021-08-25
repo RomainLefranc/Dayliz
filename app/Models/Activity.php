@@ -15,7 +15,8 @@ class Activity extends Model
         "state",
         "duree",
         "order",
-        "examen_id"
+        "examen_id",
+        "user_id"
     ];
 
     protected $table = "activities";

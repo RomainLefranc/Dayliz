@@ -3,7 +3,7 @@ const formEditTitle = document.querySelector("#formEditTitle");
 const titleEdit = document.querySelector("#titleEdit");
 const descriptionEdit = document.querySelector("#descriptionEdit");
 const durationEdit = document.querySelector("#durationEdit");
-
+const userEdit = document.querySelector("#userEdit");
 const getData = (elem) => {
     let id_activity = elem.dataset.id;
     let id_examen = elem.dataset.exam;
@@ -12,7 +12,7 @@ const getData = (elem) => {
     .get(`/api/examens/${id_examen}/users`)
     .then((res)=>{
         users = res.data.data
-        console.log(res)
+        console.log(res.data.data)
     })
     .catch((err)=>{
         console.log(err)
@@ -21,7 +21,7 @@ const getData = (elem) => {
     .get(`/api/activities/${id_activity}`)
     .then((res) => {
         let activity = res.data.data
-        console.log(activity)
+        /* console.log(activity) */
         users.forEach(user => {
            userEdit.innerHTML += `<option value=${user.id} ${activity.user_id == user.id ? 'selected' : ''}> ${user.firstName} ${user.lastName}</option>`
         })

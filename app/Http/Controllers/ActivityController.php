@@ -22,10 +22,14 @@ class ActivityController extends Controller
     public function index($id_examen)
     {
         $examen = Examen::findOrFail($id_examen);
-        $activities = Activity::where('examen_id', '=', $id_examen)->orderBy('order', 'ASC')->paginate(10);
-        $count = Activity::where('examen_id', '=', $examen->id)->count();
-
-        return view("activities.index", compact('activities', 'examen','count'));
+        $activities = $examen->activities()->orderBy('order', 'ASC')->paginate(10);
+        $count = $examen->activities()->count();
+        $users = User::join('promotions','users.promotion_id', '=', 'promotions.id')
+            ->join('examen_promotion','promotions.id', '=', 'examen_promotion.promotion_id')
+            ->join('examens','examen_promotion.examen_id', '=', 'examens.id')
+            ->where('examens.id','=',$id_examen)
+            ->get('users.*');
+        return view("activities.index", compact('activities', 'examen','count','users'));
     }
 
     public function affectateView($id_examen,$id_activity)
@@ -77,7 +81,7 @@ class ActivityController extends Controller
     public function store(Request $request, $id_examen)
     {
         $examen = Examen::findOrFail($id_examen);
-
+        $user = User::findOrFail($request->get('user'));
         $order = count($examen->activities) + 1;
 
         $validator = Validator::make($request->all(), [
@@ -99,7 +103,8 @@ class ActivityController extends Controller
             'order' => $order,
             'description' => $request->get('description'),
             'state' => true,
-            'examen_id' => $examen->id
+            'examen_id' => $examen->id,
+            'user_id' => $user->id
         ]);
 
         $activity->save();
@@ -195,9 +200,9 @@ class ActivityController extends Controller
         $examen = Examen::findOrFail($id);
         $activity = Activity::findOrFail($id_examen);
             if ($activity->order > 1) {
-                $remplaçant = Activity::where('order', '=', $activity->order-1)->first();
+                $remplaçant = Activity::where('order', '=', $activity->order-1)->where('examen_id','=',$examen->id)->first();
                 if ($remplaçant) {
-                    $remplaçant->order = $activity->order;
+                    $remplaçant->order++;
                     $remplaçant->save();
                 }
                 $activity->order--;
@@ -213,10 +218,10 @@ class ActivityController extends Controller
         $examen = Examen::findOrFail($id);
         $activity = Activity::findOrFail($id_examen);
         $count = Activity::where('examen_id', '=', $examen->id)->count();
-        if ($activity->order < $count ) {
-            $remplaçant = Activity::where('order', '=', $activity->order+1)->first();
+        if ($activity->order <= $count ) {
+            $remplaçant = Activity::where('order', '=', $activity->order+1)->where('examen_id','=',$examen->id)->first();
             if ($remplaçant) {
-                $remplaçant->order = $activity->order;
+                $remplaçant->order--;
                 $remplaçant->save();
             } 
             $activity->order++;

@@ -28,14 +28,7 @@
                             <td scope="col">{{ $activity->description }}</td>
                            
                             <td scope="col">
-                                @isset($activity->user)
-                                {{ $activity->user->firstName}} <br /> {{$activity->user->lastName}}
-                                @endisset
-                                @if(!$activity->user)
-                                {{-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formAffectation" data-id="{{ $activity->id}}">Affecter un apprenant</button>
-                                --}}
-                                <a href={{route('activities.affectateview',[$examen->id,$activity->id])}}><button class="btn btn-primary">Affecter un apprenant</button></a>
-                                @endif
+                                {{$activity->user->promotion->name}} - {{$activity->user->lastName}} {{$activity->user->firstName}}
                             </td>
                             <td scope="col">
                                 <div class="d-flex justify-content-around align-items-center">
@@ -111,6 +104,14 @@
                     <div class="mb-3">
                         <label for="description" class="form-label">Durée</label>
                         <input type="time" class="form-control @error('duree') is-invalid @enderror" name="duree">
+                    </div>
+                    <div class="mb-3">
+                        <label for="user">Apprenant</label>
+                        <select class="form-control" name="user">
+                            @foreach ($users as $user)
+                                <option value="{{$user->id}}">{{$user->promotion->name}} - {{$user->lastName}} {{$user->firstName}}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="mb-3">
                         <button type="submit" class="btn btn-primary">Enregistrer</button>
