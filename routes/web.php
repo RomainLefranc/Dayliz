@@ -27,21 +27,20 @@ Route::resource('roles', RoleController::class);
 Route::resource('users',UserController::class);
 Route::get('users/{id}/desactivate', [UserController::class,'desactivate'])->name('users.desactivate');
 Route::get('users/{id}/activate', [UserController::class,'activate'])->name('users.activate');
-Route::get('users/{token}/activities',[UserController::class,'showActivities']);
-Route::get('users/{id}/generateToken',[UserController::class,'generateToken'])->name('users.generate');
+/* Route::get('users/{token}/activities',[UserController::class,'showActivities']);
+Route::get('users/{id}/generateToken',[UserController::class,'generateToken'])->name('users.generate'); */
 
 Route::resource('promotions', PromotionController::class);
 Route::get('promotions/{id}/desactivate', [PromotionController::class,'desactivate'])->name('promotions.desactivate');
 Route::get('promotions/{id}/activate', [PromotionController::class,'activate'])->name('promotions.activate');
-Route::get('promotions/{id}/generateToken',[PromotionController::class,'generateToken'])->name('promotions.generate');
-Route::get('promotions/{token}/activities',[PromotionController::class,'showActivities']);
+/* Route::get('promotions/{id}/generateToken',[PromotionController::class,'generateToken'])->name('promotions.generate');
+Route::get('promotions/{token}/activities',[PromotionController::class,'showActivities']); */
 
 Route::resource('examens', ExamenController::class);
 
 Route::resource('examens/{id_examen}/activities', ActivityController::class);
 Route::get('examens/{id_examen}/activities/{id}/activate', [ActivityController::class, 'activate'])->name('activities.activate');
 Route::get('examens/{id_examen}/activities/{id}/desactivate', [ActivityController::class, 'desactivate'])->name('activities.desactivate');
-Route::get('examens/{id_examen}/activities/{id}/show', [ActivityController::class, 'show']);
 Route::patch('examens/{id_examen}/activities/{id}/update', [ActivityController::class, 'update']);
 Route::get('examens/{id_examen}/activities/{id}/up', [ActivityController::class, 'up'])->name('activities.up');
 Route::get('examens/{id_examen}/activities/{id}/down', [ActivityController::class, 'down'])->name('activities.down');

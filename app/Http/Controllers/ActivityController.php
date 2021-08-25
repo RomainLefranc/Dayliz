@@ -81,10 +81,8 @@ class ActivityController extends Controller
      * @param  \App\Models\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function show($id_examen, $id)
+    public function show()
     {
-        $activity = Activity::findOrFail($id);
-        return new ActivitiesResource($activity);
     }
 
     /**
@@ -215,7 +213,7 @@ class ActivityController extends Controller
         $result =  ActivitiesResource::collection($activities);
         return response($result, 200);
     }
-        /**
+    /**
      * @OA\Get(
      *      path="/activities/{id}",     
      *      operationId="showActivities",
