@@ -22,7 +22,7 @@ Route::get('/', function () {
     return redirect('/users');
 });
 
-Route::middleware(['auth', 'CheckRole:user'])->group(function () {
+Route::middleware(['auth', 'CheckRole:admin'])->group(function () {
 
 Route::resource('roles', RoleController::class);
 
