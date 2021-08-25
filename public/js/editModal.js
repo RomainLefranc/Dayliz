@@ -9,9 +9,9 @@ const getData = (elem) => {
     let id_examen = elem.dataset.exam;
     let users;
     window.axios
-    .get(`/promotions/${id_examen}/examen`)
+    .get(`/api/examens/${id_examen}/users`)
     .then((res)=>{
-        users = res.data
+        users = res.data.data
         console.log(res)
     })
     .catch((err)=>{
@@ -20,17 +20,18 @@ const getData = (elem) => {
     window.axios
     .get(`/api/activities/${id_activity}`)
     .then((res) => {
-        console.log(res.data)
+        let activity = res.data.data
+        console.log(activity)
         users.forEach(user => {
-           res.data.data.user_id == user.id ?  userEdit.innerHTML += `<option value=${user.id} selected> ${user.firstName} ${user.lastName}</option>` :  userEdit.innerHTML += `<option value=${user.id}> ${user.firstName} ${user.lastName}</option>`
+           userEdit.innerHTML += `<option value=${user.id} ${activity.user_id == user.id ? 'selected' : ''}> ${user.firstName} ${user.lastName}</option>`
         })
         formEdit.action = `/examens/${id_examen}/activities/${id_activity}/update`;
-        formEditTitle.innerHTML = `Modifier l'activité ${res.data.data.title}`;
-        titleEdit.value = res.data.data.title;
-        descriptionEdit.innerHTML = res.data.data.description;
-        //durationEdit.value = res.data.data.duree;
-        heures = Math.floor(res.data.data.duree / 3600) >= 10 ? `${Math.floor(res.data.data.duree / 3600)}` : `0${Math.floor(res.data.data.duree / 3600)}`;
-        minutes = Math.floor((res.data.data.duree / 60)%60) >= 10 ? `${Math.floor((res.data.data.duree / 60)%60)}` : `0${Math.floor((res.data.data.duree / 60)%60)}`;
+        formEditTitle.innerHTML = `Modifier l'activité ${activity.title}`;
+        titleEdit.value = activity.title;
+        descriptionEdit.innerHTML = activity.description;
+        //durationEdit.value = activity.duree;
+        heures = Math.floor(activity.duree / 3600) >= 10 ? `${Math.floor(activity.duree / 3600)}` : `0${Math.floor(activity.duree / 3600)}`;
+        minutes = Math.floor((activity.duree / 60)%60) >= 10 ? `${Math.floor((activity.duree / 60)%60)}` : `0${Math.floor((activity.duree / 60)%60)}`;
         durationEdit.value =  `${heures}:${minutes}`;
     })
     .catch((err) => console.log(err.message));

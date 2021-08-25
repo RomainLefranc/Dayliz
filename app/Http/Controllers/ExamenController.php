@@ -163,7 +163,7 @@ class ExamenController extends Controller
         return back();
     }
 
-                 /**
+      /**
      * @OA\Get(
      *      path="/examens",
      *      operationId="getExamens",
@@ -333,13 +333,53 @@ class ExamenController extends Controller
         $activities = $examen->activities;
         return ActivitiesResource::collection($activities);
     }
+    /**
+     * @OA\Get(
+     *      path="/examens/{id}/users",     
+     *      operationId="showExamenUsers",
+     *      tags={"Examens"},
+     *      summary="Récupérer les utilisateurs d'un examen",
+     *      description="Récupérer les utilisateurs d'un examen",
+     *  @OA\Parameter(
+     *      name="id",
+     *      in="path",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="integer"
+     *      )),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     * @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     * @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *  )
+     */
 
-    public function showExamenUsers($id_examen){
-
+    public function showExamenUsers($id){
         $users = User::join('promotions','users.promotion_id', '=', 'promotions.id')
-            ->join('examens','promotions.id', '=', 'examens.id')
-            ->where('examens.id','=',$id_examen)
-            ->get();
+            ->join('examen_promotion','promotions.id', '=', 'examen_promotion.promotion_id')
+            ->join('examens','examen_promotion.examen_id', '=', 'examens.id')
+            ->where('examens.id','=',$id)
+            ->get('users.*');
+        /* dd($users); */
         return UsersResource::collection($users);
     }
 }

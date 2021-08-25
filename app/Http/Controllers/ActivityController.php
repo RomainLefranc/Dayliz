@@ -57,47 +57,6 @@ class ActivityController extends Controller
 
     }
 
-         /**
-     * @OA\Get(
-     *      path="/examens",
-     *      operationId="getExamens",
-     *      tags={"Examens"},
-
-     *      summary="Get List Of Examens",
-     *      description="Returns all examens",
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\MediaType(
-     *           mediaType="application/json",
-     *      )
-     *      ),
-     *      @OA\Response(
-     *          response=401,
-     *          description="Unauthenticated",
-     *      ),
-     *      @OA\Response(
-     *          response=403,
-     *          description="Forbidden"
-     *      ),
-     * @OA\Response(
-     *      response=400,
-     *      description="Bad Request"
-     *   ),
-     * @OA\Response(
-     *      response=404,
-     *      description="not found"
-     *   ),
-     *  )
-     */
-    // public function getActivities()
-    // {
-    //     $activities = Activity::all();
-    //     $result =  ActivitiesResource::collection($activities);
-    //     return response($result, 200);
-    // }
-       
-    
 
     /**
      * Show the form for creating a new resource.
