@@ -335,20 +335,11 @@ class ExamenController extends Controller
     }
 
     public function showExamenUsers($id_examen){
-        $users = DB::table('users')
-            ->join('promotions', 'users.id', '=', 'promotions.id')
-            ->join('examen_promotion', 'promotions.id', '=', 'examen_promotion.promotion_id')
-            ->join('examens', 'examen_promotion.examen_id', '=', 'examens.id')
-            ->select('users.*')
+
+        $users = User::join('promotions','users.promotion_id', '=', 'promotions.id')
+            ->join('examens','promotions.id', '=', 'examens.id')
             ->where('examens.id','=',$id_examen)
             ->get();
-   /* $idpromo = DB::table('examen_promotion')->where('examen_id','=',$id_examen)->get(); */
-        /* $idpromo = DB::table('examen_promotion')->where('examen_id','=',$id_examen)->get();
-        $users = User::join()->where('promotion_id','=',$idpromo[0]->promotion_id)->get();
-        $users = User::all(); */
-     
-
-        dd($users);
         return UsersResource::collection($users);
     }
 }
