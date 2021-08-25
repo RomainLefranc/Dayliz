@@ -33,6 +33,7 @@ Route::get('users/{id}/generateToken',[UserController::class,'generateToken'])->
 Route::resource('promotions', PromotionController::class);
 Route::get('promotions/{id}/desactivate', [PromotionController::class,'desactivate'])->name('promotions.desactivate');
 Route::get('promotions/{id}/activate', [PromotionController::class,'activate'])->name('promotions.activate');
+Route::get('/promotions/{id_examen}/examen',[PromotionController::class,'showUsersPromotionbyIdExam']);
 /* Route::get('promotions/{id}/generateToken',[PromotionController::class,'generateToken'])->name('promotions.generate');
 Route::get('promotions/{token}/activities',[PromotionController::class,'showActivities']); */
 
@@ -44,6 +45,9 @@ Route::get('examens/{id_examen}/activities/{id}/desactivate', [ActivityControlle
 Route::patch('examens/{id_examen}/activities/{id}/update', [ActivityController::class, 'update']);
 Route::get('examens/{id_examen}/activities/{id}/up', [ActivityController::class, 'up'])->name('activities.up');
 Route::get('examens/{id_examen}/activities/{id}/down', [ActivityController::class, 'down'])->name('activities.down');
+
+Route::post('activity/affectate/{id_activity}/{id_examen}',[ActivityController::class,'affectate'])->name('activities.affecte');
+Route::get('activity/affectate/{id_examen}/{id_activity}',[ActivityController::class,'affectateView'])->name('activities.affectateview');
 
 /******/
 

@@ -7,8 +7,10 @@ use App\Http\Resources\ExamensResource;
 use App\Http\Resources\UsersResource;
 use App\Models\Examen;
 use App\Models\Activity;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class ActivityController extends Controller
 {
@@ -25,6 +27,77 @@ class ActivityController extends Controller
 
         return view("activities.index", compact('activities', 'examen','count'));
     }
+
+    public function affectateView($id_examen,$id_activity)
+    {
+        $idpromo = DB::table('examen_promotion')->where('examen_id','=',$id_examen)->get();
+        $users = User::where('promotion_id','=',$idpromo[0]->promotion_id)->get();
+        $idactivity = $id_activity;
+        $activity = Activity::find($idactivity);
+        $idexamen = $id_examen;
+        return view("activities.affectate",compact('users','idactivity','activity','idexamen'));
+    }
+
+    public function affectate(Request $request,$id_activity,$id_examen){
+        $activity = Activity::findOrFail($id_activity);
+       
+        $validator = Validator::make($request->all(),[
+            'user'=> 'required'
+        ]);
+
+        if ($validator->fails())
+        {
+            return response('',404);
+        }
+
+        $activity->user_id = $request->get('user');
+        $activity->save();
+
+        return $this->index($id_examen);
+
+    }
+
+         /**
+     * @OA\Get(
+     *      path="/examens",
+     *      operationId="getExamens",
+     *      tags={"Examens"},
+
+     *      summary="Get List Of Examens",
+     *      description="Returns all examens",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     * @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     * @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *  )
+     */
+    // public function getActivities()
+    // {
+    //     $activities = Activity::all();
+    //     $result =  ActivitiesResource::collection($activities);
+    //     return response($result, 200);
+    // }
+       
+    
 
     /**
      * Show the form for creating a new resource.
@@ -81,9 +154,12 @@ class ActivityController extends Controller
      * @param  \App\Models\Activity  $activity
      * @return \Illuminate\Http\Response
      */
-    public function show()
-    {
-    }
+    // public function show()
+    // {
+    //     $activity = Activity::findOrFail($id);
+    //     return ['data' => $activity];
+    //     //return new ActivitiesResource($activity);
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -130,6 +206,11 @@ class ActivityController extends Controller
         $activity->title = $request->get('title');
         $activity->duree = $duree;
         $activity->description = $request->get('description');
+
+        if($request->get('user'))
+        {
+            $activity->user_id = $request->get('user');
+        }
 
         $activity->save();
 
@@ -266,7 +347,8 @@ class ActivityController extends Controller
      */
     public function showActivities($id) {
         $activity = Activity::findOrFail($id);
-        return new ActivitiesResource($activity);
+        return ['data'=>$activity];
+        //return new ActivitiesResource($activity);
     }
     /**
      * @OA\Get(
