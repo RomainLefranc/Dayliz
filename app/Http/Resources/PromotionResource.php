@@ -17,9 +17,9 @@ class PromotionResource extends JsonResource
  
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name' => $this->name/*,
             'examens' => ExamensResource::collection($this->examens),
-            'users' => UsersResource::collection($this->users) 
+            'users' => UsersResource::collection($this->users)  */
         ];
     }
 }
