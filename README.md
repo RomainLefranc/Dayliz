@@ -5,6 +5,7 @@
 
 BASE_URL + /api/documentation
 
+Attention en local, faire un composer update si Swagger n'est pas connu, et rajouter dans le fichier .env L5_SWAGGER_CONST_HOST='http://127.0.0.1:8000/api' puis taper la commande php artisan l5-swagger:generate
 
 ## Initialisation du projet
 
