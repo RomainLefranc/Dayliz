@@ -27,9 +27,9 @@
                             <td scope="col">{{ gmdate('H:i', $activity->duree)  }}</td>
                             <td scope="col">{{ $activity->description }}</td>
                             <td scope="col">{{ $activity->user->firstName}} <br /> {{$activity->user->lastName}}</td>
-                            <td scope="col" class="d-flex flex-column align-items-center">
+                            <td scope="col" class="d-flex justify-content-around align-items-center">
                                 <a class="btn btn-primary {{ $activity->order == 1 ? 'disabled' : '' }}" href="{{ route('activities.up',[$examen->id,$activity->id]) }}" role="button"><i class="fas fa-arrow-up"></i></a>
-                                {{ $activity->order }}
+                                 {{ $activity->order }} 
                                 <a class="btn btn-primary {{ $activity->order == $count ? 'disabled' : '' }}" href="{{ route('activities.down', [$examen->id,$activity->id]) }}" role="button"><i class="fas fa-arrow-down"></i></a>
                             </td>
                             <td class="">
