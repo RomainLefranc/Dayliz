@@ -43,7 +43,8 @@ Route::get('examens/{id_examen}/activities/{id}/activate', [ActivityController::
 Route::get('examens/{id_examen}/activities/{id}/desactivate', [ActivityController::class, 'desactivate'])->name('activities.desactivate');
 Route::get('examens/{id_examen}/activities/{id}/show', [ActivityController::class, 'show']);
 Route::patch('examens/{id_examen}/activities/{id}/update', [ActivityController::class, 'update']);
-Route::get('examens/{id_examen}/listActivities',[ActivityController::class,'listActivities'])->name('activities.list');
+Route::get('examens/{id_examen}/activities/{id}/up', [ActivityController::class, 'up'])->name('activities.up');
+Route::get('examens/{id_examen}/activities/{id}/down', [ActivityController::class, 'down'])->name('activities.down');
 
 /******/
 

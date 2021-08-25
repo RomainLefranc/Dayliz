@@ -20,8 +20,10 @@ class ActivityController extends Controller
     public function index($id_examen)
     {
         $examen = Examen::findOrFail($id_examen);
-        $activities = Activity::where('examen_id', '=', $id_examen)->paginate(10);
-        return view("activities.index", compact('activities', 'examen'));
+        $activities = Activity::where('examen_id', '=', $id_examen)->orderBy('order', 'ASC')->paginate(10);
+        $count = Activity::where('examen_id', '=', $examen->id)->count();
+
+        return view("activities.index", compact('activities', 'examen','count'));
     }
 
     /**
@@ -147,6 +149,30 @@ class ActivityController extends Controller
         $examen = Examen::findOrFail($id);
         $activity = Activity::findOrFail($id_examen);
         $activity->delete();
+        return back();
+    }
+
+    public function up($id, $id_examen)
+    {
+        $examen = Examen::findOrFail($id);
+        $activity = Activity::findOrFail($id_examen);
+        if ($activity->order > 1) {
+            $activity->order--;
+            $activity->save();
+        }
+        return back();
+    }
+
+    public function down($id, $id_examen)
+    {
+        $examen = Examen::findOrFail($id);
+        $activity = Activity::findOrFail($id_examen);
+        $count = Activity::where('examen_id', '=', $examen->id)->count();
+        if ($activity->order < $count) {
+            $activity->order++;
+            $activity->save();
+        }
+        
         return back();
     }
 
