@@ -44,7 +44,10 @@ class ExamenController extends Controller
 
         foreach ($examens as $id) {
             $activities = Activity::where('examen_id', '=', $id->examen_id)->get();
-            array_push($results, $activities);
+        }
+
+        foreach ($activities as $activity) {
+            array_push($results, $activity);
         }
 
         return response($results, 200);
