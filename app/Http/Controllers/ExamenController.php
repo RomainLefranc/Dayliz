@@ -39,13 +39,17 @@ class ExamenController extends Controller
 
         //On récupère les id des examens de cette promotion
         $examens = DB::table('examen_promotion')->select('examen_id')->where('promotion_id', '=', $promotion)->get();
+        $examensDates = Examen::select('beginAt', 'endAt')
+            ->where('id', $examens[0]->examen_id)
+            ->first();
 
-        $results = [];
+        $results = ["examTime" => json_encode($examensDates)];
 
         foreach ($examens as $id) {
             $activities = Activity::where('examen_id', '=', $id->examen_id)->get();
             array_push($results, $activities);
         }
+
 
         return response($results, 200);
     }
