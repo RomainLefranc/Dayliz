@@ -19,7 +19,6 @@
                     <tr>
                         <th scope="col">Id</th>
                         <th scope="col">Nom</th>
-                        <th scope="col">Token</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -28,13 +27,6 @@
                         <tr>
                             <td>{{ $promotion->id }}</td>
                             <td>{{ $promotion->name }}</td>
-                            <td>
-                                @if ($promotion->token)
-                                    <a class="btn btn-primary" href="{{ route('promotions.generate', $promotion->id) }}" role="button"><i class="fas fa-redo-alt"></i></a> {{ $promotion->token }}
-                                @else
-                                    <a class="btn btn-primary" href="{{ route('promotions.generate', $promotion->id) }}" role="button"><i class="fas fa-plus"></i></a>
-                                @endif 
-                            </td>
                             <td>
                                 <a class="btn btn-primary" href="{{ route('promotions.edit', $promotion->id) }}" role="button"><i class="far fa-edit"></i></a>
                                 @if ($promotion->state == 0)

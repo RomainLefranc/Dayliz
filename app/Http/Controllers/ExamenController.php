@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ActivitiesResource;
 use App\Http\Resources\ExamensResource;
 use App\Http\Resources\PromotionResource;
+use App\Http\Resources\UsersResource;
 use App\Models\Activity;
 use App\Models\Examen;
 use App\Models\Promotion;
@@ -331,5 +332,23 @@ class ExamenController extends Controller
         $examen = Examen::findOrFail($id);
         $activities = $examen->activities;
         return ActivitiesResource::collection($activities);
+    }
+
+    public function showExamenUsers($id_examen){
+        $users = DB::table('users')
+            ->join('promotions', 'users.id', '=', 'promotions.id')
+            ->join('examen_promotion', 'promotions.id', '=', 'examen_promotion.promotion_id')
+            ->join('examens', 'examen_promotion.examen_id', '=', 'examens.id')
+            ->select('users.*')
+            ->where('examens.id','=',$id_examen)
+            ->get();
+   /* $idpromo = DB::table('examen_promotion')->where('examen_id','=',$id_examen)->get(); */
+        /* $idpromo = DB::table('examen_promotion')->where('examen_id','=',$id_examen)->get();
+        $users = User::join()->where('promotion_id','=',$idpromo[0]->promotion_id)->get();
+        $users = User::all(); */
+     
+
+        dd($users);
+        return UsersResource::collection($users);
     }
 }

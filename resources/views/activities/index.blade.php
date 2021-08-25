@@ -38,11 +38,11 @@
                                 @endif
                             </td>
                             <td scope="col">
-                            <div class="d-flex justify-content-around align-items-center">
-                                <a class="btn btn-primary {{ $activity->order == 1 ? 'disabled' : '' }}" href="{{ route('activities.up',[$examen->id,$activity->id]) }}" role="button"><i class="fas fa-arrow-up"></i></a>
-                                {{ $activity->order }}
-                                <a class="btn btn-primary {{ $activity->order == $count ? 'disabled' : '' }}" href="{{ route('activities.down', [$examen->id,$activity->id]) }}" role="button"><i class="fas fa-arrow-down"></i></a>
-                            </div>
+                                <div class="d-flex justify-content-around align-items-center">
+                                    <a class="btn btn-primary {{ $activity->order <= 1 ? 'disabled' : '' }}" href="{{ route('activities.up',[$examen->id,$activity->id]) }}" role="button"><i class="fas fa-arrow-up"></i></a>
+                                    {{ $activity->order }}
+                                    <a class="btn btn-primary {{ $activity->order >= $count ? 'disabled' : '' }}" href="{{ route('activities.down', [$examen->id,$activity->id]) }}" role="button"><i class="fas fa-arrow-down"></i></a>
+                                </div>
                             </td>
                             <td>
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formEditModal"

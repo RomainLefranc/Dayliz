@@ -37,6 +37,7 @@ Route::get('examens',[ExamenController::class,'getExamens']);
 Route::get('examens/{id}',[ExamenController::class,'showExamen']);
 Route::get('examens/{id}/promotion',[ExamenController::class,'showExamenPromotion']);
 Route::get('examens/{id}/activities',[ExamenController::class,'showExamenActivities']);
+Route::get('examens/{id}/users',[ExamenController::class,'showExamenUsers']);
 
 Route::get('activities',[ActivityController::class,'getActivities']);
 Route::get('activities/{id}',[ActivityController::class,'showActivities']);

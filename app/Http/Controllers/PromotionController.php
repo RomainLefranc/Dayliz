@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ExamensResource;
 use App\Http\Resources\PromotionResource;
 use App\Http\Resources\UsersResource;
+use App\Models\Examen;
 use App\Models\Promotion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -61,8 +62,7 @@ class PromotionController extends Controller
     public function showUsersPromotionbyIdExam($id_examen){
         $idpromo = DB::table('examen_promotion')->where('examen_id','=',$id_examen)->get();
         $users = User::where('promotion_id','=',$idpromo[0]->promotion_id)->get();
-
-        return $users;
+        return new UsersResource($users);
     }
 
     
@@ -163,7 +163,7 @@ class PromotionController extends Controller
         return back();  
 
     }
-             /**
+    /**
      * @OA\Get(
      *      path="/promotions",
      *      operationId="getPromotions",
@@ -245,7 +245,7 @@ class PromotionController extends Controller
     {
         return new PromotionResource(Promotion::findOrFail($id));
     }
-        /**
+    /**
      * @OA\Get(
      *      path="/promotions/{id}/examens",     
      *      operationId="showPromotionExamens",
@@ -289,7 +289,7 @@ class PromotionController extends Controller
         $examen = $promotion->examens;
         return ExamensResource::collection($examen);
     }
-        /**
+    /**
      * @OA\Get(
      *      path="/promotions/{id}/users",     
      *      operationId="showPromotionUsers",

@@ -16,7 +16,6 @@
                             <th scope="col">Prénom</th>
                             <th scope="col">Rôle</th>
                             <th scope="col">Promotion</th>
-                            <th scope="col">Token</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -28,13 +27,6 @@
                                 <td scope="col">{{ $user->lastName }}</td>
                                 <td scope="col">{{ $user->role->name }}</td>
                                 <td scope="col">{{ $user->promotion->name }}</td>
-                                <td scope="col">
-                                    @if ($user->tokenRandom)
-                                        <a class="btn btn-primary" href="{{ route('users.generate', $user->id) }}" role="button"><i class="fas fa-redo-alt"></i></a> {{ $user->tokenRandom }}
-                                    @else
-                                        <a class="btn btn-primary" href="{{ route('users.generate', $user->id) }}" role="button"><i class="fas fa-plus"></i></a>
-                                    @endif  
-                                </td>
                                 <td scope="col">
                                     <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}" role="button"><i class="far fa-edit"></i></a>
                                     @if ($user->state == 0)
