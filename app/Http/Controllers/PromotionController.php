@@ -7,6 +7,8 @@ use App\Http\Resources\PromotionResource;
 use App\Models\Promotion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 class PromotionController extends Controller
 {
@@ -101,12 +103,22 @@ class PromotionController extends Controller
         return new PromotionResource(Promotion::findOrFail($id));
     }
 
+
+    public function showUsersPromotionbyIdExam($id_examen){
+        $idpromo = DB::table('examen_promotion')->where('examen_id','=',$id_examen)->get();
+        $users = User::where('promotion_id','=',$idpromo[0]->promotion_id)->get();
+
+        return $users;
+    }
+
+    
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function edit($id)
     {
         $promotion = Promotion::findOrFail($id);

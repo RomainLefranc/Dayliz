@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ActivitiesResource;
 use App\Models\Examen;
 use App\Models\Activity;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class ActivityController extends Controller
 {
@@ -20,6 +22,35 @@ class ActivityController extends Controller
         $examen = Examen::findOrFail($id_examen);
         $activities = Activity::where('examen_id', '=', $id_examen)->paginate(10);
         return view("activities.index", compact('activities', 'examen'));
+    }
+
+    public function affectateView($id_examen,$id_activity)
+    {
+        $idpromo = DB::table('examen_promotion')->where('examen_id','=',$id_examen)->get();
+        $users = User::where('promotion_id','=',$idpromo[0]->promotion_id)->get();
+        $idactivity = $id_activity;
+        $activity = Activity::find($idactivity);
+        $idexamen = $id_examen;
+        return view("activities.affectate",compact('users','idactivity','activity','idexamen'));
+    }
+
+    public function affectate(Request $request,$id_activity,$id_examen){
+        $activity = Activity::findOrFail($id_activity);
+       
+        $validator = Validator::make($request->all(),[
+            'user'=> 'required'
+        ]);
+
+        if ($validator->fails())
+        {
+            return response('',404);
+        }
+
+        $activity->user_id = $request->get('user');
+        $activity->save();
+
+        return $this->index($id_examen);
+
     }
 
          /**
@@ -165,7 +196,8 @@ class ActivityController extends Controller
     public function show($id_examen, $id)
     {
         $activity = Activity::findOrFail($id);
-        return new ActivitiesResource($activity);
+        return ['data' => $activity];
+        //return new ActivitiesResource($activity);
     }
 
     /**
@@ -213,6 +245,11 @@ class ActivityController extends Controller
         $activity->title = $request->get('title');
         $activity->duree = $duree;
         $activity->description = $request->get('description');
+
+        if($request->get('user'))
+        {
+            $activity->user_id = $request->get('user');
+        }
 
         $activity->save();
 
