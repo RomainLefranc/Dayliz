@@ -18,16 +18,20 @@ class ExamenSeeder extends Seeder
         $faker = \Faker\Factory::create();
         $startDate = Carbon::createFromTimestamp($faker->dateTimeBetween('-1 years', '+1 month')->getTimestamp());
 
-        Examen::create([
-            "name" => "Examen 1 CDA 2021",
+        $examen = Examen::create([
+            "name" => "Examen CDA 2021",
             "beginAt" => $startDate->toDateTimeString(),
             "endAt" => $startDate->addHours($faker->numberBetween(1, 8)),
         ]);
 
-        Examen::create([
-            "name" => "Examen 2 CDA 2021",
+        $examen->promotions()->attach(1);
+
+        $examen = Examen::create([
+            "name" => "Examen DWWM 2021",
             "beginAt" => $startDate->toDateTimeString(),
             "endAt" => $startDate->addHours($faker->numberBetween(1, 8)),
         ]);
+
+        $examen->promotions()->attach(2);
     }
 }

@@ -33,7 +33,6 @@ Route::get('users/{id}/activate', [UserController::class,'activate'])->name('use
 Route::resource('promotions', PromotionController::class);
 Route::get('promotions/{id}/desactivate', [PromotionController::class,'desactivate'])->name('promotions.desactivate');
 Route::get('promotions/{id}/activate', [PromotionController::class,'activate'])->name('promotions.activate');
-Route::get('/promotions/{id_examen}/examen',[PromotionController::class,'showUsersPromotionbyIdExam']);
 
 /* Examens */
 Route::resource('examens', ExamenController::class);

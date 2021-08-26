@@ -55,16 +55,6 @@ class PromotionController extends Controller
         $promotion->save();
         return redirect()->route('promotions.index')->with('status', 'Promotion ajouté');
     }
-
-
-
-
-    public function showUsersPromotionbyIdExam($id_examen){
-        $idpromo = DB::table('examen_promotion')->where('examen_id','=',$id_examen)->get();
-        $users = User::where('promotion_id','=',$idpromo[0]->promotion_id)->get();
-        return new UsersResource($users);
-    }
-
     
     /**
      * Show the form for editing the specified resource.

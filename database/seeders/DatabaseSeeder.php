@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             PromotionSeeder::class,
             UserSeeder::class,
-            ExamenSeeder::class,
-            ActivitySeeder::class
+            ExamenSeeder::class/* ,
+            ActivitySeeder::class */
             
             
         ]);
