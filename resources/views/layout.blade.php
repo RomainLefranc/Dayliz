@@ -11,42 +11,28 @@
     <title>Dayliz</title>
 
     <!-- CSS only -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-
-    <!-- Datatables -->
-    <!-- CDN pour rendre datatable responsive -->
-    <link href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/responsive/2.2.6/css/responsive.dataTables.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css" rel="stylesheet">
-    <link href="https://editor.datatables.net/extensions/Editor/css/editor.dataTables.min.css" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" integrity="sha512-RXf+QSDCUQs5uwRKaDoXt55jygZZm2V++WUZduaU/Ui/9EGp3f/2KZVahFZBKGH0s774sd3HmrhUy+SgOFQLVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.6/js/dataTables.responsive.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
-    <script src="https://editor.datatables.net/extensions/Editor/js/dataTables.editor.min.js"> </script>
 </head>
 
 <body>
 
     <div id="wrapper">
         <ul class="nav nav-tabs mb-2 bg-dark pt-2">
-            <li class="nav-item">
+            <li class="nav-item {{ Request::segment(1) === 'users' ? 'active' : '' }}">
               <a class="nav-link {{ Request::segment(1) === 'users' ? 'active' : '' }}" aria-current="page" href="{{ route('users.index') }}">Utilisateurs</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {{ Request::segment(1) === 'roles' ? 'active' : '' }}">
                 <a class="nav-link  {{ Request::segment(1) === 'roles' ? 'active' : '' }}" aria-current="page" href="{{ route('roles.index') }}">Rôles</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {{ Request::segment(1) === 'promotions' ? 'active' : '' }}">
                 <a class="nav-link  {{ Request::segment(1) === 'promotions' ? 'active' : '' }}" aria-current="page" href="{{ route('promotions.index') }}">Promotions</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {{ Request::segment(1) === 'examens' ? 'active' : '' }}">
                 <a class="nav-link  {{ Request::segment(1) === 'examens' ? 'active' : '' }}" aria-current="page" href="{{ route('examens.index') }}">Examens</a>
             </li>
 
@@ -99,6 +85,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" integrity="sha512-RXf+QSDCUQs5uwRKaDoXt55jygZZm2V++WUZduaU/Ui/9EGp3f/2KZVahFZBKGH0s774sd3HmrhUy+SgOFQLVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 
     @stack('scripts')
 

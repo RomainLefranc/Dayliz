@@ -1,5 +1,12 @@
 # Dayliz
 
+
+## Documentation de l'API
+
+BASE_URL + /api/documentation
+
+Attention en local, faire un composer update si Swagger n'est pas connu, et rajouter dans le fichier .env L5_SWAGGER_CONST_HOST='http://127.0.0.1:8000/api' puis taper la commande php artisan l5-swagger:generate
+
 ## Initialisation du projet
 
 ### Cloner le projet
@@ -31,7 +38,7 @@ Se connecter ensuite avec ce nouvel utilisateur.
 | Utilisateur | Me connecter                | D'accéder à l'appli               | Authentification        |  WIP          |
 | Utilisateur | Me déconnecter              | De quitter l'appli                | Authentification        |  WIP          |
 | Utilisateur | Ajouter une activité        | Gérer mes activités               | CRUD activité           | Terminé    |
-| Utilisateur | Voir mes activités          | Avoir une vision de mes activités | CRUD activité           | Terminé    |
+| Utilisateur | Voir mes activités          | Avoir une vision de mes activités | CRUD activité           |     WP   |
 | Admin       | Créer un utilisateur        | Lui permettre de se connecter     | CRUD compte utilisateur | Terminé    |
 | Admin       | Désactiver un utilisateur   | Supprimer son compte              | CRUD compte utilisateur | Terminé    |
 | Admin       | Me connecter                | D'accéder à l'appli               | Authentification        |WIP
@@ -42,6 +49,11 @@ Se connecter ensuite avec ce nouvel utilisateur.
 | Admin       | Génerer le token d'une promo     | Voir des planning            | CRUD promo           |  |
 | Admin       | Ajouter une promotion       | Gérer des planning                | CRUD promo           | Terminé|
 
+## En ligne 
+
+Ajouter la variable d'environnement `L5_SWAGGER_CONST_HOST` qui est égale à la base url 
+
+Ex : L5_SWAGGER_CONST_HOST='https://dayliz.herokuapp.com//api'
 
 ## MCD Gaultier
 

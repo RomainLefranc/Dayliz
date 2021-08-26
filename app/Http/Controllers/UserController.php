@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ActivitiesResource;
 use App\Http\Resources\ExamensResource;
+use App\Http\Resources\PromotionResource;
 use App\Http\Resources\UsersResource;
 use Carbon\Carbon;
 use App\Models\Role;
 use App\Models\User;
-use App\Models\Activity;
 use App\Models\Promotion;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use DataTables;
-use Symfony\Component\VarDumper\Cloner\Data;
 
 class UserController extends Controller
 {
@@ -29,11 +27,7 @@ class UserController extends Controller
         return view('users.index',compact('users'));
     }
 
-    public function getUsers()
-    {
-        $users = User::all();
-        return response($users->toJson(),200);
-    }
+
 
 
     /**
@@ -81,17 +75,7 @@ class UserController extends Controller
         return redirect()->route('users.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $user = User::findOrFail($id);
-        return new UsersResource($user);
-    }
+
 
     public function generateToken($id)
     {
@@ -195,26 +179,16 @@ class UserController extends Controller
 
     public function desactivate($id){
 
-        $user = User::find($id);
-        if ($user) {
-
-            $user->state = false;
-            $user->save();
-    
-            return back();        
-        }
-        return back();        
+        $user = User::findOrFail($id);
+        $user->state = false;
+        $user->save();
+        return back();      
     }
     
     public function activate($id){
-        $user = User::find($id);
-        if ($user) {
-            
-            $user->state = true;
-            $user->save();
-    
-            return back();        
-        }
+        $user = User::findOrFail($id);
+        $user->state = true;
+        $user->save();
         return back();
 
     }
@@ -228,5 +202,218 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+     /**
+     * @OA\Get(
+     *      path="/users",
+     *      operationId="getUsers",
+     *      tags={"Users"},
+
+     *      summary="Get List Of Users",
+     *      description="Returns all users",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     * @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     * @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *  )
+     */
+
+    public function getUsers()
+    {
+        $users =  UsersResource::collection(User::all());
+        return response($users,200);
+    }
+        /**
+     * @OA\Get(
+     *      path="/user/{id}",     
+     *      operationId="showUser",
+     *      tags={"Users"},
+     *      summary="Obtenir un utilisateur",
+     *      description="Obtenir un utilisateur",
+     *  @OA\Parameter(
+     *      name="id",
+     *      in="path",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     * @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     * @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *  )
+     */
+    public function showUser($id)
+    {
+        $user = User::findOrFail($id);
+        return new UsersResource($user);
+    }
+        /**
+     * @OA\Get(
+     *      path="/user/{id}/examens",     
+     *      operationId="showUserExamens",
+     *      tags={"Users"},
+     *      summary="Obtenir les examens d'un utilisateur",
+     *      description="Obtenir les examens d'un utilisateur",
+     *  @OA\Parameter(
+     *      name="id",
+     *      in="path",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     * @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     * @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *  )
+     */
+    public function showUserExamens($id) {
+        $user = User::findOrFail($id);
+        $examen = $user->promotion->examens;
+        return ExamensResource::collection($examen);
+    }
+        /**
+     * @OA\Get(
+     *      path="/user/{id}/promotion",     
+     *      operationId="showUserPromotion",
+     *      tags={"Users"},
+     *      summary="Obtenir la promotion d'un utilisateur",
+     *      description="Obtenir la promotion d'un utilisateur",
+     *  @OA\Parameter(
+     *      name="id",
+     *      in="path",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     * @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     * @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *  )
+     */
+    public function showUserPromotion($id) {
+        $user = User::findOrFail($id);
+        return new PromotionResource($user->promotion);
+    }
+        /**
+     * @OA\Get(
+     *      path="/user/{id}/activities",     
+     *      operationId="showUserActivities",
+     *      tags={"Users"},
+     *      summary="Obtenir les activités d'un utilisateur",
+     *      description="Obtenir les activités d'un utilisateur",
+     *  @OA\Parameter(
+     *      name="id",
+     *      in="path",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     * @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     * @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *  )
+     */
+    public function showUserActivities($id) {
+        $user = User::findOrFail($id);
+        return ActivitiesResource::collection($user->activities);
     }
 }

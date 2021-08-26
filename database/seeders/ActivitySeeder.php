@@ -17,28 +17,22 @@ class ActivitySeeder extends Seeder
     {
         $faker = \Faker\Factory::create();
 
-        Activity::create([
-            "title" => 'Installation du materiel',
-            "description" => $faker->text(100),
-            "state" => true,
-            "duree" => '00:20',
-            "examen_id" => 1
-        ]);
+        for ($i = 0; $i < 20; $i++) {
 
-        Activity::create([
-            "title" => 'Presentation du projet',
-            "description" => $faker->text(30),
-            "state" => true,
-            "duree" => '00:30',
-            "examen_id" => 1
-        ]);
+            Activity::create([
+                "title" => $faker->text(50),
+                "description" => $faker->text(100),
+                "state" => true,
+                //"duree" => $faker->time('H:i'),
+                "duree" => $faker->numberBetween(60,86400),
+                'order' => $i+1,
+                "examen_id" => $faker->numberBetween(1,2),
+                "user_id" => $faker->numberBetween(1,19)
+            ]);
 
-        Activity::create([
-            "title" => 'Question sur le sujet',
-            "description" => $faker->text(30),
-            "state" => true,
-            "duree" => '00:40',
-            "examen_id" => 1
-        ]);
+        }
+
+
+
     }
 }

@@ -26,7 +26,6 @@ class User extends Authenticatable
         'email',
         'password',
         'tokenRandom',
-        'state'
     ];
 
     /**
@@ -37,6 +36,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'tokenRandom',
+        'email_verified_at',
+        'created_at',
+        'updated_at',
+        'state',
     ];
 
     /**
@@ -56,7 +60,7 @@ class User extends Authenticatable
 
     public function activities()
     {
-        return $this->belongsToMany(Activity::class,'user_activity');
+        return $this->hasMany(Activity::class);
     }
     /**
      * The role that belong to the User

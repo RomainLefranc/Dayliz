@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ExamensResource;
 use App\Http\Resources\PromotionResource;
+use App\Http\Resources\UsersResource;
+use App\Models\Examen;
 use App\Models\Promotion;
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 class PromotionController extends Controller
 {
@@ -22,6 +25,8 @@ class PromotionController extends Controller
         return view('promotions.index',compact('promotions'));
     }
 
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -31,6 +36,7 @@ class PromotionController extends Controller
     {
         return view('promotions.create');
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -49,24 +55,14 @@ class PromotionController extends Controller
         $promotion->save();
         return redirect()->route('promotions.index')->with('status', 'Promotion ajouté');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        return new PromotionResource(Promotion::findOrFail($id));
-    }
-
+    
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function edit($id)
     {
         $promotion = Promotion::findOrFail($id);
@@ -139,5 +135,192 @@ class PromotionController extends Controller
             $examens = $promotion->examens()->where('beginAt','like','%'.$dateNow.'%')->get();
             return ExamensResource::collection($examens);
         }
+    }
+
+
+    public function desactivate($id){
+
+        $promotion = Promotion::findOrFail($id);
+        $promotion->state = false;
+        $promotion->save();
+        return back();       
+    }
+    
+    public function activate($id){
+        $promotion = Promotion::findOrFail($id);
+        $promotion->state = true;
+        $promotion->save();
+        return back();  
+
+    }
+    /**
+     * @OA\Get(
+     *      path="/promotions",
+     *      operationId="getPromotions",
+     *      tags={"Promotions"},
+
+     *      summary="Obtenir la liste des promotions",
+     *      description="Returns all Promotions",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     * @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     * @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *  )
+     */
+    
+    public function getPromotions()
+    {
+        $promotions = PromotionResource::collection(Promotion::all());
+        return response($promotions,200);
+    }
+    /**
+     * @OA\Get(
+     *      path="/promotions/{id}",     
+     *      operationId="showPromotion",
+     *      tags={"Promotions"},
+     *      summary="Obtenir une promotion",
+     *      description="Obtenir une promotion",
+     *  @OA\Parameter(
+     *      name="id",
+     *      in="path",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     * @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     * @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *  )
+     */
+    public function showPromotion($id)
+    {
+        return new PromotionResource(Promotion::findOrFail($id));
+    }
+    /**
+     * @OA\Get(
+     *      path="/promotions/{id}/examens",     
+     *      operationId="showPromotionExamens",
+     *      tags={"Promotions"},
+     *      summary="Obtenir les examens d'une promotion",
+     *      description="Obtenir les examens d'une promotion",
+     *  @OA\Parameter(
+     *      name="id",
+     *      in="path",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     * @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     * @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *  )
+     */
+    public function showPromotionExamens($id) {
+        $promotion = Promotion::findOrFail($id);
+        $examen = $promotion->examens;
+        return ExamensResource::collection($examen);
+    }
+    /**
+     * @OA\Get(
+     *      path="/promotions/{id}/users",     
+     *      operationId="showPromotionUsers",
+     *      tags={"Promotions"},
+     *      summary="Obtenir les utilisateurs d'une promotion",
+     *      description="Obtenir les utilisateurs d'une promotion",
+     *  @OA\Parameter(
+     *      name="id",
+     *      in="path",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\MediaType(
+     *           mediaType="application/json",
+     *      )
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     * @OA\Response(
+     *      response=400,
+     *      description="Bad Request"
+     *   ),
+     * @OA\Response(
+     *      response=404,
+     *      description="not found"
+     *   ),
+     *  )
+     */
+    public function showPromotionUsers($id) {
+        $promotion = Promotion::findOrFail($id);
+        $users = $promotion->users;
+        return UsersResource::collection($users);
     }
 }

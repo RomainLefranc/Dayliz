@@ -18,7 +18,10 @@ class ActivitiesResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'duree' => $this->duree
+            'duree' => $this->duree,
+            'order'=> $this->order,
+            'examen'=> $this->examen->name,
+            'user'=>$this->user->firstName
         ];
     }
 }

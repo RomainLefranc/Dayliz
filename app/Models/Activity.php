@@ -14,10 +14,17 @@ class Activity extends Model
         "description",
         "state",
         "duree",
-        "examen_id"
+        "order",
+        "examen_id",
+        "user_id"
     ];
 
     protected $table = "activities";
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
 
     /**
      * The users that belong to the Activities
@@ -29,4 +36,10 @@ class Activity extends Model
     {
         return $this->belongsTo(Examen::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }
