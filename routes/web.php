@@ -21,7 +21,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect('/users');
 });
-/* Roles */
+
+Route::middleware(['auth', 'CheckRole:admin'])->group(function () {
+
 Route::resource('roles', RoleController::class);
 
 /* Users */
@@ -48,6 +50,17 @@ Route::post('activity/affectate/{id_activity}/{id_examen}',[ActivityController::
 Route::get('activity/affectate/{id_examen}/{id_activity}',[ActivityController::class,'affectateView'])->name('activities.affectateview');
 
 /******/
+
+Route::get('api/users',[UserController::class,'getUsers']);
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+});
+
+require __DIR__.'/auth.php';
+
 
 // Route::get('api/users',[UserController::class,'getUsers']);
 // Route::get('api/users/{id}',[UserController::class,'showUser']);

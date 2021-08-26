@@ -26,6 +26,11 @@ Modifier les informations de connexion à la BDD.
 
 `php artisan migrate:fresh --seed`
 
+### Authentification
+
+Créer un nouvel utilisateur avec la route `/register`, et choisir `admin` pour le champs `Role`
+Se connecter ensuite avec ce nouvel utilisateur.
+
 ## Principaux Backlog
 
 | En tant que | Je peux                     | Afin de                           | Fonctionnalité          | Avancement |
