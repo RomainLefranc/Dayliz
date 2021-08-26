@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
                 "firstName" => $faker->firstName(),
                 "lastName" => $faker->lastName(),
                 "email" => $faker->email,
-                "password" => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+                "password" => password_hash('salut',PASSWORD_BCRYPT),
                 "phoneNumber" => $faker->phoneNumber,
                 "birthDay" => $faker->date(),
                 "promotion_id" => $faker->numberBetween(1,2),
@@ -29,5 +29,16 @@ class UserSeeder extends Seeder
                 "state" => true
             ]);
         }
+        User::create([
+            "firstName" => 'Admin',
+            "lastName" => 'Admin',
+            "email" => 'admin@gmail.com',
+            "password" => password_hash('admin',PASSWORD_BCRYPT),
+            "phoneNumber" => $faker->phoneNumber,
+            "birthDay" => $faker->date(),
+            "promotion_id" => null,
+            "role_id" => 2,
+            "state" => true
+        ]);
     }
 }

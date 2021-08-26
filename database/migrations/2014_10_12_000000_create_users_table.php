@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
 
             $table->foreignId('role_id');
             $table->foreign("role_id")->references('id')->on('roles')->onDelete('cascade');
-            $table->foreignId('promotion_id');
+            $table->foreignId('promotion_id')->nullable();
             $table->foreign("promotion_id")->references('id')->on('promotions')->onDelete('cascade');
             $table->timestamp('email_verified_at')->nullable();
             //$table->string('password');

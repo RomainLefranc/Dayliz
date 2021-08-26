@@ -43,3 +43,5 @@ Route::get('activities',[ActivityController::class,'getActivities']);
 Route::get('activities/{id}',[ActivityController::class,'showActivities']);
 Route::get('activities/{id}/user',[ActivityController::class,'showActivitiesUser']);
 Route::get('activities/{id}/examen',[ActivityController::class,'showActivitiesExamen']);
+
+Route::get('auth/login',[]);
