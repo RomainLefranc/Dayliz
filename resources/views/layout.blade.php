@@ -35,12 +35,7 @@
             <li class="nav-item {{ Request::segment(1) === 'examens' ? 'active' : '' }}">
                 <a class="nav-link  {{ Request::segment(1) === 'examens' ? 'active' : '' }}" aria-current="page" href="{{ route('examens.index') }}">Examens</a>
             </li>
-
-            <li class="nav-item">
-                <a class="nav-link  {{ Request::segment(1) === 'examens' ? 'active' : '' }}" aria-current="page" href="{{ route('examens.index') }}">Examens</a>
-            </li>
-
-            
+          
                 <li class="navbar-nav nav-item dropdown">
                   <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                       {{ Auth::user()->lastName }} <i class="now-ui-icons sport_user-run"></i>

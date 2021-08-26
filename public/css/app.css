@@ -188559,6 +188559,10 @@ select {
   }
 }
 
+.nav-item.active {
+    position: relative;
+}
+
 /* circle */
 .nav-link,
 .nav-tabs {
