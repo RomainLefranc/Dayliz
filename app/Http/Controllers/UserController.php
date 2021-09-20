@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\Promotion;
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use JWTAuth;
 
 class UserController extends Controller
 {
