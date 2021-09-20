@@ -31,6 +31,16 @@ Modifier les informations de connexion à la BDD.
 Créer un nouvel utilisateur avec la route `/register`, et choisir `admin` pour le champs `Role`
 Se connecter ensuite avec ce nouvel utilisateur.
 
+### Authentification JWT
+Pour appel AJAX, POSTAMN, CURL etc..
+
+Ajouter un header:
+`Authorization : Bearer <token>`
+
+Générer la clé secrète dans .env:
+`php artisan jwt:secret`
+
+
 ## Principaux Backlog
 
 | En tant que | Je peux                     | Afin de                           | Fonctionnalité          | Avancement |
