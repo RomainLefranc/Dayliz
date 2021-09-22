@@ -8,6 +8,20 @@ const getData = (elem) => {
     let id_activity = elem.dataset.id;
     let id_examen = elem.dataset.exam;
     let users;
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(";");
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == " ") c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) == 0)
+                return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+    let token = getCookie("access_token");
+    window.axios.defaults.headers.common["Authorization"] = "bearer " + token;
+
     window.axios
         .get(`/api/examens/${id_examen}/users`)
         .then((res) => {

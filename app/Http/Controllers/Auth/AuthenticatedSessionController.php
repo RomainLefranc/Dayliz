@@ -36,7 +36,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
         $token = JWTAuth::attempt($request->only('email', 'password'));
         
-        return redirect()->intended(RouteServiceProvider::HOME)->withCookie('access_token', $token, 120);
+        return redirect()->intended(RouteServiceProvider::HOME)->withCookie('access_token', $token, 120,null,null,null,false);
     }
 
     /**
