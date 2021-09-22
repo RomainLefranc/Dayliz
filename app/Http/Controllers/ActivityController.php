@@ -32,36 +32,6 @@ class ActivityController extends Controller
         return view("activities.index", compact('activities', 'examen','count','users'));
     }
 
-    public function affectateView($id_examen,$id_activity)
-    {
-        $idpromo = DB::table('examen_promotion')->where('examen_id','=',$id_examen)->get();
-        $users = User::where('promotion_id','=',$idpromo[0]->promotion_id)->get();
-        $idactivity = $id_activity;
-        $activity = Activity::find($idactivity);
-        $idexamen = $id_examen;
-        return view("activities.affectate",compact('users','idactivity','activity','idexamen'));
-    }
-
-    public function affectate(Request $request,$id_activity,$id_examen){
-        $activity = Activity::findOrFail($id_activity);
-       
-        $validator = Validator::make($request->all(),[
-            'user'=> 'required'
-        ]);
-
-        if ($validator->fails())
-        {
-            return response('',404);
-        }
-
-        $activity->user_id = $request->get('user');
-        $activity->save();
-
-        return $this->index($id_examen);
-
-    }
-
-
     /**
      * Show the form for creating a new resource.
      *
