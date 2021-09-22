@@ -7,7 +7,9 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use JWTAuth;
+use Symfony\Component\HttpFoundation\Cookie as HttpFoundationCookie;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthenticatedSessionController extends Controller
@@ -50,7 +52,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
-
-        return redirect('/');
+        $cookie = Cookie::forget('access_token');
+        return redirect('/')->withCookie($cookie);
     }
 }
