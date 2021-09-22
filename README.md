@@ -40,6 +40,11 @@ Ajouter un header:
 Générer la clé secrète dans .env:
 `php artisan jwt:secret`
 
+Utiliser le token côté back-office admin
+
+Récupérer token dans un template blade
+`{{ Cookie::get('access_token' }}`
+
 
 ## Principaux Backlog
 

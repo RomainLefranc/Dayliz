@@ -7,6 +7,8 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -29,10 +31,10 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request)
     {
         $request->authenticate();
-
         $request->session()->regenerate();
-
-        return redirect()->intended(RouteServiceProvider::HOME);
+        $token = JWTAuth::attempt($request->only('email', 'password'));
+        
+        return redirect()->intended(RouteServiceProvider::HOME)->withCookie('access_token', $token, 120);
     }
 
     /**
