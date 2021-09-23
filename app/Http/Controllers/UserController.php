@@ -417,4 +417,12 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         return ActivitiesResource::collection($user->activities);
     }
+
+
+    public function showUserActivitiesByExams($userId, $examId)
+    {
+        $user = User::findOrFail($userId);
+        $activities = $user->activities->where('examen_id', $examId);
+        return ActivitiesResource::collection($activities);
+    }
 }

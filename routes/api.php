@@ -30,6 +30,7 @@ Route::middleware('jwt.verify')->group( function () {
     Route::get('users/{id}/examens',[UserController::class,'showUserExamens']);
     Route::get('users/{id}/activities',[UserController::class,'showUserActivities']);
     Route::get('users/{id}/promotion',[UserController::class,'showUserPromotion']);
+    Route::get('users/{userId}/examens/{examId}/activities', [UserController::class, 'showUserActivitiesByExams']);
 
     Route::get('promotions',[PromotionController::class,'getPromotions']);
     Route::get('promotions/{id}',[PromotionController::class,'showPromotion']);
