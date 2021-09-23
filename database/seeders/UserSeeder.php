@@ -37,7 +37,7 @@ class UserSeeder extends Seeder
             "phoneNumber" => $faker->phoneNumber,
             "birthDay" => $faker->date(),
             "promotion_id" => null,
-            "role_id" => 2,
+            "role_id" => 1,
             "state" => true
         ]);
     }
