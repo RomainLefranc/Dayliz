@@ -34,16 +34,17 @@ Se connecter ensuite avec ce nouvel utilisateur.
 ### Authentification JWT
 Pour appel AJAX, POSTAMN, CURL etc..
 
-Ajouter un header:
-`Authorization : Bearer <token>`
-
 Générer la clé secrète dans .env:
 `php artisan jwt:secret`
 
-Utiliser le token côté back-office admin
+Demander un token (POST):
+`http://<adresse de l'app>/api/auth/login`
 
-Récupérer token dans un template blade
-`{{ Cookie::get('access_token' }}`
+
+Accéder aux autres routes api:
+
+Ajouter un header:
+`Authorization : Bearer <token>`
 
 
 ## Principaux Backlog
