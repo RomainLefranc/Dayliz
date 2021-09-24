@@ -31,7 +31,7 @@ class AuthController extends Controller
 
         try {
 
-            if (! $token = Auth::guard('api')->attempt($credentials) ) {
+            if (! $token = Auth::guard('api')->setTTL(120)->attempt($credentials) ) {
                 return response()->json(['error' => 'Unauthorized'], 401);
             }
         } catch (JWTException $e) {
