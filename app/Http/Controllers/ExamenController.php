@@ -30,7 +30,7 @@ class ExamenController extends Controller
     public function getExamensUser($iduser)
     {
         //On récupère l'id de la promotion de l'user
-        $user = User::find($iduser);
+        $user = User::where('state', '=', 1)->findOrFail($iduser);
 
 
         $promotion = $user->promotion_id;
@@ -51,7 +51,6 @@ class ExamenController extends Controller
             array_push($results, $activity);
         }
 
-
         return response($results, 200);
     }
 
@@ -65,7 +64,7 @@ class ExamenController extends Controller
      */
     public function create()
     {
-        $promotions = Promotion::all();
+        $promotions = Promotion::where('state', '=', 1)->get();
         return view('examens.create', compact('promotions'));
     }
 
@@ -108,7 +107,7 @@ class ExamenController extends Controller
     public function edit($id)
     {
         $examen = Examen::findOrFail($id);
-        $promotions = Promotion::all();
+        $promotions = Promotion::where('state', '=', 1)->get();
         $cur_ids = [];
         foreach ($examen->promotions as $promotion) {
             $cur_ids[] = $promotion->id;
@@ -286,7 +285,7 @@ class ExamenController extends Controller
      */
     public function showExamenPromotion($id) {
         $examen = Examen::findOrFail($id);
-        $promotion = $examen->promotions;
+        $promotion = $examen->promotions->where('state', '=', 1)->get();
         return PromotionResource::collection($promotion);
     }
     /**
@@ -330,7 +329,7 @@ class ExamenController extends Controller
      */
     public function showExamenActivities($id) {
         $examen = Examen::findOrFail($id);
-        $activities = $examen->activities;
+        $activities = $examen->activities()->where('state', '=', 1)->get();
         return ActivitiesResource::collection($activities);
     }
     /**

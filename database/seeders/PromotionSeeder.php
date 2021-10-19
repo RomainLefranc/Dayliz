@@ -18,7 +18,7 @@ class PromotionSeeder extends Seeder
 
         Promotion::create([
             "name" => "CDA 2021",
-            "state" => false
+            "state" => true
         ]);
         Promotion::create([
             "name" => "DWWW 2021",

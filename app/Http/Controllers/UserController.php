@@ -39,7 +39,7 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::all();
-        $promotions = Promotion::all();
+        $promotions = Promotion::where('state', '=', 1)->get();
         return view('users.create',compact('roles','promotions'));
     }
 
@@ -61,7 +61,7 @@ class UserController extends Controller
             'role'=>'required'
         ]);
         $role = Role::findOrFail($request->get('role'));
-        $promotion = Promotion::findOrFail($request->get('promotion'));
+        $promotion = Promotion::where('state', '=', 1)->findOrFail($request->get('promotion'));
         $user = new User([
             'lastName'=> $request->get('lastName'),
             'firstName'=> $request->get('firstName'),
@@ -80,7 +80,7 @@ class UserController extends Controller
 
     public function generateToken($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::where('state', '=', 1)->findOrFail($id);
         $caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $longueurMax = strlen($caracteres);
         $chaineAleatoire = '';
@@ -110,7 +110,7 @@ class UserController extends Controller
     public function showActivities($token)
     {  
        
-        $user = User::where('tokenRandom',$token)->firstOrFail();
+        $user = User::where('tokenRandom',$token)->where('state', '=', 1)->firstOrFail();
         //On vérifie que l'utilisateur est bien trouvé
          
         //Variable pour tester la date
@@ -136,11 +136,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
-        $promotions = Promotion::all();
-        if ($user) {
-            return view('users.edit',compact('user','promotions'));
-        }
+        $user = User::where('state', '=', 1)->findOrFail($id);
+        $promotions = Promotion::where('state', '=', 1)->get();
+        return view('users.edit',compact('user','promotions'));
     }
 
     /**
@@ -153,41 +151,27 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         /* dd($request); */
-        $user = User::find($id);
-        if ($user) {
-            
-            /* $request->validate([
-                'lastName' => 'required|min:3|max:255|regex:/^[A-Za-z]+$/',
-                'firstName' => 'required|min:3|max:255|regex:/^[A-Za-z - é è ]+$/',
-                'email'=> 'required|email',
-                'phone'=>'required|regex:/^[0-9 - () ]+$/',
-                'birthDay'=>'required',
-                'promotion'=>'required'
-            ]); */
-            
-            $user->lastName = $request->get('lastName');
-            $user->firstName = $request->get('firstName');
-            $user->email = $request->get('email');
-            $user->promotion_id = $request->get('promotion');
-            $user->phoneNumber = $request->get('phone');
-            $user->birthDay = $request->get('birthDay');
-            $user->save();
-            return redirect()->route('users.index');        
-        }
-        return back();
-
+        $user = User::where('state', '=', 1)->findOrFail($id);
+        $user->lastName = $request->get('lastName');
+        $user->firstName = $request->get('firstName');
+        $user->email = $request->get('email');
+        $user->promotion_id = $request->get('promotion');
+        $user->phoneNumber = $request->get('phone');
+        $user->birthDay = $request->get('birthDay');
+        $user->save();
+        return redirect()->route('users.index');    
     }
 
     public function desactivate($id){
 
-        $user = User::findOrFail($id);
+        $user = User::where('state', '=', 1)->findOrFail($id);
         $user->state = false;
         $user->save();
         return back();      
     }
     
     public function activate($id){
-        $user = User::findOrFail($id);
+        $user = User::where('state', '=', 1)->findOrFail($id);
         $user->state = true;
         $user->save();
         return back();
@@ -240,7 +224,7 @@ class UserController extends Controller
 
     public function getUsers()
     {
-        $users =  UsersResource::collection(User::all());
+        $users =  UsersResource::collection(User::where('state', '=', 1)->get());
         return response($users,200);
     }
         /**
@@ -284,7 +268,7 @@ class UserController extends Controller
      */
     public function showUser($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::where('state', '=', 1)->findOrFail($id);
         return new UsersResource($user);
     }
         /**
@@ -327,8 +311,8 @@ class UserController extends Controller
      *  )
      */
     public function showUserExamens($id) {
-        $user = User::findOrFail($id);
-        $examen = $user->promotion->examens;
+        $user = User::where('state', '=', 1)->findOrFail($id);
+        $examen = $user->promotion->examens()->whereDate('beginAt', '=', Carbon::today()->toDateString())->get();
         return ExamensResource::collection($examen);
     }
         /**
@@ -371,7 +355,7 @@ class UserController extends Controller
      *  )
      */
     public function showUserPromotion($id) {
-        $user = User::findOrFail($id);
+        $user = User::where('state', '=', 1)->findOrFail($id);
         return new PromotionResource($user->promotion);
     }
         /**
@@ -414,15 +398,15 @@ class UserController extends Controller
      *  )
      */
     public function showUserActivities($id) {
-        $user = User::findOrFail($id);
+        $user = User::where('state', '=', 1)->findOrFail($id);
         return ActivitiesResource::collection($user->activities);
     }
 
 
     public function showUserActivitiesByExams($userId, $examId)
     {
-        $user = User::findOrFail($userId);
-        $activities = $user->activities->where('examen_id', $examId);
+        $user = User::where('state', '=', 1)->findOrFail($userId);
+        $activities = $user->activities()->where('examen_id', $examId)->where('state', '=', 1)->get();
         return ActivitiesResource::collection($activities);
     }
 }

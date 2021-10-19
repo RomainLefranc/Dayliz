@@ -21,7 +21,7 @@ class PromotionController extends Controller
      */
     public function index()
     {
-        $promotions = Promotion::paginate(10);
+        $promotions = Promotion::where('state', '=', 1)->paginate(10);
         return view('promotions.index',compact('promotions'));
     }
 
@@ -65,7 +65,7 @@ class PromotionController extends Controller
 
     public function edit($id)
     {
-        $promotion = Promotion::findOrFail($id);
+        $promotion = Promotion::where('state', '=', 1)->findOrFail($id);
         return view('promotions.edit',compact('promotion'));
     }
 
@@ -78,7 +78,7 @@ class PromotionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $promotion = Promotion::findOrFail($id);
+        $promotion = Promotion::where('state', '=', 1)->findOrFail($id);
         $request->validate([
             'name' => 'required|min:3|max:255'
         ]);
@@ -102,7 +102,7 @@ class PromotionController extends Controller
 
     public function generateToken($id)
     {
-        $promotion = Promotion::findOrFail($id);
+        $promotion = Promotion::where('state', '=', 1)->findOrFail($id);
         $caracteres = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $longueurMax = strlen($caracteres);
         $chaineAleatoire = '';
@@ -127,7 +127,7 @@ class PromotionController extends Controller
     public function showActivities($token)
     {  
         // récuperation de la promotion
-        $promotion = Promotion::where('token',$token)->firstOrFail();
+        $promotion = Promotion::where('token',$token)->where('state', '=', 1)->firstOrFail();
         $verif = md5(Carbon::today() . $promotion->id);
         $dateNow = explode(' ',Carbon::now())[0];
 
@@ -140,14 +140,14 @@ class PromotionController extends Controller
 
     public function desactivate($id){
 
-        $promotion = Promotion::findOrFail($id);
+        $promotion = Promotion::where('state', '=', 1)->findOrFail($id);
         $promotion->state = false;
         $promotion->save();
         return back();       
     }
     
     public function activate($id){
-        $promotion = Promotion::findOrFail($id);
+        $promotion = Promotion::where('state', '=', 1)->findOrFail($id);
         $promotion->state = true;
         $promotion->save();
         return back();  
@@ -189,7 +189,7 @@ class PromotionController extends Controller
     
     public function getPromotions()
     {
-        $promotions = PromotionResource::collection(Promotion::all());
+        $promotions = PromotionResource::collection(Promotion::where('state', '=', 1)->get());
         return response($promotions,200);
     }
     /**
@@ -233,7 +233,7 @@ class PromotionController extends Controller
      */
     public function showPromotion($id)
     {
-        return new PromotionResource(Promotion::findOrFail($id));
+        return new PromotionResource(Promotion::where('state', '=', 1)->findOrFail($id));
     }
     /**
      * @OA\Get(
@@ -275,7 +275,7 @@ class PromotionController extends Controller
      *  )
      */
     public function showPromotionExamens($id) {
-        $promotion = Promotion::findOrFail($id);
+        $promotion = Promotion::where('state', '=', 1)->findOrFail($id);
         $examen = $promotion->examens;
         return ExamensResource::collection($examen);
     }
@@ -319,7 +319,7 @@ class PromotionController extends Controller
      *  )
      */
     public function showPromotionUsers($id) {
-        $promotion = Promotion::findOrFail($id);
+        $promotion = Promotion::where('state', '=', 1)->findOrFail($id);
         $users = $promotion->users;
         return UsersResource::collection($users);
     }

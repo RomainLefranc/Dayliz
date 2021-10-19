@@ -25,10 +25,11 @@ class UserSeeder extends Seeder
                 "phoneNumber" => $faker->phoneNumber,
                 "birthDay" => $faker->date(),
                 "promotion_id" => $faker->numberBetween(1,2),
-                "role_id" => 1,
+                "role_id" => 2,
                 "state" => true
             ]);
         }
+        // Utilisateur demo Administrateur
         User::create([
             "firstName" => 'Admin',
             "lastName" => 'Admin',
@@ -38,6 +39,18 @@ class UserSeeder extends Seeder
             "birthDay" => $faker->date(),
             "promotion_id" => null,
             "role_id" => 1,
+            "state" => true
+        ]);
+        // Utilisateur demo Apprenant
+        User::create([
+            "firstName" => 'Demo',
+            "lastName" => 'Demo',
+            "email" => 'demo@gmail.com',
+            "password" => password_hash('demo',PASSWORD_BCRYPT),
+            "phoneNumber" => $faker->phoneNumber,
+            "birthDay" => $faker->date(),
+            "promotion_id" => 1,
+            "role_id" => 2,
             "state" => true
         ]);
     }

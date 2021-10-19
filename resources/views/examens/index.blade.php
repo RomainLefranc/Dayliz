@@ -32,10 +32,9 @@
                                     <tr>
                                         <td>{{ $examen->id }}</td>
                                         <td>{{ $examen->name }}</td>
-                                        <td>{{ $examen->beginAt }}</td>
-                                        <td>{{ $examen->endAt }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($examen->beginAt)->format('d/m/Y à H:i') }}</td>
+                                        <td>{{ \Carbon\Carbon::parse($examen->endAt)->format('d/m/Y à H:i') }}</td>
                                         <td>
-                                            
                                             @if(count($examen->promotions) > 0 )     
                                                     @foreach ($examen->promotions as $promotion)
                                                         <li >
@@ -44,7 +43,7 @@
                                                     @endforeach                               
                                             @else 
                                             Aucune promotion
-                                        @endif
+                                            @endif
                                         </td>
                                         <td>
                                             <a class="btn btn-primary me-2" href="{{ route('examens.edit', $examen->id) }}" role="button"><i class="far fa-edit"></i></a>

@@ -10,7 +10,6 @@ use App\Models\Activity;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
 
 class ActivityController extends Controller
 {
@@ -22,12 +21,13 @@ class ActivityController extends Controller
     public function index($id_examen)
     {
         $examen = Examen::findOrFail($id_examen);
-        $activities = $examen->activities()->orderBy('order', 'ASC')->paginate(10);
+        $activities = $examen->activities()->where('state', '=', 1)->orderBy('order', 'ASC')->paginate(10);
         $count = $examen->activities()->count();
         $users = User::join('promotions','users.promotion_id', '=', 'promotions.id')
             ->join('examen_promotion','promotions.id', '=', 'examen_promotion.promotion_id')
             ->join('examens','examen_promotion.examen_id', '=', 'examens.id')
             ->where('examens.id','=',$id_examen)
+            ->where('users.state', '=', 1)
             ->get('users.*');
         return view("activities.index", compact('activities', 'examen','count','users'));
     }
@@ -51,7 +51,7 @@ class ActivityController extends Controller
     public function store(Request $request, $id_examen)
     {
         $examen = Examen::findOrFail($id_examen);
-        $user = User::findOrFail($request->get('user'));
+        $user = User::where('state', '=', 1)->findOrFail($request->get('user'));
         $order = count($examen->activities) + 1;
 
         $validator = Validator::make($request->all(), [
@@ -104,7 +104,7 @@ class ActivityController extends Controller
     public function edit($id, $id_examen)
     {
         $examen = Examen::findOrFail($id_examen);
-        $activity = Activity::findOrFail($id);
+        $activity = Activity::where('state', '=', 1)->findOrFail($id);
         return view('activities.edit', compact('activity'));
     }
 
@@ -120,7 +120,7 @@ class ActivityController extends Controller
 
         $examen = Examen::findOrFail($id_examen);
 
-        $activity = Activity::findOrFail($id);
+        $activity = Activity::where('state', '=', 1)->findOrFail($id);
 
         $validator = Validator::make($request->all(), [
             'title' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù. ]+$/',
@@ -160,7 +160,7 @@ class ActivityController extends Controller
     public function destroy($id, $id_examen)
     {
         $examen = Examen::findOrFail($id);
-        $activity = Activity::findOrFail($id_examen);
+        $activity = Activity::where('state', '=', 1)->findOrFail($id_examen);
         $activity->delete();
         return back();
     }
@@ -168,7 +168,7 @@ class ActivityController extends Controller
     public function up($id, $id_examen)
     {
         $examen = Examen::findOrFail($id);
-        $activity = Activity::findOrFail($id_examen);
+        $activity = Activity::where('state', '=', 1)->findOrFail($id_examen);
             if ($activity->order > 1) {
                 $remplaçant = Activity::where('order', '=', $activity->order-1)->where('examen_id','=',$examen->id)->first();
                 if ($remplaçant) {
@@ -186,8 +186,8 @@ class ActivityController extends Controller
     public function down($id, $id_examen)
     {
         $examen = Examen::findOrFail($id);
-        $activity = Activity::findOrFail($id_examen);
-        $count = Activity::where('examen_id', '=', $examen->id)->count();
+        $activity = Activity::where('state', '=', 1)->findOrFail($id_examen);
+        $count = Activity::where('examen_id', '=', $examen->id)->where('state', '=', 1)->count();
         if ($activity->order <= $count ) {
             $remplaçant = Activity::where('order', '=', $activity->order+1)->where('examen_id','=',$examen->id)->first();
             if ($remplaçant) {
@@ -236,7 +236,7 @@ class ActivityController extends Controller
      */
     public function getActivities()
     {
-        $activities = Activity::all();
+        $activities = Activity::where('state', '=', 1)->get();
         $result =  ActivitiesResource::collection($activities);
         return response($result, 200);
     }
@@ -280,7 +280,7 @@ class ActivityController extends Controller
      *  )
      */
     public function showActivities($id) {
-        $activity = Activity::findOrFail($id);
+        $activity = Activity::where('state', '=', 1)->findOrFail($id);
         return ['data'=>$activity];
         //return new ActivitiesResource($activity);
     }
@@ -324,7 +324,7 @@ class ActivityController extends Controller
      *  )
      */
     public function showActivitiesUser($id) {
-        $activity = Activity::findOrFail($id);
+        $activity = Activity::where('state', '=', 1)->findOrFail($id);
         $user = $activity->user;
         return new UsersResource($user);
     }
@@ -368,7 +368,7 @@ class ActivityController extends Controller
      *  )
      */
     public function showActivitiesExamen($id) {
-        $activity = Activity::findOrFail($id);
+        $activity = Activity::where('state', '=', 1)->findOrFail($id);
         $examen = $activity->examen;
         return new ExamensResource($examen);
     }
