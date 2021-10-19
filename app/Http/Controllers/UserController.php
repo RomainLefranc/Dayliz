@@ -399,7 +399,8 @@ class UserController extends Controller
      */
     public function showUserActivities($id) {
         $user = User::where('state', '=', 1)->findOrFail($id);
-        return ActivitiesResource::collection($user->activities);
+        $activities = $user->activities()->join('examens','activities.examen_id', '=', 'examens.id')->whereDate('examens.beginAt', '=', Carbon::today()->toDateString())->get('activities.*');
+        return ActivitiesResource::collection($activities);
     }
 
 
