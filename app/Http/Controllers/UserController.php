@@ -58,7 +58,8 @@ class UserController extends Controller
             'phone'=>'required|regex:/^[0-9 - () ]+$/',
             'birthDay'=> ['required', 'regex:/^(19|20)\d{2}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])+$/'],
             'promotion'=>'required',
-            'role'=>'required'
+            'role'=>'required',
+            'password' => 'required|min:6'
         ]);
         $role = Role::findOrFail($request->get('role'));
         $promotion = Promotion::where('state', '=', 1)->findOrFail($request->get('promotion'));
@@ -70,7 +71,8 @@ class UserController extends Controller
             'phoneNumber'=> $request->get('phone'),
             'promotion_id'=> $promotion->id,
             'role_id' => $role->id,
-            'state'=> true
+            'state'=> true,
+            'password' => password_hash($request->get('password'), PASSWORD_BCRYPT)
         ]);
         $user->save();
         return redirect()->route('users.index');
