@@ -50,6 +50,10 @@
                                 <label for="floatingInput">Téléphone *</label>
                             </div>
                             <div class="form-floating mb-3 col">
+                                <input type="password" class="form-control" name="password" placeholder="Mot de passe" required>
+                                <label for="floatingInput">Mot de passe *</label>
+                            </div>
+                            <div class="form-floating mb-3 col">
                                 <select class="form-control" name="role">
                                     @foreach ($roles as $role)
                                         <option value="{{$role->id}}">{{$role->name}}</option>
