@@ -9,9 +9,9 @@ use App\Http\Resources\UsersResource;
 use App\Models\Activity;
 use App\Models\Examen;
 use App\Models\Promotion;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\User;
 
 class ExamenController extends Controller
 {
@@ -26,12 +26,10 @@ class ExamenController extends Controller
         return view('examens.index', compact('examens'));
     }
 
-
     public function getExamensUser($iduser)
     {
         //On récupère l'id de la promotion de l'user
         $user = User::where('state', '=', 1)->findOrFail($iduser);
-
 
         $promotion = $user->promotion_id;
 
@@ -53,9 +51,6 @@ class ExamenController extends Controller
 
         return response($results, 200);
     }
-
-
-
 
     /**
      * Show the form for creating a new resource.
@@ -80,7 +75,7 @@ class ExamenController extends Controller
             'name' => 'required|min:3|max:255|regex:/^[A-Za-z0-9éàôèù ]+$/',
             'beginAt' => 'required|date',
             'endAt' => 'required|date|after:beginAt',
-            'promotion' => 'required'
+            'promotion' => 'required',
         ]);
 
         $examen = new Examen([
@@ -95,8 +90,6 @@ class ExamenController extends Controller
 
         return redirect()->route('examens.index');
     }
-
-
 
     /**
      * Show the form for editing the specified resource.
@@ -162,7 +155,7 @@ class ExamenController extends Controller
         return back();
     }
 
-      /**
+    /**
      * @OA\Get(
      *      path="/examens",
      *      operationId="getExamens",
@@ -202,7 +195,7 @@ class ExamenController extends Controller
     }
     /**
      * @OA\Get(
-     *      path="/examens/{id}",     
+     *      path="/examens/{id}",
      *      operationId="showExamen",
      *      tags={"Examens"},
      *      summary="Obtenir un examen",
@@ -246,7 +239,7 @@ class ExamenController extends Controller
 
     /**
      * @OA\Get(
-     *      path="/examens/{id}/promotion",     
+     *      path="/examens/{id}/promotion",
      *      operationId="showExamenPromotion",
      *      tags={"Examens"},
      *      summary="Obtenir les promotions d'un examen",
@@ -283,14 +276,15 @@ class ExamenController extends Controller
      *   ),
      *  )
      */
-    public function showExamenPromotion($id) {
+    public function showExamenPromotion($id)
+    {
         $examen = Examen::findOrFail($id);
         $promotion = $examen->promotions->where('state', '=', 1)->get();
         return PromotionResource::collection($promotion);
     }
     /**
      * @OA\Get(
-     *      path="/examens/{id}/activities",     
+     *      path="/examens/{id}/activities",
      *      operationId="showExamenActivities",
      *      tags={"Examens"},
      *      summary="Récupérer les activités d'un examen",
@@ -327,14 +321,15 @@ class ExamenController extends Controller
      *   ),
      *  )
      */
-    public function showExamenActivities($id) {
+    public function showExamenActivities($id)
+    {
         $examen = Examen::findOrFail($id);
-        $activities = $examen->activities()->where('state', '=', 1)->get();
+        $activities = $examen->activities()->where('state', '=', 1)->orderBy('order', 'ASC')->get();
         return ActivitiesResource::collection($activities);
     }
     /**
      * @OA\Get(
-     *      path="/examens/{id}/users",     
+     *      path="/examens/{id}/users",
      *      operationId="showExamenUsers",
      *      tags={"Examens"},
      *      summary="Récupérer les utilisateurs d'un examen",
@@ -372,11 +367,12 @@ class ExamenController extends Controller
      *  )
      */
 
-    public function showExamenUsers($id){
-        $users = User::join('promotions','users.promotion_id', '=', 'promotions.id')
-            ->join('examen_promotion','promotions.id', '=', 'examen_promotion.promotion_id')
-            ->join('examens','examen_promotion.examen_id', '=', 'examens.id')
-            ->where('examens.id','=',$id)
+    public function showExamenUsers($id)
+    {
+        $users = User::join('promotions', 'users.promotion_id', '=', 'promotions.id')
+            ->join('examen_promotion', 'promotions.id', '=', 'examen_promotion.promotion_id')
+            ->join('examens', 'examen_promotion.examen_id', '=', 'examens.id')
+            ->where('examens.id', '=', $id)
             ->get('users.*');
         /* dd($users); */
         return UsersResource::collection($users);

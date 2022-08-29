@@ -20,11 +20,11 @@ class AuthController extends Controller
 
         try {
 
-            if (! $token = Auth::guard('api')->setTTL(120)->attempt($credentials) ) {
-                return response()->json(['error' => 'Unauthorized'], 401);
+            if (!$token = Auth::guard('api')->setTTL(120)->attempt($credentials)) {
+                return response()->json(['error' => 'Adresse email ou mot de passe invalide'], 401);
             }
         } catch (JWTException $e) {
-            return response()->json(['error' => 'could_not_create_token'], 500);
+            return response()->json(['error' => 'Impossible de créer le token'], 500);
         }
 
         return $this->createNewToken($token);
@@ -35,21 +35,32 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function logout() {
+    public function logout()
+    {
         auth()->logout();
 
-        return response()->json(['message' => 'User successfully signed out']);
+        return response()->json(['message' => 'Utilisateur déconnecté avec succes']);
     }
 
-     /**
+    /**
+     * get current user information .
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function me()
+    {
+        return response()->json(['user' => auth()->user()]);
+    }
+
+    /**
      * Refresh a token.
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function refresh() {
+    public function refresh()
+    {
         return $this->createNewToken(auth('api')->refresh());
     }
-
 
     /**
      * Get the token array structure.
@@ -58,7 +69,8 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function createNewToken($token){
+    protected function createNewToken($token)
+    {
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
